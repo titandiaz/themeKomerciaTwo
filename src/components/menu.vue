@@ -1,8 +1,8 @@
 <template>
 	<div class="menu">
 		<ul>
-			<li>Inicio</li>
-			<li>Catalogo</li>
+			<li><router-link to="/">Inicio</router-link></li>
+			<li><router-link to="/productos">Catalogo</router-link></li>
 			<figure class="logo">
 				<img src="">
 			</figure>

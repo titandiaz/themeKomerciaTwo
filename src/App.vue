@@ -1,12 +1,20 @@
 <template>
-  <div id="app">
+  <div id="app" :style="stylesConf">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  data() {
+    return {
+      stylesConf: {
+        color: this.$store.state.colorTexto,
+        backgroundImage: `url(http://komercia.app/img/fondos/${this.$store.state.urlFondo})`,
+      }
+    }
+  }
 }
 </script>
 
@@ -19,8 +27,10 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f3f7fa;
   min-height: 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 .block{
   font-weight: bold;
