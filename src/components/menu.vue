@@ -13,8 +13,10 @@
 </template>
 <style scoped>
 	.menu{
+		position: absolute;
 		width: 100%;
 		padding: 20px;
+		z-index: 3;
 	}
 	ul{
 		width: 100%;

@@ -1,12 +1,15 @@
 <template>
   <div id="app" :style="stylesConf">
     <router-view></router-view>
+    <footer-component></footer-component>
   </div>
 </template>
 
 <script>
+import footerComponent from './components/footer.vue'
 export default {
   name: 'app',
+  components: { footerComponent },
   data() {
     return {
       stylesConf: {
@@ -22,6 +25,7 @@ export default {
 *{
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

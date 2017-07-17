@@ -19,13 +19,13 @@ export const store = new Vuex.Store({
     categorias: [],
     productos: [],
     subcategorias: [],
-    tienda: {
-      ciudad: 0,
-      colorPrincipal: '',
-    }
+    tienda: {}
   }
 })
 
 axios.get(`http://komercia.la/api/front/tienda/${conf.id}`).then((response) => {
-  console.log(response)
+  console.log(response.data.data);
+  store.state.banners = response.data.data.banners[0];
+  store.state.productos = response.data.data.productos;
+  store.state.tienda = response.data.data.tienda;
 })

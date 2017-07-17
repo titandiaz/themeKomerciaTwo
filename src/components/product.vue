@@ -1,5 +1,5 @@
 <template>
-	<div class="product">
+	<div class="product" v-on:click="openModal">
 		<div class="product_image">
 			<img :src="`http://www.komercia.co/tumb/${data.foto}`">
 		</div>
@@ -9,7 +9,7 @@
 				<p>&#9733 &#9733 &#9733 &#9733 &#9734;</p>
 				<p v-show="precio">{{precio}}</p>
 			</div>
-			<button class="detail">ADD CARRITO<i class="material-icons">add_shopping_cart</i></button>
+			<button id="actionAddCart" class="detail">ADD CARRITO<i class="material-icons">add_shopping_cart</i></button>
 		</div>
 	</div>
 </template>
@@ -20,6 +20,13 @@
 			precio() {
 				if(this.data.precio){
 					return `$${this.data.precio}`;
+				}
+			}
+		},
+		methods: {
+			openModal(e) {
+				if(e.target.id != "actionAddCart"){
+					this.$router.push(`/productos/${this.data.id}`);
 				}
 			}
 		}

@@ -2,6 +2,7 @@
   <div class="home">
     <header>
       <header-menu></header-menu>
+      <img class="banners" :src="`http://komercia.co/banners/${banners.ruta_banner}`" alt="">
     </header>
       <section class="items">
         <div class="items_item offers">
@@ -29,53 +30,15 @@
         </div>
       </section>
       <section class="products">
-          <product :data="product" v-for="product in products"></product>
+          <product v-for="product in products" :data="product" :key="product.id"></product>
       </section>
       <div class="goProducts">
-          <button>Ir a  Productos</button>
+          <router-link to="/productos">Ir a  Productos</router-link>
       </div>
       <section class="features">
           <div class="features_item"></div>
           <div class="features_item"></div>
       </section>
-      <footer>
-            <div class="footer_content">
-              <div>
-                <p>312 3914 859</p>
-                <p>Direccion: Calle 16 # 30, 19. Medellin -Colombia</p>
-                <p>Horario: Lunes a viernes 8:00 am a 6: pm</p>
-              </div>
-              <div class="footer_content_social">
-                <span class="footer_content_social_item">
-                  <img src="../assets/social/facebook.png">
-                </span>
-                <span class="footer_content_social_item">
-                  <img src="../assets/social/instagram.png">
-                </span>
-                <span class="footer_content_social_item">
-                  <img src="../assets/social/youtube.png">
-                </span>
-                <span class="footer_content_social_item">
-                  <img src="../assets/social/twitter.png">
-                </span>
-              </div>
-              <div>
-                <p>Terminos y condiciones</p>
-                <p>Politicas de reembolso</p>
-                <p>Politicas de garantia</p>
-                <p>Politicas de privacidad</p>
-              </div>
-            </div>
-            <div class="footer_actions">
-              <button class="footer_actions_email">Correo electronico</button>
-              <button class="footer_actions_subscribe">Suscribete</button>
-            </div>
-            <div class="footer_last">
-              <span class="effects"></span>
-              <p class="text">Desarrollado por komercia.co</p>
-              <img src="../assets/komercia.png">
-            </div>
-      </footer>
   </div>
 </template>
 
@@ -98,6 +61,12 @@
         products: [],
       }
     },
+    computed: {
+      banners() {
+        console.log(this.$store.state.banners)
+        return this.$store.state.banners;
+      }
+    }
   }
 </script>
 
@@ -108,14 +77,19 @@
     color: #4a4a4a;
   }
   header{
+    position: relative;
     width: 100%;
-    height: 60vh;
-    background-color: blue;
+    display: flex;
+  }
+  .banners{
+    height: auto;
+    margin: 0 auto;
   }
   .items{
     width: 100%;
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     background-color: #FFF;
     color: #4a4a4a;
     padding: 40px 0;
@@ -127,6 +101,7 @@
     align-items: center;
     background-color: #f1f1f1;
     border-radius: 10px;
+    margin: 5px;
     padding: 20px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   }
@@ -175,12 +150,13 @@
     justify-content: center;
     padding: 10px 0;
   }
-  .goProducts button{
+  .goProducts a{
     border-style: none;
     background-color: #4383ff;
     color: #FFF;
     border-radius: 100px;
     padding: 15px 45px;
+    cursor: pointer;
   }
   .features{
     width: 100%;
@@ -194,84 +170,5 @@
     height: 155px;
     background-color: #f1f1f1;
     border-radius: 10.8px;
-  }
-  footer{
-    width: 100%;
-  }
-  .footer_content{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 50px;
-  }
-  .footer_content_social{
-    display: flex;
-  }
-  .footer_content_social_item{
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    border: 1px solid #9b9b9b;
-    padding: 20px;
-    margin: 0 5px;
-  }
-  .footer_content_social_item img{
-    width: 25px;
-  }
-  .footer_actions{
-    display: flex;
-    justify-content: center;
-    padding: 30px 0;
-  }
-  .footer_actions button{
-    margin: 0px 20px;
-  }
-  .footer_actions_email{
-    max-width: 200px;
-    width: 100%;
-    border-radius: 100px;
-    border: solid 1px #9b9b9b;
-    font-size: 14px;
-    background-color: transparent;
-    padding: 10px 50px;
-    color: #a6a6a6;
-  }
-  .footer_actions_subscribe{
-    max-width: 200px;
-    width: 100%;
-    border-style: none;
-    border-radius: 100px;
-    background-color: #616062;
-    color: #FFF;
-    padding: 10px 40px;
-    box-shadow: 3px 4px 7px 0 rgba(0, 0, 0, 0.5);
-  }
-  .footer_last{
-    width: 100%;
-    height: 60px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
-    background-color: #616061;
-    color: #FFF;
-  }
-  .footer_last .effects{
-    width: 50%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-right: 0px solid transparent;
-    border-left: 60px solid transparent;
-    border-top: 60px solid #4a4a4a;
-  }
-  .footer_last img{
-    width: 120px;
-    z-index: 2;
   }
 </style>
