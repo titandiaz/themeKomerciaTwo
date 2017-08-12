@@ -2,7 +2,11 @@
   <div id="modalProduct" v-on:click="closeModal">
     <div class="product">
       <div class="photos">
-        <img :src="`http://www.komercia.co/tumb/${data.foto}`" :alt="data.nombre" class="photo_main">
+        <img :src="`https://komercia.co/tumb/${selectPhotoUrl}`" :alt="data.nombre" class="photo_main">
+        <div class="photos_selected">
+          <img :src="`https://komercia.co/tumb/${data.foto}`" v-on:click="selectedPhoto(data.foto)">
+          <img :src="`https://komercia.co/tumb/${foto.foto}`" v-on:click="selectedPhoto(foto.foto)" v-for="foto in data.fotos">
+        </div>
       </div>
       <div class="content">
         <i id="closeModal" class="material-icons close">close</i>
@@ -22,8 +26,9 @@
     created() {
       let data = this.$store.state.productos.filter((product) => { if(product.id == this.$route.params.id){ return product}});
       this.data = data[0];
-      axios.get(`http://komercia.la/api/front/producto/${this.$route.params.id}`).then((response) => {
+      axios.get(`https://komercia.co/api/front/producto/${this.$route.params.id}`).then((response) => {
         console.log(response.data);
+        this.selectedPhoto(response.data.foto)
         this.data = Object.assign(response.data, this.data);
       }).catch((error) => {
 
@@ -32,6 +37,7 @@
     data() {
       return {
         data: {},
+        selectPhotoUrl: '',
       }
     },
     computed: {
@@ -46,6 +52,9 @@
         if(e.target.id == "modalProduct" || e.target.id == "closeModal"){
           this.$router.push('/productos');
         }
+      },
+      selectedPhoto(f){
+        this.selectPhotoUrl = f;
       }
     }
   }
@@ -58,8 +67,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255,255,255,0.82);
-    z-index: 2;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 3;
   }
   .product{
     width: 650px;
@@ -71,14 +80,33 @@
     box-shadow: 0 0 31px 7px rgba(121, 121, 121, 0.29);
   }
   .photos{
-    width: 40%;
+    width: 250px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .photo_main{
     width: 90%;
+    box-shadow: 0 1px 5px 0px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .photos_selected{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .photos_selected img{
+    width: 23%;
+    box-shadow: 0 0px 5px 0px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    cursor: pointer;
   }
   .content{
-    width: 60%;
+    width: calc(100% - 250px);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -125,5 +153,29 @@
     margin: 7px 0;
     font-size: 14px;
     line-height: 1.5;
+    overflow-y: auto;
   }
+@media(max-width: 710px){
+  .product{
+    position: relative;
+    width: 95%;
+    min-height: 97vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .photos{
+    width: 70%;
+    height: initial;
+  }
+  .content{
+    width: 100%;
+    height: initial;
+  }
+  i.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
 </style>

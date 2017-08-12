@@ -1,10 +1,10 @@
 <template>
   <footer>
         <div class="footer_content">
-          <div>
-            <p>312 3914 859</p>
-            <p>Direccion: Calle 16 # 30, 19. Medellin -Colombia</p>
-            <p>Horario: Lunes a viernes 8:00 am a 6: pm</p>
+          <div class="footer_info">
+            <p><i class="material-icons">phone</i>312 3914 859</p>
+            <p><i class="material-icons">location_on</i>Direccion: Calle 16 # 30, 19. Medellin -Colombia</p>
+            <p><i class="material-icons">watch_later</i>Horario: Lunes a viernes 8:00 am a 6: pm</p>
           </div>
           <div class="footer_content_social">
             <a v-show="facebook" :href="facebook" target="_blank" class="footer_content_social_item">
@@ -20,17 +20,17 @@
               <img src="../assets/social/twitter.png">
             </a>
           </div>
-          <div>
-            <p>Terminos y condiciones</p>
-            <p>Politicas de reembolso</p>
-            <p>Politicas de garantia</p>
-            <p>Politicas de privacidad</p>
-          </div>
-        </div>
         <div class="footer_actions">
-          <button class="footer_actions_email">Correo electronico</button>
+          <input type="text" class="footer_actions_email" placeholder="Correo electronico">
           <button class="footer_actions_subscribe">Suscribete</button>
         </div>
+        <div class="footer_about_legal">
+          <router-link to="">Terminos y condiciones</router-link>
+          <router-link to="">Politicas de reembolso</router-link>
+          <router-link to="">Politicas de garantia</router-link>
+          <router-link to="">Politicas de privacidad</router-link>
+        </div>
+      </div>
         <div class="footer_last">
           <span class="effects"></span>
           <p class="text">Desarrollado por komercia.co</p>
@@ -42,10 +42,20 @@
   export default {
     data() {
       return {
-        facebook: this.$store.state.tienda.red_facebook,
-        instagram: this.$store.state.tienda.red_instagram,
-        youtube: this.$store.state.tienda.red_youtube,
-        twitter: this.$store.state.tienda.red_twitter,
+      }
+    },
+    computed: {
+      facebook(){
+        return this.$store.state.tienda.red_facebook;
+      },
+      instagram(){
+        return this.$store.state.tienda.red_instagram;
+      },
+      youtube(){
+        return this.$store.state.tienda.red_youtube;
+      },
+      twitter(){
+        return this.$store.state.tienda.red_twitter;
       }
     }
   }
@@ -57,8 +67,22 @@ footer{
 .footer_content{
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   padding: 20px 50px;
+}
+.footer_info{
+  display: flex;
+  flex-direction: column;
+}
+.footer_info p{
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+.footer_info p i{
+  margin-right: 5px;
+  font-size: 17px;
 }
 .footer_content_social{
   display: flex;
@@ -84,19 +108,21 @@ footer{
 }
 .footer_actions button{
   margin: 0px 20px;
+  outline: none;
 }
 .footer_actions_email{
-  max-width: 200px;
+  max-width: 250px;
   width: 100%;
   border-radius: 100px;
   border: solid 1px #9b9b9b;
   font-size: 14px;
   background-color: transparent;
-  padding: 10px 50px;
-  color: #a6a6a6;
+  padding: 10px;
+  text-align: center;
+  outline: none;
 }
 .footer_actions_subscribe{
-  max-width: 200px;
+  max-width: 180px;
   width: 100%;
   border-style: none;
   border-radius: 100px;
@@ -104,6 +130,21 @@ footer{
   color: #FFF;
   padding: 10px 40px;
   box-shadow: 3px 4px 7px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: .3s;
+}
+.footer_actions_subscribe:hover{
+  transform: scale(0.95);
+}
+.footer_about_legal{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.footer_about_legal a{
+  margin: 0 6px;
+  text-decoration: underline;
+  color: initial;
 }
 .footer_last{
   width: 100%;
@@ -129,5 +170,14 @@ footer{
 .footer_last img{
   width: 120px;
   z-index: 2;
+}
+@media(max-width: 380px){
+  .footer_actions{
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer_actions button{
+    margin: 6px 0px;
+  }
 }
 </style>

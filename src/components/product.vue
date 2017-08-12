@@ -1,7 +1,7 @@
 <template>
-	<div class="product" v-on:click="openModal">
+	<div class="product" :id="data.id" v-on:click="openModal">
 		<div class="product_image">
-			<img :src="`http://www.komercia.co/tumb/${data.foto}`">
+			<img :src="`https://komercia.co/tumb/${data.foto}`">
 		</div>
 		<div class="product_content">
 			<h2 class="text">{{data.nombre}}</h2>
@@ -9,7 +9,7 @@
 				<p>&#9733 &#9733 &#9733 &#9733 &#9734;</p>
 				<p v-show="precio">{{precio}}</p>
 			</div>
-			<button id="actionAddCart" class="detail">ADD CARRITO<i class="material-icons">add_shopping_cart</i></button>
+			<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">ADD CARRITO<i class="material-icons">add_shopping_cart</i></button>
 		</div>
 	</div>
 </template>
@@ -28,6 +28,22 @@
 				if(e.target.id != "actionAddCart"){
 					this.$router.push(`/productos/${this.data.id}`);
 				}
+			},
+			addShoppingCart(product){
+					let productExist = false;
+					for(let productCart of this.$store.state.productsCart){
+						if(product.id == productCart.id){
+								 productCart.cantidad++;
+								 product = productCart;
+								 productExist = true;
+						}
+					}
+					if(!productExist){
+						product.cantidad = 1;
+						this.$store.state.productsCart.push(product);
+					}
+				this.$store.commit('updateContentCart');
+				document.getElementById(this.data.id).classList.add('bought');
 			}
 		}
 	}
@@ -43,6 +59,9 @@
 		margin: 16px 16px;
 		cursor: pointer;
 		transition: all .3s;
+	}
+	.product.bought{
+		border: solid 0.5px green;
 	}
 	.product:hover {
 		transform: scale(1.05);
@@ -79,6 +98,10 @@
 		padding: 5px 20px;
 		display: flex;
 		align-items: center;
+		outline: none;
+	}
+	.product.bought .product_content button{
+		color: green;
 	}
 	.product_content button i{
 		height: 100%;

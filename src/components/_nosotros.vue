@@ -1,0 +1,82 @@
+<template>
+  <div id="nosotros">
+    <header>
+        <header-menu></header-menu>
+    </header>
+    <section class="abouts">
+      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow }">
+        <h2>Nosotros</h2>
+        <p>{{ info.nosotros}}</p>
+      </div>
+      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow2 }" v-show="info.mision">
+        <h2>Misión</h2>
+        <p>{{ info. mision }}</p>
+      </div>
+      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow3 }">
+        <h2>Visión</h2>
+        <p>{{ info.vision }}</p>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+import headerMenu from './menu2.vue';
+
+export default {
+  components: { headerMenu },
+  computed: {
+    styles(){
+      return {
+        boxShadow: `35px 15px 0 0px ${this.$store.state.colorPrincipal}`,
+        boxShadow2: `0px 15px 0 0px ${this.$store.state.colorPrincipal}`,
+        boxShadow3: `-35px 15px 0 0px ${this.$store.state.colorPrincipal}`,
+      }
+    },
+    info(){
+      return this.$store.state.tienda;
+    }
+  }
+}
+</script>
+
+<style scoped>
+  #nosotros{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header{
+    width: 100%;
+    height: 90px;
+    background-color: #e4e4e4;
+    padding: 0 20px;
+  }
+  .abouts{
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 0;
+  }
+  .about_item{
+    position: relative;
+    max-width: 400px;
+    align-self: center;
+    padding: 10px;
+    margin: 10px 10px 0 0;
+    background-color: #FFF;
+    border-radius: 3px;
+    border: 1px solid peru;
+    text-align: justify;
+    box-shadow: 0px 15px 0 0px peru;
+    transition: all .5s;
+    z-index: 2;
+  }
+  .about_item:first-of-type{
+    box-shadow: 15px 5px 0 0px;
+    z-index: 1;
+  }
+  .about_item:last-of-type{
+    z-index: 1;
+  }
+</style>

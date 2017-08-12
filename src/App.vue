@@ -48,4 +48,7 @@ export default {
 a{
   text-decoration: none;
 }
+.pointer{
+  cursor: pointer;
+}
 </style>

@@ -1,45 +1,41 @@
 <template>
-  <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">Slide 1</div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-            <div class="swiper-slide">Slide 4</div>
-            <div class="swiper-slide">Slide 5</div>
-            <div class="swiper-slide">Slide 6</div>
-            <div class="swiper-slide">Slide 7</div>
-            <div class="swiper-slide">Slide 8</div>
-            <div class="swiper-slide">Slide 9</div>
-            <div class="swiper-slide">Slide 10</div>
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-        <!-- Add Arrows -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
+  <swiper :options="swiperOption">
+    <!-- slides -->
+    <swiper-slide v-for="banner in banners"><img :src="`https://komercia.co/banners/${banner.ruta_banner}`" alt=""></swiper-slide>
+    <!-- Optional controls -->
+    <div class="swiper-pagination"  slot="pagination"></div>
+  </swiper>
 </template>
 
 <script>
-let swiper = new Swiper('.swiper-container', {
-    pagination: '.swiper-pagination',
-    nextButton: '.swiper-button-next',
-    prevButton: '.swiper-button-prev',
-    slidesPerView: 1,
-    paginationClickable: true,
-    spaceBetween: 30,
-    loop: true
-});
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
-}
-</script>
+  components: { swiper, swiperSlide },
+    name: 'carrousel',
+    data() {
+          return {
+            swiperOption: {
+              direction: 'horizontal',
+              pagination: '.swiper-pagination',
+              setWrapperSize: true,
+              paginationClickable: true,
+              grabCursor : true,
+              autoplay: 2500,
+            }
+          }
+        },
+        computed: {
+          banners(){
+            return this.$store.state.banners;
+          }
+        }
+      }
+    </script>
 
-<style scoped>
+<style>
   .swiper-container {
-      width: 100%;
-      height: 500px;
-      margin-left: auto;
-      margin-right: auto;
+    width: 100%;
+    height: 100%;
   }
   .swiper-slide {
       text-align: center;
@@ -58,5 +54,16 @@ export default {
       -ms-flex-align: center;
       -webkit-align-items: center;
       align-items: center;
+  }
+  .swiper-slide img{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+  }
+  .swiper-pagination-bullet{
+    background-color: rgba(255,255,255,0.5);
+  }
+  .swiper-pagination-bullet-active{
+    background-color: #FFF;
   }
 </style>

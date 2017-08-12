@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <header>
-      <header-menu></header-menu>
-      <img class="banners" :src="`http://komercia.co/banners/${banners.ruta_banner}`" alt="">
+      <header-menu class="menu_responsive_home"></header-menu>
+      <header-menu2 class="menu_responsive_home2"></header-menu2>
+      <banners></banners>
+      <label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto"></label>
     </header>
       <section class="items">
         <div class="items_item offers">
@@ -36,8 +38,22 @@
           <router-link to="/productos">Ir a  Productos</router-link>
       </div>
       <section class="features">
-          <div class="features_item"></div>
-          <div class="features_item"></div>
+          <div class="features_item">
+            <img src="../assets/cards.png" alt="">
+            <div class="features_item_info">
+              <h3>Pagos online</h3>
+              <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
+              <a href="#">EMPEZAR A COMPRAR</a>
+            </div>
+          </div>
+          <div class="features_item">
+            <img src="../assets/mensajero.png" alt="">
+            <div class="features_item_info">
+              <h3>Recibe tu producto</h3>
+              <p>Recibe tus compras sin salir de casa Enviamos tus productos con seguridad</p>
+              <a href="#">EMPEZAR A COMPRAR</a>
+            </div>
+          </div>
       </section>
   </div>
 </template>
@@ -45,15 +61,17 @@
 <script>
 
   import headerMenu from './menu.vue';
+  import headerMenu2 from './menu2.vue';
+  import banners from './banners.vue';
   import product from './product.vue';
   import axios from 'axios';
 
   export default {
-    components: { headerMenu, product },
+    components: { headerMenu, headerMenu2, product, banners },
     name: 'home',
     created(){
-      axios.get(`http://www.komercia.co/api/tienda/inventario/${this.$store.state.id}`).then((response) => {
-        this.products = response.data.datos;
+      axios.get(`https://komercia.co/api/tienda/inventario/${this.$store.state.id}`).then((response) => {
+        this.products = response.data.datos.slice(0,8);
       })
     },
     data () {
@@ -80,10 +98,42 @@
     position: relative;
     width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .menu_responsive_home2{
+    display: none !important;
   }
   .banners{
-    height: auto;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
+  }
+  .header__search{
+    position: absolute;
+    bottom: 30px;
+    max-width: 350px;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    background-color: #FFF;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 10px;
+    z-index: 3;
+    box-shadow:  0 0 10px 2px rgba(0,0,0,0.3);
+  }
+  .header__search i{
+    color: #5c5c5c;
+  }
+  .header__search input{
+    width: 91%;
+    height: 100%;
+    outline: none;
+    border-style: none;
   }
   .items{
     width: 100%;
@@ -161,14 +211,68 @@
   .features{
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     padding: 30px 0px;
     background-color: #FFF;
   }
   .features_item{
     width: 430px;
-    height: 155px;
+    min-height: 155px;
+    display: flex;
+    align-items: center;
     background-color: #f1f1f1;
     border-radius: 10.8px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
+    margin: 10px;
+    padding: 0 25px;
+  }
+  .features_item:nth-child(2) img{
+    align-self: flex-end;
+  }
+  .features_item_info{
+    text-align: right;
+  }
+  .features_item_info h3{
+    font-size: 16px;
+  }
+  .features_item_info p{
+    font-size: 14px;
+    margin: 8px 0;
+  }
+  .features_item_info a{
+    font-size: 12px;
+    font-weight: bold;
+    color: #1c65b9;
+  }
+  @media(max-width: 800px){
+    header{
+      flex-direction: column;
+    }
+    .banners{
+
+    }
+  }
+  @media(max-width: 700px){
+    .menu_responsive_home{
+      display: none;
+    }
+    .menu_responsive_home2{
+      width: 100%;
+      padding: 0 10px;
+      display: flex !important;
+    }
+    .header__search{
+      display: none;
+    }
+  }
+  @media(max-width: 320px){
+    .features_item{
+        flex-direction: column;
+    }
+    .features_item_info{
+      text-align: center;
+      margin: 10px 0;
+    }
   }
 </style>

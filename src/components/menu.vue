@@ -3,25 +3,38 @@
 		<ul>
 			<li><router-link to="/">Inicio</router-link></li>
 			<li><router-link to="/productos">Catalogo</router-link></li>
-			<figure class="logo">
-				<img src="">
-			</figure>
-			<li>Nosotros</li>
-			<li>Contacto</li>
+			<div class="logo_full">
+				<figure class="logo">
+					<img :src="`https://komercia.co/logos/${info.logo}`" alt="">
+				</figure>
+			</div>
+			<li><router-link to="/nosotros">Nosotros</router-link></li>
+			<li><router-link to="/contacto">Contacto</router-link></li>
 		</ul>
 	</div>
 </template>
+<script>
+	export default{
+		computed: {
+			info() {
+				return this.$store.state.tienda
+			},
+		}
+	}
+</script>
 <style scoped>
 	.menu{
 		position: absolute;
 		width: 100%;
-		padding: 20px;
+		padding: 10px;
 		z-index: 3;
+		background-color: rgba(0,0,0,0.3);
 	}
 	ul{
 		width: 100%;
 		list-style: none;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-around;
 		align-items: center;
 	}
@@ -29,11 +42,42 @@
 		padding: 10px 20px;
 		color: #FFF;
 	}
+	a{
+		color: #FFF;
+		font-weight: bold;
+	}
+	.menu li:first-child{
+		border: 2px solid #FFF;
+	}
 	.logo{
-		border-radius: 50%;
-		width: 120px;
-		height: 120px;
-		background-color: #FFF;
-		border: 5PX solid rgba(255,255,255,0.5);
+		max-width: 80px;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #FFF;
+    box-shadow: 0px 0px 0px 4px rgba(255,255,255, 0.5);
+	}
+	.logo img{
+		width: 100%;
+    height: auto;
+	}
+	@media(max-width: 800px){
+		.menu{
+			position: initial;
+		}
+	}
+	@media(max-width: 650px){
+		.logo_full{
+			width: 100%;
+			display: flex;
+			justify-content: center;
+		}
+		.logo_full{
+			order: -1;
+		}
 	}
 </style>
