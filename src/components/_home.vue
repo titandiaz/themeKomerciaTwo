@@ -11,15 +11,15 @@
           <div class="items_item_info">
             <h3>Nuestras Ofertas</h3>
             <p class="detail">Encuentra lo que</br> siempre has querido</p>
-            <router-link to="/productos" class="detail block">Ver Catalogo</router-link>
+            <router-link to="/productos" class="detail block" :style="styles.colorSecundario">Ver Catalogo</router-link>
           </div>
           <img src="../assets/offers.png">
         </div>
         <div class="items_item login">
           <div class="items_item_info">
-            <h3>Registrate Gratis</h3>
-            <p class="detail">Crea una cuenta de comprador</p>
-            <router-link to="/productos" class="detail">REGISTRATE</router-link>
+            <h3>Contactanos</h3>
+            <p class="detail">Conatactanos</p>
+            <router-link to="/contacto" class="detail">CONTACTANOS</router-link>
           </div>
         </div>
         <div class="items_item shopping_cart">
@@ -35,7 +35,7 @@
           <product v-for="product in products" :data="product" :key="product.id"></product>
       </section>
       <div class="goProducts">
-          <router-link to="/productos">Ir a  Productos</router-link>
+          <router-link to="/productos" :style="styles.colorPrincipal" >Ir a  Productos</router-link>
       </div>
       <section class="features">
           <div class="features_item">
@@ -43,7 +43,7 @@
             <div class="features_item_info">
               <h3>Pagos online</h3>
               <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
-              <router-link to="/productos">EMPEZAR A COMPRAR</router-link>
+              <router-link to="/productos" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
           <div class="features_item">
@@ -51,7 +51,7 @@
             <div class="features_item_info">
               <h3>Recibe tu producto</h3>
               <p>Recibe tus compras sin salir de casa Enviamos tus productos con seguridad</p>
-              <router-link to="/productos">EMPEZAR A COMPRAR</router-link>
+              <router-link to="/productos" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
       </section>
@@ -80,6 +80,12 @@
       }
     },
     computed: {
+      styles(){
+        return {
+          colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
+          colorSecundario: {color: this.$store.state.colorSecundario}
+        }
+      },
       banners() {
         console.log(this.$store.state.banners)
         return this.$store.state.banners;

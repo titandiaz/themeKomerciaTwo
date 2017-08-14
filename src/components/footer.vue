@@ -54,6 +54,7 @@
       }
     },
     computed: {
+      
       facebook(){
         return this.$store.state.tienda.red_facebook;
       },

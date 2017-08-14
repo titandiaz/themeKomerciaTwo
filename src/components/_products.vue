@@ -34,7 +34,7 @@
 						<p>Añade tus productos favoritos al carrito</p>
 						<div>
 							<img src="../assets/shopping.png">
-							<p v-on:click="openOrderComponent">Ir al Carrito</p>
+							<p v-on:click="openOrderComponent" :style="">Ir al Carrito</p>
 						</div>
 					</div>
 				</div>
@@ -54,15 +54,10 @@
 	export default {
 		components: { product, Order, headerMenu },
 		created(){
-			window.onscroll = function() {myFunction()};
-			function myFunction() {
-				// document.getElementById("shortcuts").style.top = document.body.scrollTop;
-				if (document.body.scrollTop > 60) {
-					document.getElementById("shortcuts").classList.add('effectScroll');
-				} else {
-					document.getElementById("shortcuts").classList.remove('effectScroll');
-				}
-			}
+				window.addEventListener('scroll', this.handleScroll);
+		},
+		destroyed(){
+			window.removeEventListener('scroll', this.handleScroll);
 		},
 		data(){
 			return {
@@ -109,6 +104,13 @@
 			}
 		},
 		methods: {
+			handleScroll(){
+				if (document.body.scrollTop > 60) {
+					document.getElementById("shortcuts").classList.add('effectScroll');
+				} else {
+					document.getElementById("shortcuts").classList.remove('effectScroll');
+				}
+			},
 			openOrderComponent(){
 				  this.$store.state.orderComponent = true;
 			},

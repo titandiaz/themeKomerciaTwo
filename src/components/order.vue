@@ -59,7 +59,16 @@ export default {
       }
     },
     next(){
-      this.$router.push('https://www.google.com.co/?gfe_rd=cr&ei=fzeOWWjzz_AH2aq7kAo&gws_rd=ssl')
+      let json = {
+        products: this.$store.state.productsCart,
+        tienda: this.$store.state.id,
+        tipo: 0,
+        total: this.$store.state.totalCart,
+        estado: 0,
+        direccion_entrega: 1
+      }
+      json = JSON.stringify(json)
+      location.href = `https://komercia.co/beforecheckout/${json}`;
     }
   },
   filters: {
