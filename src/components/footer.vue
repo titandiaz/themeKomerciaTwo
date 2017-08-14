@@ -25,10 +25,10 @@
           <button class="footer_actions_subscribe">Suscribete</button>
         </div>
         <div class="footer_about_legal">
-          <router-link to="">Terminos y condiciones</router-link>
-          <router-link to="">Politicas de reembolso</router-link>
-          <router-link to="">Politicas de garantia</router-link>
-          <router-link to="">Politicas de privacidad</router-link>
+          <router-link to="/manejo-de-datos">Politicas de manejo de datos</router-link>
+          <!-- <router-link to="">Politicas de reembolso</router-link> -->
+          <router-link to="/garantias">Politicas de garantia</router-link>
+          <!-- <router-link to="">Politicas de privacidad</router-link> -->
         </div>
       </div>
         <div class="footer_last">

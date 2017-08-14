@@ -6,6 +6,9 @@ import Product from '@/components/_product'
 import About from '@/components/_nosotros'
 import Contact from '@/components/_contacto'
 import Order from '@/components/_order'
+import Garantias from '@/components/_garantias'
+import ManejoDatos from '@/components/_manejo_datos'
+
 
 Vue.use(Router)
 
@@ -42,6 +45,12 @@ export default new Router({
     },{
       path: '/contacto',
       component: Contact
+    },{
+      path: '/manejo-de-datos',
+      component: ManejoDatos
+    },{
+      path: '/garantias',
+      component: Garantias
     }
   ]
 })
