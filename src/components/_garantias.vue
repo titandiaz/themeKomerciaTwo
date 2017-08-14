@@ -34,20 +34,15 @@
 </ol>
 
 
-
-CAUSALES DE NO ACEPTACIÓN DEL PRODUCTO.
-
+<h3>CAUSALES DE NO ACEPTACIÓN DEL PRODUCTO.</h3>
 
 
-
-
-·        Cuando el producto presente cualquier tipo de daño, golpe, mal trato o mal uso imputable al cliente.
-
-·        Cuando el producto presente indicios de manipulación o alteración interna. En el caso de suministros: TONER y CARTUCHOS TINTAS: cuando el producto se recicle, recargue y/o se remano facturen y se modifiquen sus características originales para su posterior utilización, ni se cubrirá la garantía en suministros que presenten averías o estén consumidas más del 50%.
-
-·        Los productos que tengan señas de sobre voltaje (quemado, olor o aspecto físico) no aplican por garantía.
-
-·        Cuando no se siguieron las especificaciones e instrucciones descritas en el manual.
+<ul>
+  <li>Cuando el producto presente cualquier tipo de daño, golpe, mal trato o mal uso imputable al cliente.</li>
+  <li>Cuando el producto presente indicios de manipulación o alteración interna. En el caso de suministros: TONER y CARTUCHOS TINTAS: cuando el producto se recicle, recargue y/o se remano facturen y se modifiquen sus características originales para su posterior utilización, ni se cubrirá la garantía en suministros que presenten averías o estén consumidas más del 50%.</li>
+  <li>Los productos que tengan señas de sobre voltaje (quemado, olor o aspecto físico) no aplican por garantía.</li>
+  <li>Cuando no se siguieron las especificaciones e instrucciones descritas en el manual.</li>
+</ul>
   </div>
 </template>
 
@@ -57,4 +52,7 @@ export default {
 </script>
 
 <style scoped>
+  ul{
+    margin: 40px;
+  }
 </style>

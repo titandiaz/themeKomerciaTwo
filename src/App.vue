@@ -14,7 +14,7 @@ export default {
     return {
       stylesConf: {
         color: this.$store.state.colorTexto,
-        backgroundImage: `url(http://komercia.app/img/fondos/${this.$store.state.urlFondo})`,
+        backgroundImage: `url(http://komercia.co/img/fondos/${this.$store.state.urlFondo})`,
       }
     }
   }

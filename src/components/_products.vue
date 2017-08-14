@@ -56,7 +56,6 @@
 		created(){
 			window.onscroll = function() {myFunction()};
 			function myFunction() {
-				console.log(document.body.scrollTop)
 				// document.getElementById("shortcuts").style.top = document.body.scrollTop;
 				if (document.body.scrollTop > 60) {
 					document.getElementById("shortcuts").classList.add('effectScroll');
