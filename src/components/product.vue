@@ -6,7 +6,7 @@
 		<div class="product_content">
 			<h2 class="text">{{data.nombre}}</h2>
 			<div class="product_content_info">
-				<p>&#9733 &#9733 &#9733 &#9733 &#9734;</p>
+				<!--<p>&#9733 &#9733 &#9733 &#9733 &#9734;</p>-->
 				<p v-show="precio">{{precio}}</p>
 			</div>
 			<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">ADD CARRITO<i class="material-icons">add_shopping_cart</i></button>

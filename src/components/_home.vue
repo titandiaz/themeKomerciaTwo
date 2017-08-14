@@ -4,14 +4,14 @@
       <header-menu class="menu_responsive_home"></header-menu>
       <header-menu2 class="menu_responsive_home2"></header-menu2>
       <banners></banners>
-      <label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto"></label>
+      <!--<label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto"></label>-->
     </header>
       <section class="items">
         <div class="items_item offers">
           <div class="items_item_info">
             <h3>Nuestras Ofertas</h3>
             <p class="detail">Encuentra lo que</br> siempre has querido</p>
-            <a href="#" class="detail block">Ver Catalogo</a>
+            <router-link to="/productos" class="detail block">Ver Catalogo</router-link>
           </div>
           <img src="../assets/offers.png">
         </div>
@@ -19,7 +19,7 @@
           <div class="items_item_info">
             <h3>Registrate Gratis</h3>
             <p class="detail">Crea una cuenta de comprador</p>
-            <a href="#" class="detail">REGISTRATE</a>
+            <router-link to="/productos" class="detail">REGISTRATE</router-link>
           </div>
         </div>
         <div class="items_item shopping_cart">
@@ -43,7 +43,7 @@
             <div class="features_item_info">
               <h3>Pagos online</h3>
               <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
-              <a href="#">EMPEZAR A COMPRAR</a>
+              <router-link to="/productos">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
           <div class="features_item">
@@ -51,7 +51,7 @@
             <div class="features_item_info">
               <h3>Recibe tu producto</h3>
               <p>Recibe tus compras sin salir de casa Enviamos tus productos con seguridad</p>
-              <a href="#">EMPEZAR A COMPRAR</a>
+              <router-link to="/productos">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
       </section>

@@ -34,7 +34,7 @@
 						<p>Añade tus productos favoritos al carrito</p>
 						<div>
 							<img src="../assets/shopping.png">
-							<p>Ir al Carrito</p>
+							<p v-on:click="openOrderComponent">Ir al Carrito</p>
 						</div>
 					</div>
 				</div>
@@ -56,8 +56,9 @@
 		created(){
 			window.onscroll = function() {myFunction()};
 			function myFunction() {
+				console.log(document.body.scrollTop)
 				// document.getElementById("shortcuts").style.top = document.body.scrollTop;
-				if (document.getElementById('products').scrollTop > 60) {
+				if (document.body.scrollTop > 60) {
 					document.getElementById("shortcuts").classList.add('effectScroll');
 				} else {
 					document.getElementById("shortcuts").classList.remove('effectScroll');
@@ -210,7 +211,7 @@
 	.products{
 		display: flex;
 		width: 100%;
-		height: calc(100vh - 366px)
+		min-height: calc(100vh - 366px)
 	}
 	.shortcuts{
 		position: relative;
@@ -282,6 +283,7 @@
 		color: #e66a07;
 		font-size: 13px;
 		font-weight: bold;
+		cursor: pointer;
 	}
 	.products_list{
 		width: calc(100% - 300px);

@@ -6,15 +6,15 @@
     <section class="abouts">
       <div class="about_item" :style="{ 'boxShadow': styles.boxShadow }">
         <h2>Nosotros</h2>
-        <p>{{ info.nosotros}}</p>
+        <p>{{ info.nosotros | htmlToString}}</p>
       </div>
       <div class="about_item" :style="{ 'boxShadow': styles.boxShadow2 }" v-show="info.mision">
         <h2>Misión</h2>
-        <p>{{ info. mision }}</p>
+        <p>{{ info. mision | htmlToString}}</p>
       </div>
       <div class="about_item" :style="{ 'boxShadow': styles.boxShadow3 }">
         <h2>Visión</h2>
-        <p>{{ info.vision }}</p>
+        <p>{{ info.vision | htmlToString}}</p>
       </div>
     </section>
   </div>
@@ -35,6 +35,14 @@ export default {
     },
     info(){
       return this.$store.state.tienda;
+    }
+  },
+  filters: {
+    htmlToString(value){
+      var html = value;
+      var div = document.createElement("div");
+      div.innerHTML = html;
+      return div.textContent || div.innerText || "";
     }
   }
 }

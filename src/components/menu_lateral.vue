@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     removeMenuComponent(e){
-      if(e.target.id == "menuLateral" || e.target.id == "closeMenuLateral"){
+      if(e.target.id == "menuLateral" || e.target.id == "closeMenuLateral" || e.target.tagName == "A"){
         this.$store.state.menuComponent = false;
       }
     }
