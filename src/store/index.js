@@ -35,6 +35,18 @@ export const store = new Vuex.Store({
       localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart))
       store.commit('calculateTotalCart');
     },
+    productsPurchased(state) {
+      for(let product of state.productsCart){
+        setTimeout(()=>{
+          document.getElementById(product.id).classList.add('bought');
+        }, 1000)
+      }
+    },
+    removeProductsPurchased(state) {
+      for(let bought of document.getElementsByClassName('bought')){
+        bought.classList.remove('bought');
+      }
+    },
     calculateTotalCart (state) {
       state.totalCart = 0;
       for(let product of state.productsCart){

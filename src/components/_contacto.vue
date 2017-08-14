@@ -5,16 +5,18 @@
     </header>
     <div id="map"></div>
     <div class="contact" :style="styles.borderColor">
-        <input type="text" placeholder="Nombres" value="">
-        <input type="text" placeholder="Correo Electronica" value="">
-        <input type="text" placeholder="Celular" value="">
-        <textarea rows="8" placeholder="Comentrario"></textarea>
+        <input type="text" placeholder="Nombres" v-model="nombre">
+        <input type="text" placeholder="Correo Electronica" v-model="email">
+        <input type="text" placeholder="Celular" v-model="numberphone">
+        <textarea rows="8" placeholder="Comentrario" v-model="comment"></textarea>
+        <button v-on:click="submitContact">Enviar</button>
     </div>
   </div>
 </template>
 
 <script>
 import headerMenu from './menu2.vue';
+import axios from 'axios';
 
 export default {
   components: { headerMenu },
@@ -25,6 +27,14 @@ export default {
     '$store.state.geolocalizacion': function(){
       this.makeMap();
     },
+  },
+  data(){
+    return {
+      nombre: '',
+      email: '',
+      numberphone: '',
+      comment: '',
+    }
   },
   computed: {
     geolocalizacion(){
@@ -37,6 +47,16 @@ export default {
     }
   },
   methods: {
+    submitContact(){
+      let json = {
+        nombre: this.nombre,
+        correo: this.email,
+        celular: this.numberphone,
+        comentario: this.comment,
+        tienda: this.$store.state.id,
+      }
+      axios.post('https://komercia.co/api/front/mensaje-contacto', json)
+    },
     makeMap(){
       let place = this.geolocalizacion[0];
       var firstPlace = {lat: place.latitud, lng: place.longitud};

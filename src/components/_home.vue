@@ -27,7 +27,7 @@
           <div class="items_item_info">
             <h3>Carrito de compras</h3>
             <p class="detail">Añade tus productos</br> favoritos al carrito</p>
-            <a href="#" class="detail block">Ir al carrito</a>
+            <router-link to="/pedido" class="detail block">Ir al carrito</router-link>
           </div>
         </div>
       </section>

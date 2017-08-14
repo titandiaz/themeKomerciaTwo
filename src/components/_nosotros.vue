@@ -62,6 +62,7 @@ export default {
   }
   .abouts{
     width: 90%;
+    min-height: calc(100vh - 306px);
     display: flex;
     justify-content: space-around;
     padding: 30px 0;

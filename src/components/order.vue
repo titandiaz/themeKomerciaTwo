@@ -52,6 +52,7 @@ export default {
     deleteItemCart(i){
       this.$store.state.productsCart.splice(i, 1);
       this.$store.commit('updateContentCart');
+      this.$store.commit('removeProductsPurchased');
     },
     backPage(e) {
       if(e.target.id == 'order' || e.target.id == 'closeOrder'){

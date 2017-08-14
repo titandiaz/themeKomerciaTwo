@@ -1,26 +1,26 @@
 <template>
-  <div id="order" v-on:click="backPage">
-    <div class="order">
+  <div id="order" v-on:click="backPage" :class="{activeOrder:orderComponent}">
+    <div :class="{order: true ,active: orderComponent}">
       <header :style="styles.colorPrincipal">
         <i class="material-icons">shopping_cart</i>
         <p>Mi pedido</p>
         <i id="closeOrder" class="material-icons">close</i>
       </header>
       <div class="products">
-        <div v-for="product in productsCart" class="product">
+        <div v-for="(product, index) in productsCart" class="product">
           <figure class="photo">
             <img :src="setFoto(product.foto)" alt="">
           </figure>
           <p class="nombre">{{product.nombre}}</p>
-          <p class="precio" v-show="product.precio">{{product.precio}}</p>
-          <i class="material-icons">close</i>
+          <p class="precio" v-show="product.precio">{{product.cantidad}} X {{product.precio | currency}}</p>
+          <i class="material-icons pointer" v-on:click="deleteItemCart(index)">close</i>
         </div>
       </div>
       <div class="total">
         <p>Total</p>
-        <h3>$14.000</h3>
+        <h3 :style="styles.colorSecundarioTotal">{{ totalCart | currency }}</h3>
       </div>
-      <button class="actionOrder" :style="styles.colorSecundario">Finalizar compra</button>
+      <button class="actionOrder" :style="styles.colorSecundario" v-on:click="next">Finalizar compra</button>
     </div>
   </div>
 </template>
@@ -28,24 +28,54 @@
 <script>
 export default {
   computed: {
+    totalCart(){
+      return this.$store.state.totalCart;
+    },
+    orderComponent(){
+      return this.$store.state.orderComponent;
+    },
     productsCart(){
       return this.$store.state.productsCart;
     },
     styles(){
       return {
         colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
-        colorSecundario: {backgroundColor: this.$store.state.colorSecundario}
+        colorSecundario: {backgroundColor: this.$store.state.colorSecundario},
+        colorSecundarioTotal: {color: this.$store.state.colorSecundario}
       }
     }
   },
   methods: {
     setFoto(f) {
-      return `http://komercia.la/productos/${f}`
+      return `http://komercia.co/productos/${f}`;
+    },
+    deleteItemCart(i){
+      this.$store.state.productsCart.splice(i, 1);
+      this.$store.commit('updateContentCart');
+      this.$store.commit('removeProductsPurchased');
     },
     backPage(e) {
       if(e.target.id == 'order' || e.target.id == 'closeOrder'){
-        this.$router.push('/productos');
+        this.$store.state.orderComponent = false;
       }
+    },
+    next(){
+      let json = {
+        products: this.$store.state.productsCart,
+        tienda: this.$store.state.id,
+        tipo: 0,
+        total: this.$store.state.totalCart,
+        estado: 0,
+        direccion_entrega: 1
+      }
+      json = JSON.stringify(json)
+      location.href = `https://komercia.co/beforecheckout/${json}`;
+    }
+  },
+  filters: {
+    currency(value) {
+      // return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+      return value
     }
   }
 }
@@ -58,6 +88,7 @@ export default {
     height: 100vh;
     background-color: rgba(255,255,255,0.5);
     z-index: 10;
+    right: 0%;
   }
   #closeOrder{
     cursor: pointer;
@@ -65,7 +96,7 @@ export default {
   .order{
     position: absolute;
     top: calc(50% - 300px);
-    right: -430px;
+    right: 0px;
     max-width: 400px;
     width: 100%;
     height: 600px;
@@ -74,7 +105,15 @@ export default {
     justify-content: space-between;
     background-color: #FFF;
     box-shadow: 0 0 19px 7px rgba(121, 121, 121, 0.45);
-    transition: all .5s;
+    color: rgba(0,0,0,0.6);
+    transition: all .3s;
+  }
+  #order.activeOrder{
+    opacity: 1;
+    right: 0%;
+  }
+  .order.active{
+    right: 0;
   }
   .order header{
     width: 100%;
@@ -108,6 +147,9 @@ export default {
   .order .total{
     display: flex;
     justify-content: space-around;
+  }
+  .order .total h3{
+    font-size: 1.2em;
   }
   .actionOrder{
     width: 100%;

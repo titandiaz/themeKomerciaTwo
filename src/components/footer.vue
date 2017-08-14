@@ -2,9 +2,9 @@
   <footer>
         <div class="footer_content">
           <div class="footer_info">
-            <p><i class="material-icons">phone</i>312 3914 859</p>
-            <p><i class="material-icons">location_on</i>Direccion: Calle 16 # 30, 19. Medellin -Colombia</p>
-            <p><i class="material-icons">watch_later</i>Horario: Lunes a viernes 8:00 am a 6: pm</p>
+            <p v-if="phone"><i class="material-icons">phone</i>{{ phone }}</p>
+            <p v-for="address in addresses"><i class="material-icons">location_on</i>Direccion: {{ address.direccion }}</p>
+            <!-- <p><i class="material-icons">watch_later</i>Horario: Lunes a viernes 8:00 am a 6: pm</p> -->
           </div>
           <div class="footer_content_social">
             <a v-show="facebook" :href="facebook" target="_blank" class="footer_content_social_item">
@@ -14,7 +14,12 @@
               </svg>
             </a>
             <a v-show="instagram" :href="instagram" target="_blank" class="footer_content_social_item">
-              <img src="../assets/SVG/instagram.svg">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+              <title>instagram</title>
+              <path d="M16 2.881c4.275 0 4.781 0.019 6.462 0.094 1.563 0.069 2.406 0.331 2.969 0.55 0.744 0.288 1.281 0.638 1.837 1.194 0.563 0.563 0.906 1.094 1.2 1.838 0.219 0.563 0.481 1.412 0.55 2.969 0.075 1.688 0.094 2.194 0.094 6.463s-0.019 4.781-0.094 6.463c-0.069 1.563-0.331 2.406-0.55 2.969-0.288 0.744-0.637 1.281-1.194 1.837-0.563 0.563-1.094 0.906-1.837 1.2-0.563 0.219-1.413 0.481-2.969 0.55-1.688 0.075-2.194 0.094-6.463 0.094s-4.781-0.019-6.463-0.094c-1.563-0.069-2.406-0.331-2.969-0.55-0.744-0.288-1.281-0.637-1.838-1.194-0.563-0.563-0.906-1.094-1.2-1.837-0.219-0.563-0.481-1.413-0.55-2.969-0.075-1.688-0.094-2.194-0.094-6.463s0.019-4.781 0.094-6.463c0.069-1.563 0.331-2.406 0.55-2.969 0.288-0.744 0.638-1.281 1.194-1.838 0.563-0.563 1.094-0.906 1.838-1.2 0.563-0.219 1.412-0.481 2.969-0.55 1.681-0.075 2.188-0.094 6.463-0.094zM16 0c-4.344 0-4.887 0.019-6.594 0.094-1.7 0.075-2.869 0.35-3.881 0.744-1.056 0.412-1.95 0.956-2.837 1.85-0.894 0.888-1.438 1.781-1.85 2.831-0.394 1.019-0.669 2.181-0.744 3.881-0.075 1.713-0.094 2.256-0.094 6.6s0.019 4.887 0.094 6.594c0.075 1.7 0.35 2.869 0.744 3.881 0.413 1.056 0.956 1.95 1.85 2.837 0.887 0.887 1.781 1.438 2.831 1.844 1.019 0.394 2.181 0.669 3.881 0.744 1.706 0.075 2.25 0.094 6.594 0.094s4.888-0.019 6.594-0.094c1.7-0.075 2.869-0.35 3.881-0.744 1.050-0.406 1.944-0.956 2.831-1.844s1.438-1.781 1.844-2.831c0.394-1.019 0.669-2.181 0.744-3.881 0.075-1.706 0.094-2.25 0.094-6.594s-0.019-4.887-0.094-6.594c-0.075-1.7-0.35-2.869-0.744-3.881-0.394-1.063-0.938-1.956-1.831-2.844-0.887-0.887-1.781-1.438-2.831-1.844-1.019-0.394-2.181-0.669-3.881-0.744-1.712-0.081-2.256-0.1-6.6-0.1v0z"></path>
+              <path d="M16 7.781c-4.537 0-8.219 3.681-8.219 8.219s3.681 8.219 8.219 8.219 8.219-3.681 8.219-8.219c0-4.537-3.681-8.219-8.219-8.219zM16 21.331c-2.944 0-5.331-2.387-5.331-5.331s2.387-5.331 5.331-5.331c2.944 0 5.331 2.387 5.331 5.331s-2.387 5.331-5.331 5.331z"></path>
+              <path d="M26.462 7.456c0 1.060-0.859 1.919-1.919 1.919s-1.919-0.859-1.919-1.919c0-1.060 0.859-1.919 1.919-1.919s1.919 0.859 1.919 1.919z"></path>
+              </svg>
             </a>
             <a v-show="youtube" :href="youtube" target="_blank" class="footer_content_social_item">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -30,8 +35,8 @@
             </a>
           </div>
         <div class="footer_actions">
-          <input type="text" class="footer_actions_email" placeholder="Correo electronico">
-          <button class="footer_actions_subscribe">Suscribete</button>
+          <input type="text" class="footer_actions_email" placeholder="Correo electronico" v-model="email">
+          <button class="footer_actions_subscribe" v-on:click="submitNewsletter">Suscribete</button>
         </div>
         <div class="footer_about_legal">
           <router-link to="/manejo-de-datos">Politicas de manejo de datos</router-link>
@@ -48,13 +53,21 @@
   </footer>
 </template>
 <script>
+  import axios from 'axios';
+
   export default {
     data() {
       return {
+        email: null,
       }
     },
     computed: {
-      
+      addresses(){
+        return this.$store.state.geolocalizacion.slice(0, 3);
+      },
+      phone(){
+        return this.$store.state.tienda.telefono;
+      },
       facebook(){
         return this.$store.state.tienda.red_facebook;
       },
@@ -67,12 +80,22 @@
       twitter(){
         return this.$store.state.tienda.red_twitter;
       }
+    },
+    methods: {
+      submitNewsletter(){
+        let json = {
+          correo: this.email,
+          tienda: this.$store.state.id,
+        }
+        axios.post('https://komercia.co/api/front/suscriptores', json)
+      }
     }
   }
 </script>
 <style scoped>
 footer{
   width: 100%;
+  background-color: #f3f7fa;
 }
 .footer_content{
   width: 100%;
@@ -107,6 +130,7 @@ footer{
   border: 1px solid #9b9b9b;
   padding: 20px;
   margin: 0 5px;
+  cursor: pointer;
 }
 .footer_content_social_item svg{
   fill: #616061;

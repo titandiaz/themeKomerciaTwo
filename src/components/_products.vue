@@ -73,11 +73,7 @@
 				this.searchProduct();
 			},
 	    productsData: function (value) {
-	      for(let product of this.$store.state.productsCart){
-					setTimeout(()=>{
-						document.getElementById(product.id).classList.add('bought')
-					}, 100)
-				}
+				this.$store.commit('productsPurchased');
 	    }
   	},
 		computed: {
