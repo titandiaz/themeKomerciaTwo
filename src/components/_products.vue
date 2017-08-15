@@ -139,7 +139,7 @@
 		position: relative;
 		width: 100%;
 		height: 90px;
-		background-color: #e4e4e4;
+		background-color: #c5c5c5;
 		padding: 0 20px;
 	}
 	.header_fixed{
@@ -150,7 +150,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		background-color: #e4e4e4;
+		background-color: #c5c5c5;
 		z-index: 2;
 		padding: 0 10px;
 	}

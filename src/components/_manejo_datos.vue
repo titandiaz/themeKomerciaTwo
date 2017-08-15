@@ -1,5 +1,8 @@
 <template>
-  <div class="">
+  <div id="manejoDatos">
+    <header>
+        <header-menu></header-menu>
+    </header>
     <h2>Politicas de Manejo de Datos</h2>
     NORMATIVIDAD LEGAL Y AMBITO DE APLICACIÓN:
 La presente política de tratamiento de datos personales es elaborada de conformidad con
@@ -197,9 +200,27 @@ Esta política de protección de datos personales está vigente desde el 26 de O
 </template>
 
 <script>
+import headerMenu from './menu2.vue';
+
 export default {
+  components: { headerMenu },
 }
 </script>
 
 <style scoped>
+  #garantias{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header{
+    width: 100%;
+    background-color: #c5c5c5;
+  }
+  .container{
+    max-width: 1200px;
+  }
+  ul{
+    margin: 40px;
+  }
 </style>

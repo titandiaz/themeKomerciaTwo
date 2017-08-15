@@ -3,7 +3,7 @@
         <div class="footer_content">
           <div class="footer_info">
             <p v-if="phone"><i class="material-icons">phone</i>{{ phone }}</p>
-            <p v-for="address in addresses"><i class="material-icons">location_on</i>Direccion: {{ address.direccion }}</p>
+            <p v-for="address in addresses" v-if="address"><i class="material-icons">location_on</i>Direccion: {{ address.direccion }}</p>
             <!-- <p><i class="material-icons">watch_later</i>Horario: Lunes a viernes 8:00 am a 6: pm</p> -->
           </div>
           <div class="footer_content_social">
