@@ -40,6 +40,19 @@
 				</div>
 			</aside>
 			<section class="products_list">
+				<div class="">
+
+					<!-- <paginate
+					name="languages"
+					:list="langs"
+					:per="2"
+					>
+					<li v-for="lang in paginated('languages')">
+						{{ lang }}
+					</li>
+				</paginate>
+				<paginate-links for="languages"></paginate-links> -->
+				</div>
 				<product v-if="filteredProducts" v-for="product in filteredProducts" :data="product" :key="product.id"></product>
 				<product  v-if="!filteredProducts" v-for="product in productsData" :data="product" :key="product.id"></product>
 			</section>
@@ -59,6 +72,9 @@
 		destroyed(){
 			window.removeEventListener('scroll', this.handleScroll);
 		},
+		mounted(){
+			this.$store.commit('productsPurchased');
+		},
 		data(){
 			return {
 				search: '',
@@ -66,11 +82,16 @@
 				filteredProducts: null,
 				products: null,
 				moreProducts: 40,
+				langs: ['JavaScript', 'PHP', 'HTML', 'CSS', 'Ruby', 'Python', 'Erlang'],
+				paginate: ['languages']
 			}
 		},
 		watch: {
 			search: function () {
 				this.searchProduct();
+			},
+			'$route.path': function () {
+				this.$store.commit('productsPurchased');
 			},
 	    productsData: function (value) {
 				this.$store.commit('productsPurchased');

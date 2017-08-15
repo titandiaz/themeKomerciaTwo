@@ -69,17 +69,22 @@
   export default {
     components: { headerMenu, headerMenu2, product, banners },
     name: 'home',
-    created(){
-      axios.get(`https://komercia.co/api/tienda/inventario/${this.$store.state.id}`).then((response) => {
-        this.products = response.data.datos.slice(0,8);
-      })
+    mounted(){
+      this.$store.commit('productsPurchased');
+    },
+    watch: {
+      products: function (value) {
+        this.$store.commit('productsPurchased');
+      }
     },
     data () {
       return {
-        products: [],
       }
     },
     computed: {
+      products() {
+				return this.$store.state.productos.slice(0,8);
+			},
       styles(){
         return {
           colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
@@ -90,6 +95,8 @@
         console.log(this.$store.state.banners)
         return this.$store.state.banners;
       }
+    },
+    methods: {
     }
   }
 </script>

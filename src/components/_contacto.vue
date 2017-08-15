@@ -9,7 +9,7 @@
         <input type="text" placeholder="Correo Electronica" v-model="email">
         <input type="text" placeholder="Celular" v-model="numberphone">
         <textarea rows="8" placeholder="Comentrario" v-model="comment"></textarea>
-        <button v-on:click="submitContact">Enviar</button>
+        <button class="submitContact" :style="styles.backgroundColor" v-on:click="submitContact">Enviar</button>
     </div>
   </div>
 </template>
@@ -43,6 +43,7 @@ export default {
     styles(){
       return {
         borderColor:{borderColor: this.$store.state.colorPrincipal},
+        backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
       }
     }
   },
@@ -135,5 +136,12 @@ export default {
   }
   .contact textarea{
     padding: 15px 10px;
+  }
+  .contact .submitContact{
+    border-style: none;
+    padding: 10px 40px;
+    margin: 0 10px 10px 0px;
+    color: #FFF;
+    border-radius: 15px;
   }
 </style>

@@ -38,14 +38,14 @@ export const store = new Vuex.Store({
     productsPurchased(state) {
       for(let product of state.productsCart){
         setTimeout(()=>{
-          document.getElementById(product.id).classList.add('bought');
-        }, 1000)
+          if(document.getElementById(product.id)){
+            document.getElementById(product.id).classList.add('bought');
+          }
+        }, 500)
       }
     },
-    removeProductsPurchased(state) {
-      for(let bought of document.getElementsByClassName('bought')){
-        bought.classList.remove('bought');
-      }
+    removeProductsPurchased(state, id) {
+      document.getElementById(id).classList.remove('bought');
     },
     calculateTotalCart (state) {
       state.totalCart = 0;

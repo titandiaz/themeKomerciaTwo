@@ -4,15 +4,15 @@
         <header-menu></header-menu>
     </header>
     <section class="abouts">
-      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow }">
+      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow, 'border': styles.border }">
         <h2>Nosotros</h2>
         <p>{{ info.nosotros | htmlToString}}</p>
       </div>
-      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow2 }" v-show="info.mision">
+      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow2, 'border': styles.border }" v-show="info.mision">
         <h2>Misión</h2>
         <p>{{ info. mision | htmlToString}}</p>
       </div>
-      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow3 }">
+      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow3, 'border': styles.border }">
         <h2>Visión</h2>
         <p>{{ info.vision | htmlToString}}</p>
       </div>
@@ -31,6 +31,7 @@ export default {
         boxShadow: `35px 15px 0 0px ${this.$store.state.colorPrincipal}`,
         boxShadow2: `0px 15px 0 0px ${this.$store.state.colorPrincipal}`,
         boxShadow3: `-35px 15px 0 0px ${this.$store.state.colorPrincipal}`,
+        border: `1px solid ${this.$store.state.colorPrincipal}`,
       }
     },
     info(){
@@ -64,6 +65,7 @@ export default {
     width: 90%;
     min-height: calc(100vh - 306px);
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     padding: 30px 0;
   }
@@ -77,7 +79,7 @@ export default {
     border-radius: 3px;
     border: 1px solid peru;
     text-align: justify;
-    box-shadow: 0px 15px 0 0px peru;
+    box-shadow: 0px 15px 0 0px #e4e4e4;
     transition: all .5s;
     z-index: 2;
   }

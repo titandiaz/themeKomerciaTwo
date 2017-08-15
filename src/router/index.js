@@ -13,14 +13,13 @@ import ManejoDatos from '@/components/_manejo_datos'
 Vue.use(Router)
 
 export default new Router({
-  // scrollBehavior (to, from, savedPosition) {
-  //   console.log(to, from)
-  //   if (savedPosition) {
-  //     return savedPosition
-  //   } else {
-  //     return { x: 0, y: 0 }
-  //   }
-  // },
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
   mode: 'history',
   routes: [
     {

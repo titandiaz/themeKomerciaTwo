@@ -1,11 +1,9 @@
 <template>
   <div id="order" v-on:click="backPage" :class="{activeOrder:orderComponent}">
+    <header>
+        <header-menu></header-menu>
+    </header>
     <div :class="{order: true ,active: orderComponent}">
-      <header :style="styles.colorPrincipal">
-        <i class="material-icons">shopping_cart</i>
-        <p>Mi pedido</p>
-        <i id="closeOrder" class="material-icons">close</i>
-      </header>
       <div class="products">
         <div v-for="(product, index) in productsCart" class="product">
           <figure class="photo">
@@ -16,17 +14,27 @@
           <i class="material-icons pointer" v-on:click="deleteItemCart(index)">close</i>
         </div>
       </div>
-      <div class="total">
-        <p>Total</p>
-        <h3 :style="styles.colorSecundarioTotal">{{ totalCart | currency }}</h3>
+      <div class="content">
+        <header :style="styles.colorPrincipal">
+          <i class="material-icons">shopping_cart</i>
+          <p>Mi pedido</p>
+          <i id="closeOrder" class="material-icons">close</i>
+        </header>
+        <div class="total">
+          <p>Total</p>
+          <h3 :style="styles.colorSecundarioTotal">{{ totalCart | currency }}</h3>
+        </div>
+        <button class="actionOrder" :style="styles.colorSecundario" v-on:click="next">Finalizar compra</button>
       </div>
-      <button class="actionOrder" :style="styles.colorSecundario" v-on:click="next">Finalizar compra</button>
     </div>
   </div>
 </template>
 
 <script>
+import headerMenu from './menu2.vue';
+
 export default {
+  components: { headerMenu },
   computed: {
     totalCart(){
       return this.$store.state.totalCart;
@@ -86,26 +94,29 @@ export default {
     position: fixed;
     width: 100%;
     height: 100vh;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,1);
     z-index: 10;
     right: 0%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   #closeOrder{
     cursor: pointer;
   }
-  .order{
-    position: absolute;
-    top: calc(50% - 300px);
-    right: 0px;
-    max-width: 400px;
+  header{
     width: 100%;
+    background-color: #e4e4e4;
+  }
+  .order{
+    width: 90%;
     height: 600px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    align-items: flex-start;
     background-color: #FFF;
-    box-shadow: 0 0 19px 7px rgba(121, 121, 121, 0.45);
+    box-shadow: 0 0 19px 7px rgba(121, 121, 121, 0.25);
     color: rgba(0,0,0,0.6);
+    margin: auto;
     transition: all .3s;
   }
   #order.activeOrder{
@@ -115,20 +126,18 @@ export default {
   .order.active{
     right: 0;
   }
-  .order header{
-    width: 100%;
-    height: 60px;
+  .products{
+    width: 60%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-  }
-  .products{
-    height: calc(600px - 160px);
     overflow-y: auto;
   }
   .product{
+    width: 45%;
     display: flex;
+    flex: none;
     justify-content: space-between;
     align-items: center;
     padding: 15px;
@@ -143,6 +152,21 @@ export default {
   .product .nombre{
     max-width: 160px;
     font-size: 13px;
+  }
+  .content{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .order header{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
   }
   .order .total{
     display: flex;

@@ -9,7 +9,7 @@
 				<!--<p>&#9733 &#9733 &#9733 &#9733 &#9734;</p>-->
 				<p v-show="precio">{{precio}}</p>
 			</div>
-			<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">ADD CARRITO<i class="material-icons">add_shopping_cart</i></button>
+			<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
 		</div>
 	</div>
 </template>
@@ -43,7 +43,7 @@
 						this.$store.state.productsCart.push(product);
 					}
 				this.$store.commit('updateContentCart');
-				document.getElementById(this.data.id).classList.add('bought');
+				this.$store.commit('productsPurchased');
 			}
 		}
 	}
@@ -99,9 +99,11 @@
 		display: flex;
 		align-items: center;
 		outline: none;
+		cursor: pointer;
 	}
 	.product.bought .product_content button{
 		color: green;
+		border: 1px solid green;
 	}
 	.product_content button i{
 		height: 100%;
@@ -109,5 +111,9 @@
 		border-left: solid 1px #e9e9e9;
 		margin-left: 10px;
 		padding-left: 10px;
+		pointer-events: none;
+	}
+	.product.bought .product_content button i{
+		border-left: solid 1px green;
 	}
 </style>

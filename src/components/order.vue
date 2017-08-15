@@ -13,7 +13,7 @@
           </figure>
           <p class="nombre">{{product.nombre}}</p>
           <p class="precio" v-show="product.precio">{{product.cantidad}} X {{product.precio | currency}}</p>
-          <i class="material-icons pointer" v-on:click="deleteItemCart(index)">close</i>
+          <i class="material-icons pointer" v-on:click="deleteItemCart(index, product.id)">close</i>
         </div>
       </div>
       <div class="total">
@@ -49,10 +49,10 @@ export default {
     setFoto(f) {
       return `http://komercia.co/productos/${f}`;
     },
-    deleteItemCart(i){
+    deleteItemCart(i, id){
       this.$store.state.productsCart.splice(i, 1);
       this.$store.commit('updateContentCart');
-      this.$store.commit('removeProductsPurchased');
+      this.$store.commit('removeProductsPurchased', id);
     },
     backPage(e) {
       if(e.target.id == 'order' || e.target.id == 'closeOrder'){
@@ -69,7 +69,7 @@ export default {
         direccion_entrega: 1
       }
       json = JSON.stringify(json)
-      location.href = `https://komercia.co/beforecheckout/${json}`;
+      location.href = `https://komercia.co/before/checkout/${json}`;
     }
   },
   filters: {

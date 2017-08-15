@@ -13,7 +13,7 @@
         <h2 class="content_name">{{data.nombre}}</h2>
         <div class="content_buy">
           <h3 class="content_buy_price">{{precio}}</h3>
-          <button class="content_buy_action">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+          <button class="content_buy_action" :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
         </div>
         <p class="content_desc">{{data.descripcion}}</p>
       </div>
@@ -25,9 +25,9 @@
   export default{
     created() {
       let data = this.$store.state.productos.filter((product) => { if(product.id == this.$route.params.id){ return product}});
-      this.data = data[0];
+      this.data, this.beforeData = data[0];
+      // this.beforeData = data[0];
       axios.get(`https://komercia.co/api/front/producto/${this.$route.params.id}`).then((response) => {
-        console.log(response.data);
         this.selectedPhoto(response.data.foto)
         this.data = Object.assign(response.data, this.data);
       }).catch((error) => {
@@ -41,6 +41,11 @@
       }
     },
     computed: {
+      styles(){
+        return {
+          backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
+        }
+      },
       precio() {
 				if(this.data.precio){
 					return `$${this.data.precio}`;
@@ -55,6 +60,21 @@
       },
       selectedPhoto(f){
         this.selectPhotoUrl = f;
+      },
+      addShoppingCart(){
+          let productExist = false;
+          for(let productCart of this.$store.state.productsCart){
+            if(this.beforeData.id == productCart.id){
+                 productCart.cantidad++;
+                 this.beforeData = productCart;
+                 productExist = true;
+            }
+          }
+          if(!productExist){
+            this.beforeData.cantidad = 1;
+            this.$store.state.productsCart.push(this.beforeData);
+          }
+        this.$store.commit('updateContentCart');
       }
     }
   }
