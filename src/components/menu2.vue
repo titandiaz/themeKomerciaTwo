@@ -77,6 +77,7 @@
   }
   .header__title{
     font-size: 1.25em;
+    color: #FFF;
   }
   .icon_menu{
     display: none;
@@ -109,9 +110,11 @@
     }
     .header__title{
       font-size: 1em;
+      color: #FFF;
     }
     .icon_menu{
       display: flex;
+      color: #FFF;
     }
     .header_navigation{
       display: none;

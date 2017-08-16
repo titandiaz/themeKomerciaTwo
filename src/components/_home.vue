@@ -274,6 +274,7 @@
       width: 100%;
       padding: 0 10px;
       display: flex !important;
+      background-color: #9b9b9b;
     }
     .header__search{
       display: none;

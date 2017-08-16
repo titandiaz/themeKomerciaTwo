@@ -126,6 +126,7 @@
 			},
 			nextPagination(){
 				if(this.pages < this.calcQuantityPages()){
+					this.$store.commit('productsPurchased');
 					this.products = this.productsData.slice(this.moreProducts, this.moreProducts + 40);
 					this.moreProducts += 40;
 					this.pages++;
@@ -134,6 +135,7 @@
 			},
 			prevPagination(){
 				if(this.pages > 1){
+					this.$store.commit('productsPurchased');
 					this.moreProducts -= 40;
 					this.products = this.productsData.slice(this.moreProducts - 40, this.moreProducts);
 					this.pages--;
