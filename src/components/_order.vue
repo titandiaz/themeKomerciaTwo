@@ -3,8 +3,13 @@
     <header>
         <header-menu></header-menu>
     </header>
+    <h2></h2>
     <div :class="{order: true ,active: orderComponent}">
-      <div class="products">
+      <div v-show="productsCart.length == 0" class="empty_products">
+        <img src="../assets/empty_cart.png" alt="">
+        <router-link to="/productos" :style="styles.colorPrincipalFont">Comprar</router-link>
+      </div>
+      <div v-show="productsCart.length != 0"  class="products">
         <div v-for="(product, index) in productsCart" class="product">
           <figure class="photo">
             <img :src="setFoto(product.foto)" alt="">
@@ -14,17 +19,12 @@
           <i class="material-icons pointer" v-on:click="deleteItemCart(index)">close</i>
         </div>
       </div>
-      <div class="content">
-        <header :style="styles.colorPrincipal">
-          <i class="material-icons">shopping_cart</i>
-          <p>Mi pedido</p>
-          <i id="closeOrder" class="material-icons">close</i>
-        </header>
+      <div class="content" :style="styles.colorSecundario">
         <div class="total">
           <p>Total</p>
-          <h3 :style="styles.colorSecundarioTotal">{{ totalCart | currency }}</h3>
+          <h3>{{ totalCart | currency }}</h3>
         </div>
-        <button class="actionOrder" :style="styles.colorSecundario" v-on:click="next">Finalizar compra</button>
+        <button class="actionOrder" v-on:click="next">Finalizar compra</button>
       </div>
     </div>
   </div>
@@ -49,6 +49,7 @@ export default {
       return {
         colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
         colorSecundario: {backgroundColor: this.$store.state.colorSecundario},
+        colorPrincipalFont:{color: this.$store.state.colorPrincipal, border: `2px solid ${this.$store.state.colorPrincipal}`},
         colorSecundarioTotal: {color: this.$store.state.colorSecundario}
       }
     }
@@ -91,12 +92,9 @@ export default {
 
 <style scoped>
   #order{
-    position: fixed;
     width: 100%;
-    height: 100vh;
     background-color: rgba(255,255,255,1);
     z-index: 10;
-    right: 0%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -106,17 +104,20 @@ export default {
   }
   header{
     width: 100%;
-    background-color: #e4e4e4;
+    background-color: #9b9b9b;
+    padding: 0 20px;
   }
   .order{
-    width: 90%;
-    height: 600px;
+    max-width: 1000px;
+    width: 95%;
+    height: 500px;
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     background-color: #FFF;
     box-shadow: 0 0 19px 7px rgba(121, 121, 121, 0.25);
     color: rgba(0,0,0,0.6);
-    margin: auto;
+    margin: 50px auto;
     transition: all .3s;
   }
   #order.activeOrder{
@@ -126,16 +127,37 @@ export default {
   .order.active{
     right: 0;
   }
+  .empty_products{
+    width: 100%;
+    height: calc(100% - 50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .empty_products a{
+    border-style: none;
+    border: 2px solid red;
+    background-color: transparent;
+    border-radius: 15px;
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: .3s;
+    outline: none;
+  }
   .products{
-    width: 60%;
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
     overflow-y: auto;
+    align-content: flex-start;
   }
   .product{
     width: 45%;
+    max-height: 100px;
     display: flex;
     flex: none;
     justify-content: space-between;
@@ -154,30 +176,43 @@ export default {
     font-size: 13px;
   }
   .content{
-    width: 40%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .order header{
     width: 100%;
-    height: 60px;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 0 20px;
   }
   .order .total{
+    width: 25%;
     display: flex;
     justify-content: space-around;
+    align-items: center;
   }
   .order .total h3{
     font-size: 1.2em;
   }
   .actionOrder{
-    width: 100%;
     border-style: none;
-    padding: 15px 0;
+    color: #FFF;
+    border: 2px solid #FFF;
+    background-color: transparent;
+    border-radius: 15px;
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: .3s;
+    outline: none;
+  }
+  .actionOrder:hover{
+    transform: scale(0.9);
+    background-color: rgba(0,0,0,0.1);
+  }
+  @media (max-width: 1000px) {
+    .products{
+      justify-content: center;
+    }
+    .product{
+      width: 95%;
+    }
   }
 </style>

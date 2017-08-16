@@ -59,17 +59,22 @@ export default {
       axios.post('https://komercia.co/api/front/mensaje-contacto', json)
     },
     makeMap(){
-      let place = this.geolocalizacion[0];
+      let place = {latitud:  4.14, longitud: -73.63};
+      if(this.geolocalizacion){
+        place = this.geolocalizacion[0];
+      }
       var firstPlace = {lat: place.latitud, lng: place.longitud};
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 15,
         center: firstPlace
       });
-      for(let place of this.geolocalizacion){
-        var marker = new google.maps.Marker({
-          position: {lat: place.latitud, lng: place.longitud},
-          map: map
-        });
+      if(this.geolocalizacion){
+        for(let place of this.geolocalizacion){
+          var marker = new google.maps.Marker({
+            position: {lat: place.latitud, lng: place.longitud},
+            map: map
+          });
+        }
       }
     }
   }
@@ -88,7 +93,7 @@ export default {
     position: relative;
     width: 100%;
     height: 90px;
-    background-color: #e4e4e4;
+    background-color: #9b9b9b;
     padding: 0 20px;
   }
   #map {

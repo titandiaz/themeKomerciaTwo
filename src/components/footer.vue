@@ -106,6 +106,7 @@ footer{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   padding: 20px 50px;
 }
 .footer_info{
@@ -123,6 +124,7 @@ footer{
 }
 .footer_content_social{
   display: flex;
+  margin-left: 190px;
 }
 .footer_content_social_item{
   width: 50px;
@@ -209,6 +211,14 @@ footer{
 .footer_last img{
   width: 120px;
   z-index: 2;
+}
+@media(max-width: 500px){
+  .footer_content{
+    justify-content: center;
+  }
+  .footer_content_social{
+    margin-left: 0px;
+  }
 }
 @media(max-width: 380px){
   .footer_actions{

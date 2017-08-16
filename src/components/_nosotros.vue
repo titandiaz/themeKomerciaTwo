@@ -58,7 +58,7 @@ export default {
   header{
     width: 100%;
     height: 90px;
-    background-color: #e4e4e4;
+    background-color: #9b9b9b;
     padding: 0 20px;
   }
   .abouts{

@@ -40,16 +40,15 @@
 				</div>
 			</aside>
 			<section class="products_list">
-				<div class="pagination_actions">
+				<div  v-show="paginationActions" class="pagination_actions">
 					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
 					<button class="prev" v-on:click="prevPagination"><i class="material-icons">keyboard_arrow_left</i></button>
 					<button class="next" v-on:click="nextPagination"><i class="material-icons">keyboard_arrow_right</i></button>
 				</div>
 				<div class="pagination">
-					<product v-if="filteredProducts" v-for="product in filteredProducts" :data="product" :key="product.id"></product>
-					<product  v-if="!filteredProducts" v-for="product in products" :data="product" :key="product.id"></product>
+					<product v-for="product in products" :data="product" :key="product.id"></product>
 				</div>
-				<div class="pagination_actions">
+				<div v-show="paginationActions" class="pagination_actions">
 					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
 					<button class="prev" v-on:click="prevPagination"><i class="material-icons">keyboard_arrow_left</i></button>
 					<button class="next" v-on:click="nextPagination"><i class="material-icons">keyboard_arrow_right</i></button>
@@ -83,6 +82,7 @@
 				products: null,
 				moreProducts: 40,
 				pages: 1,
+				paginationActions: true,
 			}
 		},
 		watch: {
@@ -130,6 +130,7 @@
 					this.moreProducts += 40;
 					this.pages++;
 				}
+				document.body.scrollTop = 0;
 			},
 			prevPagination(){
 				if(this.pages > 1){
@@ -158,14 +159,19 @@
 				this.filteredProducts = filters;
 			},
 			selectCat(categoria){
+				this.paginationActions = false;
 				this.selCat = categoria.id;
 				this.filteredProducts = this.productsData.filter(product => product.categoria == categoria.nombre_categoria_producto);
 				this.products = this.filteredProducts;
 			},
 			allSelectCat(){
-				this.filteredProducts = null;
+				this.paginationActions = true;
+				this.moreProducts = 40;
+				this.pages = 1;
+				this.products = this.productsData.slice(0, this.moreProducts);
 			},
 			selectSubcat(subcategoria){
+				this.paginationActions = false;
 				this.filteredProducts = this.productsData.filter(product => product.subcategoria == subcategoria.id)
 				this.products = this.filteredProducts;
 			}
@@ -177,7 +183,7 @@
 		position: relative;
 		width: 100%;
 		height: 90px;
-		background-color: #c5c5c5;
+		background-color: #9b9b9b;
 		padding: 0 20px;
 	}
 	.header_fixed{
@@ -188,7 +194,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		background-color: #c5c5c5;
+		background-color: #9b9b9b;
 		z-index: 2;
 		padding: 0 10px;
 	}
