@@ -63,7 +63,11 @@
     },
     computed: {
       addresses(){
-        return this.$store.state.geolocalizacion.slice(0, 3);
+        if(this.$store.state.geolocalizacion){
+          return this.$store.state.geolocalizacion.slice(0, 3);
+        }else{
+          return [];
+        }
       },
       phone(){
         return this.$store.state.tienda.telefono;

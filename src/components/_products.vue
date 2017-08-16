@@ -40,21 +40,20 @@
 				</div>
 			</aside>
 			<section class="products_list">
-				<div class="">
-
-					<!-- <paginate
-					name="languages"
-					:list="langs"
-					:per="2"
-					>
-					<li v-for="lang in paginated('languages')">
-						{{ lang }}
-					</li>
-				</paginate>
-				<paginate-links for="languages"></paginate-links> -->
+				<div class="pagination_actions">
+					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
+					<button class="prev" v-on:click="prevPagination"><i class="material-icons">keyboard_arrow_left</i></button>
+					<button class="next" v-on:click="nextPagination"><i class="material-icons">keyboard_arrow_right</i></button>
 				</div>
-				<product v-if="filteredProducts" v-for="product in filteredProducts" :data="product" :key="product.id"></product>
-				<product  v-if="!filteredProducts" v-for="product in productsData" :data="product" :key="product.id"></product>
+				<div class="pagination">
+					<product v-if="filteredProducts" v-for="product in filteredProducts" :data="product" :key="product.id"></product>
+					<product  v-if="!filteredProducts" v-for="product in products" :data="product" :key="product.id"></product>
+				</div>
+				<div class="pagination_actions">
+					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
+					<button class="prev" v-on:click="prevPagination"><i class="material-icons">keyboard_arrow_left</i></button>
+					<button class="next" v-on:click="nextPagination"><i class="material-icons">keyboard_arrow_right</i></button>
+				</div>
 			</section>
 		</div>
 	</div>
@@ -74,6 +73,7 @@
 		},
 		mounted(){
 			this.$store.commit('productsPurchased');
+			this.products = this.productsData.slice(0, this.moreProducts);
 		},
 		data(){
 			return {
@@ -82,8 +82,7 @@
 				filteredProducts: null,
 				products: null,
 				moreProducts: 40,
-				langs: ['JavaScript', 'PHP', 'HTML', 'CSS', 'Ruby', 'Python', 'Erlang'],
-				paginate: ['languages']
+				pages: 1,
 			}
 		},
 		watch: {
@@ -94,6 +93,7 @@
 				this.$store.commit('productsPurchased');
 			},
 	    productsData: function (value) {
+				this.products = this.productsData.slice(0, this.moreProducts);
 				this.$store.commit('productsPurchased');
 	    }
   	},
@@ -121,6 +121,23 @@
 			}
 		},
 		methods: {
+			calcQuantityPages(){
+				return Math.ceil(this.productsData.length / 40);
+			},
+			nextPagination(){
+				if(this.pages < this.calcQuantityPages()){
+					this.products = this.productsData.slice(this.moreProducts, this.moreProducts + 40);
+					this.moreProducts += 40;
+					this.pages++;
+				}
+			},
+			prevPagination(){
+				if(this.pages > 1){
+					this.moreProducts -= 40;
+					this.products = this.productsData.slice(this.moreProducts - 40, this.moreProducts);
+					this.pages--;
+				}
+			},
 			handleScroll(){
 				if (document.body.scrollTop > 60) {
 					document.getElementById("shortcuts").classList.add('effectScroll');
@@ -142,15 +159,15 @@
 			},
 			selectCat(categoria){
 				this.selCat = categoria.id;
-				let filters = this.productsData.filter(product => product.categoria == categoria.nombre_categoria_producto);
-				this.filteredProducts = filters;
+				this.filteredProducts = this.productsData.filter(product => product.categoria == categoria.nombre_categoria_producto);
+				this.products = this.filteredProducts;
 			},
 			allSelectCat(){
 				this.filteredProducts = null;
 			},
 			selectSubcat(subcategoria){
-				let filters = this.productsData.filter(product => product.subcategoria == subcategoria.id)
-				this.filteredProducts = filters;
+				this.filteredProducts = this.productsData.filter(product => product.subcategoria == subcategoria.id)
+				this.products = this.filteredProducts;
 			}
 		}
 	}
@@ -306,8 +323,42 @@
 	.products_list{
 		width: calc(100% - 300px);
 		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.products_list .pagination{
+		width: 100%;
+		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
+	}
+	.pagination_actions{
+		display: flex;
+		align-items: center;
+		margin: 10px 0 0 0;
+	}
+	.pagination_actions button{
+		border-style: none;
+		background-color: transparent;
+		border: 1px solid #cfcfcf;
+		border-radius: 4px;
+		padding: 0px;
+		margin: 0 2px;
+		color: #585858;
+		font-size: 1px;
+		outline: none;
+		cursor: pointer;
+		transition: .3s;
+	}
+	.pagination_actions button:hover{
+		transform: scale(1.1);
+	}
+	.pagination_actions button i{
+		font-size: 19px;
+		font-weight: bold;
+	}
+	.pagination_actions p{
+		margin: 0 2px;
 	}
 	@media(max-width: 950px){
 		.products_list{
