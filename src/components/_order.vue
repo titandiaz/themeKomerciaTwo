@@ -7,7 +7,7 @@
     <div :class="{order: true ,active: orderComponent}">
       <div v-show="productsCart.length == 0" class="empty_products">
         <img src="../assets/empty_cart.png" alt="">
-        <router-link to="/productos" :style="styles.colorPrincipalFont">Comprar</router-link>
+        <router-link to="/catalogo" :style="styles.colorPrincipalFont">Comprar</router-link>
       </div>
       <div v-show="productsCart.length != 0"  class="products">
         <div v-for="(product, index) in productsCart" class="product">

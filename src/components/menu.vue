@@ -2,7 +2,7 @@
 	<div class="menu">
 		<ul>
 			<li><router-link to="/">Inicio</router-link></li>
-			<li><router-link to="/productos">Catalogo</router-link></li>
+			<li><router-link to="/catalogo">Catalogo</router-link></li>
 			<div class="logo_full">
 				<figure class="logo">
 					<img :src="`https://komercia.co/logos/${info.logo}`" alt="">

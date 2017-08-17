@@ -11,7 +11,7 @@
           <div class="items_item_info">
             <h3>Nuestras Ofertas</h3>
             <p class="detail">Encuentra lo que</br> siempre has querido</p>
-            <router-link to="/productos" class="detail block" :style="styles.colorSecundario">Ver Catalogo</router-link>
+            <router-link to="/catalogo" class="detail block" :style="styles.colorSecundario">Ver Catalogo</router-link>
           </div>
           <img src="../assets/offers.png">
         </div>
@@ -35,7 +35,7 @@
           <product v-for="product in products" :data="product" :key="product.id"></product>
       </section>
       <div class="goProducts">
-          <router-link to="/productos" :style="styles.colorPrincipal" >Ir a  Productos</router-link>
+          <router-link to="/catalogo" :style="styles.colorPrincipal" >Ir a  Productos</router-link>
       </div>
       <section class="features">
           <div class="features_item">
@@ -43,7 +43,7 @@
             <div class="features_item_info">
               <h3>Pagos online</h3>
               <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
-              <router-link to="/productos" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
+              <router-link to="/catalogo" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
           <div class="features_item">
@@ -51,7 +51,7 @@
             <div class="features_item_info">
               <h3>Recibe tu producto</h3>
               <p>Recibe tus compras sin salir de casa Enviamos tus productos con seguridad</p>
-              <router-link to="/productos" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
+              <router-link to="/catalogo" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
       </section>

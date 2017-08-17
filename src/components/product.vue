@@ -26,7 +26,7 @@
 		methods: {
 			openModal(e) {
 				if(e.target.id != "actionAddCart"){
-					this.$router.push(`/productos/${this.data.id}`);
+					this.$router.push(`/catalogo/${this.data.id}`);
 				}
 			},
 			addShoppingCart(product){

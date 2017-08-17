@@ -55,7 +55,7 @@
     methods: {
       closeModal(e){
         if(e.target.id == "modalProduct" || e.target.id == "closeModal"){
-          this.$router.push('/productos');
+          this.$router.push('/catalogo');
         }
       },
       selectedPhoto(f){

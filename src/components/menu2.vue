@@ -9,7 +9,7 @@
     <nav class="header_navigation">
       <ul class="header_navigation_list">
         <li class="header_navigation__item"><router-link to="/">Inicio</router-link></li>
-        <li class="header_navigation__item"><router-link to="/productos">Catologo</router-link></li>
+        <li class="header_navigation__item"><router-link to="/catalogo">Catologo</router-link></li>
         <li class="header_navigation__item"><router-link to="/nosotros">Nosotros</router-link></li>
         <li class="header_navigation__item"><router-link to="/contacto">Contacto</router-link></li>
       </ul>
