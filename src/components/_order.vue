@@ -78,7 +78,7 @@ export default {
         direccion_entrega: 1
       }
       json = JSON.stringify(json)
-      location.href = `https://komercia.co/beforecheckout/${json}`;
+      location.href = `https://komercia.co/before/checkout/${json}`;
     }
   },
   filters: {
