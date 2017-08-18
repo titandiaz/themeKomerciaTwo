@@ -47,6 +47,7 @@
 				</div>
 				<div class="pagination">
 					<product v-for="product in products" :data="product" :key="product.id"></product>
+					<product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product"></product>
 				</div>
 				<div v-show="paginationActions" class="pagination_actions">
 					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
@@ -98,6 +99,9 @@
 	    }
   	},
 		computed: {
+			productsPlaceholder(){
+				return this.$store.state.productsPlaceholder
+			},
 			productsCart(){
 				return	this.$store.state.productsCart.length;
 			},

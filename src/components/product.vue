@@ -1,6 +1,9 @@
 <template>
 	<div class="product" :id="data.id" v-on:click="openModal">
-		<div class="product_image">
+		<div  v-if="data.placeholder" class="product_image placeholder">
+			<img :src="setImagePLaceholder()">
+		</div>
+		<div v-else class="product_image">
 			<img :src="`https://komercia.co/tumb/${data.foto}`">
 		</div>
 		<div class="product_content">
@@ -24,9 +27,16 @@
 			}
 		},
 		methods: {
+			setImagePLaceholder(){
+				return require(`../assets/${this.data.foto}`);
+			},
 			openModal(e) {
 				if(e.target.id != "actionAddCart"){
-					this.$router.push(`/catalogo/${this.data.id}`);
+					if(this.data.placeholder){
+						window.location.href = 'https://komercia.co/panel/inventario/productos';
+					}else{
+						this.$router.push(`/catalogo/${this.data.id}`);
+					}
 				}
 			},
 			addShoppingCart(product){
@@ -73,8 +83,14 @@
 		align-items: center;
 		overflow: hidden;
 	}
+	.product_image.placeholder{
+		background-color: #e8e9ed;
+	}
 	.product_image img{
 		max-width: 300px;
+	}
+	.product_image.placeholder img{
+		width: 100%;
 	}
 	.product_content{
 		display: flex;

@@ -29,6 +29,29 @@ export const store = new Vuex.Store({
     totalCart: 0,
     orderComponent: false,
     menuComponent: false,
+    productsPlaceholder: [
+      {
+        placeholder: true,
+        foto: 'placeholder1.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },{
+        placeholder: true,
+        foto: 'placeholder2.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },{
+        placeholder: true,
+        foto: 'placeholder3.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },{
+        placeholder: true,
+        foto: 'placeholder4.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      }
+    ]
   },
   mutations: {
     updateContentCart (state) {
