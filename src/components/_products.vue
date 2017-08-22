@@ -45,9 +45,9 @@
 					<button class="prev" v-on:click="prevPagination"><i class="material-icons">keyboard_arrow_left</i></button>
 					<button class="next" v-on:click="nextPagination"><i class="material-icons">keyboard_arrow_right</i></button>
 				</div>
-				<div class="pagination">
+				<div v-if="products" class="pagination">
 					<product v-for="product in products" :data="product" :key="product.id"></product>
-					<product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product"></product>
+					<product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
 				</div>
 				<div v-show="paginationActions" class="pagination_actions">
 					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
@@ -126,7 +126,11 @@
 		},
 		methods: {
 			calcQuantityPages(){
-				return Math.ceil(this.productsData.length / 40);
+				if(Math.ceil(this.productsData.length / 40) != 0){
+					return Math.ceil(this.productsData.length / 40);
+				}else{
+					return 1;
+				}
 			},
 			nextPagination(){
 				if(this.pages < this.calcQuantityPages()){

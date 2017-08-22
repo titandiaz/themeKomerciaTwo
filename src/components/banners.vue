@@ -1,7 +1,7 @@
 <template>
   <swiper :options="swiperOption">
     <!-- slides -->
-    <swiper-slide v-for="banner in banners"><img :src="`https://komercia.co/banners/${banner.ruta_banner}`" alt=""></swiper-slide>
+    <swiper-slide v-for="banner in banners" :key="banner.id"><img :src="`https://komercia.co/banners/${banner.ruta_banner}`" alt=""></swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
   </swiper>

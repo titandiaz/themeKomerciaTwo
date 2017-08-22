@@ -14,7 +14,13 @@ export default {
     return {
       stylesConf: {
         color: this.$store.state.colorTexto,
-        backgroundImage: `url(http://komercia.co/img/fondos/${this.$store.state.urlFondo})`,
+        backgroundImage: ()=>{
+          if(this.$store.state.urlFondo){
+            return`url(http://komercia.co/img/fondos/${this.$store.state.urlFondo})`;
+          }else{
+            return '';
+          }
+        },
       }
     }
   }

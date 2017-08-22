@@ -2,7 +2,7 @@
   <div class="header_main">
     <div class="header_brand">
       <figure class="header__logo">
-        <img :src="`https://komercia.co/logos/${info.logo}`" alt="">
+        <img v-if="info.logo" :src="`https://komercia.co/logos/${info.logo}`" alt="">
       </figure>
       <h1 class="header__title">{{ info.nombre }}</h1>
     </div>
@@ -60,7 +60,7 @@
   }
   .header__logo{
     max-width: 70px;
-    width: 100%;
+    width: 70px;
     height: 70px;
     display: flex;
     justify-content: center;

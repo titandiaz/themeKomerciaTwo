@@ -36,7 +36,7 @@
       </section>
       <section class="products">
           <product v-for="product in products" :data="product" :key="product.id"></product>
-          <product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product"></product>
+          <product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
       </section>
       <div class="goProducts">
           <router-link to="/catalogo" :style="styles.colorPrincipal" >Ir a  Productos</router-link>

@@ -5,7 +5,7 @@
 			<li><router-link to="/catalogo">Catalogo</router-link></li>
 			<div class="logo_full">
 				<figure class="logo">
-					<img :src="`https://komercia.co/logos/${info.logo}`" alt="">
+					<img v-if="info.logo" :src="`https://komercia.co/logos/${info.logo}`" alt="">
 				</figure>
 			</div>
 			<li><router-link to="/nosotros">Nosotros</router-link></li>
@@ -51,7 +51,7 @@
 	}
 	.logo{
 		max-width: 80px;
-    width: 100%;
+    width: 80px;
     height: 80px;
     display: flex;
     justify-content: center;
