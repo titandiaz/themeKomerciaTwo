@@ -38,4 +38,3 @@ new Vue({
 })
 
 store.commit('calculateTotalCart');
-console.log(this.$router)
