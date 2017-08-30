@@ -13,7 +13,7 @@
 				<p>{{ productsCart }}</p>
 			</div>
 		</div>
-		<div class="products">
+		<div class="products maxcontainer">
 			<aside class="shortcuts" id="shortcuts">
 				<div class="sticky">
 					<ul class="categorias">
@@ -47,7 +47,11 @@
 				</div>
 				<div v-if="products" class="pagination">
 					<product v-for="product in products" :data="product" :key="product.id"></product>
-					<product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
+					<product v-if="productsData.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
+					<div v-show="productsData.length != 0 & products.length == 0" class="empty_products">
+						<p>No hay productos</p>
+						<button :style="styles.colorPrincipal" v-on:click="allSelectCat">Ver todos los productos</button>
+					</div>
 				</div>
 				<div v-show="paginationActions" class="pagination_actions">
 					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
@@ -89,6 +93,9 @@
 		watch: {
 			search: function () {
 				this.searchProduct();
+				if(this.search == ''){
+					this.paginationActions = true;
+				}
 			},
 			'$route.path': function () {
 				this.$store.commit('productsPurchased');
@@ -166,7 +173,8 @@
 				let search = this.search;
 				search = search.toLowerCase()
 				let filters = this.productsData.filter(product => product.nombre.toLowerCase().includes(search))
-				this.filteredProducts = filters;
+				this.products = filters;
+				this.paginationActions = false;
 			},
 			selectCat(categoria){
 				this.paginationActions = false;
@@ -261,6 +269,7 @@
 	}
 	.products{
 		display: flex;
+		margin: auto;
 		width: 100%;
 		min-height: calc(100vh - 366px)
 	}
@@ -375,6 +384,25 @@
 	}
 	.pagination_actions p{
 		margin: 0 2px;
+	}
+	.empty_products{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 10px;
+	}
+	.empty_products button{
+		margin: 10px;
+		padding: 10px 30px;
+		cursor: pointer;
+		color: #FFF;
+		border-style: none;
+		border-radius: 10px;
+		outline: none;
+		transition: .3s;
+	}
+	.empty_products button:hover{
+		transform: scale(0.9);
 	}
 	@media(max-width: 950px){
 		.products_list{

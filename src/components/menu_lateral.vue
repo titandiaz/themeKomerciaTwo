@@ -8,7 +8,7 @@
         <ul class="navigation_list">
           <li class="navigation__item"><router-link to="/">Inicio</router-link></li>
           <li class="navigation__item"><router-link to="/catalogo">Catologo</router-link></li>
-          <li class="navigation__item"><router-link to="/nosotros">Nosotros</router-link></li>
+          <li class="navigation__item"><router-link to="/pedido">Carrito</router-link></li>
           <li class="navigation__item"><router-link to="/contacto">Contacto</router-link></li>
         </ul>
       </nav>

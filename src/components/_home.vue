@@ -9,7 +9,7 @@
       </div>
       <!--<label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto"></label>-->
     </header>
-      <section class="items">
+      <section class="items maxcontainer">
         <div class="items_item offers">
           <div class="items_item_info">
             <h3>Nuestras Ofertas</h3>
@@ -34,14 +34,14 @@
           </div>
         </div>
       </section>
-      <section class="products">
+      <section class="products maxcontainer">
           <product v-for="product in products" :data="product" :key="product.id"></product>
           <product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
       </section>
       <div class="goProducts">
           <router-link to="/catalogo" :style="styles.colorPrincipal" >Ir a  Productos</router-link>
       </div>
-      <section class="features">
+      <section class="features maxcontainer">
           <div class="features_item">
             <img src="https://komercia.co/template3/static/img/cards.png" alt="">
             <div class="features_item_info">
@@ -112,6 +112,11 @@
   *{
     box-sizing: border-box;
     color: #4a4a4a;
+  }
+  .home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   header{
     position: relative;

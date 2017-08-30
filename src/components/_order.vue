@@ -16,6 +16,11 @@
           </figure>
           <p class="nombre">{{product.nombre}}</p>
           <p class="precio" v-show="product.precio">{{product.cantidad}} X {{product.precio | currency}}</p>
+          <div class="quantity">
+            <button class="quantity_remove" v-on:click="removeQuantity(product)"><i class="material-icons">remove</i></button>
+            <p class="quantity_value">{{ product.cantidad }}</p>
+            <button class="quantity_add" v-on:click="addQuantity(product)"><i class="material-icons">add</i></button>
+          </div>
           <i class="material-icons pointer" v-on:click="deleteItemCart(index)">close</i>
         </div>
       </div>
@@ -35,6 +40,10 @@ import headerMenu from './menu2.vue';
 
 export default {
   components: { headerMenu },
+  data(){
+    return {
+    }
+  },
   computed: {
     totalCart(){
       return this.$store.state.totalCart;
@@ -55,6 +64,16 @@ export default {
     }
   },
   methods: {
+    addQuantity(product){
+      product.cantidad++;
+      this.$store.commit('updateContentCart');
+    },
+    removeQuantity(product){
+      if(product.cantidad >= 2){
+        product.cantidad--;
+        this.$store.commit('updateContentCart');
+      }
+    },
     setFoto(f) {
       return `http://komercia.co/productos/${f}`;
     },
@@ -191,6 +210,31 @@ export default {
   }
   .order .total h3{
     font-size: 1.2em;
+  }
+  .order .quantity{
+    display: flex;
+    align-items: center;
+  }
+  .quantity_remove, .quantity_add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: none;
+    background-color: transparent;
+    border: 1px solid black;
+    padding: 2.5px;
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+  }
+  .quantity_value{
+    margin: 0 10px;
+  }
+  .quantity_remove:hover, .quantity_add:hover{
+    transform: scale(0.9);
+  }
+  .quantity_remove i, .quantity_add i{
+    font-size: 14px;
   }
   .actionOrder{
     border-style: none;

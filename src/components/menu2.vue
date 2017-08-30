@@ -1,16 +1,16 @@
 <template>
-  <div class="header_main">
-    <div class="header_brand">
-      <figure class="header__logo">
-        <img v-if="info.logo" :src="`https://komercia.co/logos/${info.logo}`" alt="">
-      </figure>
-      <h1 class="header__title">{{ info.nombre }}</h1>
-    </div>
+  <div class="header_main maxcontainer">
+    <router-link to="/" class="header_brand">
+        <figure class="header__logo">
+          <img v-if="info.logo" :src="`https://komercia.co/logos/${info.logo}`" alt="">
+        </figure>
+        <h1 class="header__title">{{ info.nombre }}</h1>
+    </router-link>
     <nav class="header_navigation">
       <ul class="header_navigation_list">
         <li class="header_navigation__item"><router-link to="/">Inicio</router-link></li>
         <li class="header_navigation__item"><router-link to="/catalogo">Catologo</router-link></li>
-        <li class="header_navigation__item"><router-link to="/nosotros">Nosotros</router-link></li>
+        <li class="header_navigation__item"><router-link to="/pedido">Carrito</router-link></li>
         <li class="header_navigation__item"><router-link to="/contacto">Contacto</router-link></li>
       </ul>
     </nav>
@@ -53,6 +53,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: auto;
   }
   .header_brand{
     display: flex;

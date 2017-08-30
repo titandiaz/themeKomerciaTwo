@@ -13,9 +13,9 @@
         <h2 class="content_name">{{data.nombre}}</h2>
         <div class="content_buy">
           <h3 class="content_buy_price">{{precio}}</h3>
-          <button class="content_buy_action" :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+          <button class="content_buy_action" v-show="!bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
         </div>
-        <p class="content_desc">{{data.descripcion}}</p>
+        <p class="content_desc" id="contentDesc"></p>
       </div>
     </div>
   </div>
@@ -30,14 +30,19 @@
       axios.get(`https://komercia.co/api/front/producto/${this.$route.params.id}`).then((response) => {
         this.selectedPhoto(response.data.foto)
         this.data = Object.assign(response.data, this.data);
+        var html = this.data.descripcion;
+        var div = document.getElementById('contentDesc');
+        div.innerHTML = html;
+        return div.textContent || div.innerText || "";
       }).catch((error) => {
-
       });
+      this.ifBoughtYet();
     },
     data() {
       return {
         data: {},
         selectPhotoUrl: '',
+        bought: false,
       }
     },
     computed: {
@@ -61,19 +66,17 @@
       selectedPhoto(f){
         this.selectPhotoUrl = f;
       },
+      ifBoughtYet(){
+        for(let productCart of this.$store.state.productsCart){
+          if(this.beforeData.id == productCart.id){
+            this.bought = true;
+          }
+        }
+      },
       addShoppingCart(){
-          let productExist = false;
-          for(let productCart of this.$store.state.productsCart){
-            if(this.beforeData.id == productCart.id){
-                 productCart.cantidad++;
-                 this.beforeData = productCart;
-                 productExist = true;
-            }
-          }
-          if(!productExist){
-            this.beforeData.cantidad = 1;
-            this.$store.state.productsCart.push(this.beforeData);
-          }
+        this.beforeData.cantidad = 1;
+        this.$store.state.productsCart.push(this.beforeData);
+        this.bought = true;
         this.$store.commit('updateContentCart');
       }
     }
@@ -88,7 +91,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(255,255,255,0.8);
-    z-index: 3;
+    z-index: 4;
   }
   .product{
     width: 650px;
@@ -108,7 +111,8 @@
     align-items: center;
   }
   .photo_main{
-    width: 90%;
+    max-width: 90%;
+    max-height: 70%;
     box-shadow: 0 1px 5px 0px rgba(0,0,0,0.3);
     border-radius: 12px;
     margin-bottom: 10px;
@@ -160,6 +164,11 @@
     box-shadow: 0 1px 7px 0 rgba(155, 155, 155, 0.6);
     font-size: 13px;
     cursor: pointer;
+    outline: none;
+    transition: .3s;
+  }
+  .content_buy_action:hover{
+    transform: scale(0.9);
   }
   .content_buy_action i{
     font-size: 19px;

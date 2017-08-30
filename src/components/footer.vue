@@ -1,6 +1,6 @@
 <template>
   <footer>
-        <div class="footer_content">
+        <div class="footer_content maxcontainer">
           <div class="footer_info">
             <p v-show="phone"><i class="material-icons">phone</i>{{ phone }}</p>
             <p v-for="address in addresses" v-show="address.direccion"><i class="material-icons">location_on</i>Direccion: {{ address.direccion }}</p>
@@ -40,9 +40,8 @@
         </div>
         <div class="footer_about_legal">
           <router-link to="/manejo-de-datos">Politicas de manejo de datos</router-link>
-          <!-- <router-link to="">Politicas de reembolso</router-link> -->
           <router-link to="/garantias">Politicas de garantia</router-link>
-          <!-- <router-link to="">Politicas de privacidad</router-link> -->
+          <router-link to="/nosotros">Sobre nosotros</router-link>
         </div>
       </div>
         <div class="footer_last">
@@ -100,6 +99,9 @@
 footer{
   width: 100%;
   background-color: #f3f7fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .footer_content{
   width: 100%;
@@ -143,6 +145,8 @@ footer{
   transform: scale(3);
 }
 .footer_actions{
+  max-width: 505px;
+  width: 100%;
   display: flex;
   justify-content: center;
   padding: 30px 0;
@@ -152,7 +156,7 @@ footer{
   outline: none;
 }
 .footer_actions_email{
-  max-width: 250px;
+  max-width: 325px;
   width: 100%;
   border-radius: 100px;
   border: solid 1px #9b9b9b;
@@ -212,12 +216,18 @@ footer{
   width: 120px;
   z-index: 2;
 }
-@media(max-width: 500px){
+@media(max-width: 1050px){
   .footer_content{
     justify-content: center;
   }
   .footer_content_social{
     margin-left: 0px;
+    margin: 30px 0 10px 0;
+  }
+}
+@media(max-width: 500px){
+  .footer_content{
+    justify-content: center;
   }
 }
 @media(max-width: 380px){

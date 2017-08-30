@@ -12,7 +12,7 @@
             <img :src="setFoto(product.foto)" alt="">
           </figure>
           <p class="nombre">{{product.nombre}}</p>
-          <p class="precio" v-show="product.precio">{{product.cantidad}} X {{product.precio | currency}}</p>
+          <p class="precio">{{product.cantidad}} <span v-show="product.precio">X {{product.precio | currency}}</span></p>
           <i class="material-icons pointer" v-on:click="deleteItemCart(index, product.id)">close</i>
         </div>
       </div>
@@ -20,7 +20,9 @@
         <p>Total</p>
         <h3 :style="styles.colorSecundarioTotal">{{ totalCart | currency }}</h3>
       </div>
-      <button class="actionOrder" :style="styles.colorSecundario" v-on:click="next">Finalizar compra</button>
+      <div class="actionOfCheckout" :style="styles.colorSecundario">
+        <button class="actionOrder" v-on:click="next">Finalizar compra</button>
+      </div>
     </div>
   </div>
 </template>
@@ -153,9 +155,25 @@ export default {
   .order .total h3{
     font-size: 1.2em;
   }
-  .actionOrder{
+  .order .actionOfCheckout{
     width: 100%;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .actionOrder{
     border-style: none;
-    padding: 15px 0;
+    color: #FFF;
+    border: 2px solid #FFF;
+    background-color: transparent;
+    border-radius: 15px;
+    padding: 10px 50px;
+    cursor: pointer;
+    transition: .3s;
+    outline: none;
+  }
+  .actionOrder:hover{
+    transform: scale(0.9);
+    background-color: rgba(0,0,0,0.1);
   }
 </style>

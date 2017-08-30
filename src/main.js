@@ -11,9 +11,10 @@ import VueAnalytics from 'vue-analytics'
   var urlParts = regexParse.exec(window.location.hostname);
   result.domain = urlParts[1];
   result.type = urlParts[2];
-  result.subdomain = window.location.hostname.replace(result.domain + '.' + result.type, '').slice(0, -1);;
+  result.subdomain = window.location.hostname.replace(result.domain + '.' + result.type, '').slice(0, -1);
+
 Vue.use(VueAnalytics, {
-  id: 'UA-92934137-1',
+  id: ['UA-92934137-1'],
   router,
   autoTracking: {
     pageviewTemplate (route) {
@@ -25,6 +26,7 @@ Vue.use(VueAnalytics, {
     }
   }
 })
+
 
 Vue.config.productionTip = false
 

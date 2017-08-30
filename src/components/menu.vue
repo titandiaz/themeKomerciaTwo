@@ -1,14 +1,14 @@
 <template>
 	<div class="menu">
-		<ul>
+		<ul class="maxcontainer">
 			<li><router-link to="/">Inicio</router-link></li>
 			<li><router-link to="/catalogo">Catalogo</router-link></li>
-			<div class="logo_full">
+			<router-link to="/" class="logo_full">
 				<figure class="logo">
 					<img v-if="info.logo" :src="`https://komercia.co/logos/${info.logo}`" alt="">
 				</figure>
-			</div>
-			<li><router-link to="/nosotros">Nosotros</router-link></li>
+			</router-link>
+			<li><router-link to="/pedido">Carrito</router-link></li>
 			<li><router-link to="/contacto">Contacto</router-link></li>
 		</ul>
 	</div>
@@ -26,6 +26,8 @@
 	.menu{
 		position: absolute;
 		width: 100%;
+		display: flex;
+		justify-content: center;
 		padding: 10px;
 		z-index: 3;
 		background-color: rgba(0,0,0,0.3);
