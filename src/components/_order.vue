@@ -5,21 +5,21 @@
     </header>
     <h2></h2>
     <div :class="{order: true ,active: orderComponent}">
-      <div v-show="productsCart.length == 0" class="empty_products">
+      <div v-show="products.length == 0" class="empty_products">
         <img src="../assets/empty_cart.png" alt="">
         <router-link to="/catalogo" :style="styles.colorPrincipalFont">Comprar</router-link>
       </div>
-      <div v-show="productsCart.length != 0"  class="products">
-        <div v-for="(product, index) in productsCart" class="product">
+      <div v-show="products.length != 0"  class="products">
+        <div v-for="(product, index) in products" class="product">
           <figure class="photo">
             <img :src="setFoto(product.foto)" alt="">
           </figure>
           <p class="nombre">{{product.nombre}}</p>
           <p class="precio" v-show="product.precio">{{product.cantidad}} X {{product.precio | currency}}</p>
           <div class="quantity">
-            <button class="quantity_remove" v-on:click="removeQuantity(product)"><i class="material-icons">remove</i></button>
+            <button class="quantity_remove" v-on:click="removeQuantity(product, index)"><i class="material-icons">remove</i></button>
             <p class="quantity_value">{{ product.cantidad }}</p>
-            <button class="quantity_add" v-on:click="addQuantity(product)"><i class="material-icons">add</i></button>
+            <button class="quantity_add" v-on:click="addQuantity(product, index)"><i class="material-icons">add</i></button>
           </div>
           <i class="material-icons pointer" v-on:click="deleteItemCart(index)">close</i>
         </div>
@@ -40,8 +40,12 @@ import headerMenu from './menu2.vue';
 
 export default {
   components: { headerMenu },
+  mounted(){
+    this.products = this.$store.state.productsCart;
+  },
   data(){
     return {
+      products: [],
     }
   },
   computed: {
@@ -50,9 +54,6 @@ export default {
     },
     orderComponent(){
       return this.$store.state.orderComponent;
-    },
-    productsCart(){
-      return this.$store.state.productsCart;
     },
     styles(){
       return {
@@ -64,13 +65,15 @@ export default {
     }
   },
   methods: {
-    addQuantity(product){
-      product.cantidad++;
+    addQuantity(product, index){
+      product.cantidad = product.cantidad + 1;
+      this.products.splice(index, 1, product)
       this.$store.commit('updateContentCart');
     },
-    removeQuantity(product){
-      if(product.cantidad >= 2){
-        product.cantidad--;
+    removeQuantity(product, index){
+      if(this.products[index].cantidad >= 2){
+        product.cantidad = product.cantidad - 1;
+        this.products.splice(index, 1, product)
         this.$store.commit('updateContentCart');
       }
     },

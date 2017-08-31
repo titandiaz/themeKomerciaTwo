@@ -35,7 +35,7 @@
             </a>
           </div>
         <div class="footer_actions">
-          <input type="text" class="footer_actions_email" placeholder="Correo electronico" v-model="email">
+          <input type="text" class="footer_actions_email" placeholder="Correo electrónico" v-model="email">
           <button class="footer_actions_subscribe" v-on:click="submitNewsletter">Suscribete</button>
         </div>
         <div class="footer_about_legal">

@@ -1,0 +1,241 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+<!-- Include Chart.js so our import can use it -->
+<template id="chat-komercia">
+  <style>
+  #komerciaChat{
+    overflow: hidden;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 0;
+    height: 0;
+  }
+  .komercia_chat *{
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    }
+    .komercia_chat_close{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 60px;
+    height: 60px;
+    background-color: #1F8CEB;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    cursor: pointer;
+    }
+    .komercia_chat_close i{
+    font-size: 30px;
+    }
+    .komercia_chat{
+    position: absolute;
+    bottom: 80px;
+    right: 10px;
+    width: 250px;
+    height: 400px;
+    opacity: 0;
+    background-color: #FFF;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    }
+    .komercia_chat_header{
+    width: 100%;
+    height: 70px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    background-color: #1F8CEB;
+    color: #FFF;
+    box-shadow: 0 0 10px 1px rgba(0,0,0,0.3)
+    }
+    .komercia_chat_header_logo{
+    width: 40px;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 50%;
+    }
+    .komercia_chat_header_info{
+    display: flex;
+    flex-direction: column;
+    }
+    .komercia_chat_header_info h2{
+    font-size: 15px;
+    font-weight: normal;
+    }
+    .komercia_chat_header_info p{
+    font-size: 12px;
+    font-weight: lighter;
+    color: rgba(255, 255, 255, 0.7);
+    }
+    .komercia_chat_input{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f4f7f9;
+    }
+    .komercia_chat_input textarea{
+    width: 80%;
+    height: 18px;
+    padding: 15px 0;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: #f4f7f9;
+    color: #565867;
+    }
+    .komercia_chat_input i{
+    color: #d6dde2;
+    cursor: pointer;
+    }
+    .komercia_chat_input i:hover{
+      color: #cbd2d6;
+    }
+    .komercia_chat_messages{
+      width: 100%;
+      height: calc(100% - 120px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      overflow: auto;
+    }
+    .komercia_chat_messages .tienda{
+      max-width: 98%;
+      background-color: #EEE;
+      padding: 10px;
+      margin: 10px;
+    }
+    .komercia_chat_messages .comprador{
+      max-width: 98%;
+      background-color: #448AFF;
+      padding: 10px;
+      color: #FFF;
+      align-self: flex-end;
+      margin: 10px;
+      text-align: right;
+    }
+    .open_chat{
+      opacity: 1;
+    }
+  </style>
+  <div id="komerciaChat">
+    <div :class="{komercia_chat: true, open_chat: openchat }">
+      <div class="komercia_chat_header">
+        <img class="komercia_chat_header_logo" :src="`https://komercia.co/logos/${datatienda.logo}`">
+        <div class="komercia_chat_header_info">
+          <h2>{{ datatienda.nombre }}</h2>
+          <!-- <p>Activo hace 30m</p> -->
+        </div>
+      </div>
+      <div class="komercia_chat_messages">
+        <p v-for="message in messages" :class="message.de">{{ message.mensaje }}</p>
+      </div>
+      <div class="komercia_chat_input">
+        <textarea v-model="message" placeholder="Escribir una respuesta"></textarea>
+        <img v-on:click="submitMessage" src="https://js.intercomcdn.com/images/send-button.553b8d28.png">
+      </div>
+    </div>
+    <span class="komercia_chat_close" v-on:click="openChat">
+      <i class="material-icons" v-show="openchat">close</i>
+      <i class="material-icons" v-show="!openchat">chat</i>
+    </span>
+  </div>
+</template>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
+  var data = JSON.parse(localStorage.getItem('conf'));
+  var config = {
+  apiKey: "AIzaSyDoqiDyDXuDbb1VF4EY26ye8QaSXc7btFw",
+  authDomain: "chatboxkomercia.firebaseapp.com",
+  databaseURL: "https://chatboxkomercia.firebaseio.com",
+  projectId: "chatboxkomercia",
+  storageBucket: "chatboxkomercia.appspot.com",
+  messagingSenderId: "340039679603"
+  };
+  firebase.initializeApp(config);
+  window.onload = function () {
+    var chatmodel = new Vue({
+      el: '#komerciaChat',
+      data: {
+        message: '',
+        messages: '',
+        tienda: 0,
+        datatienda: {},
+        userid: 0,
+        key: null,
+        openchat: false,
+        noChat: false,
+      },
+      methods: {
+        openChat() {
+          this.openchat = !this.openchat;
+        },
+        submitMessage() {
+          if(!this.noChat){
+            firebase.database().ref(`/chats/${this.key}/mensajes`).push({
+              mensaje: this.message,
+              de: "comprador",
+            })
+          }else{
+            var saveChatKey = firebase.database().ref(`/chats`).push({
+              comprador_id: this.userid,
+              firstMessageSeen: false,
+              mensajes: {
+                de: "comprador",
+                mensaje: this.message
+              },
+              tienda_id: this.tienda,
+              visto: false,
+            }).key;
+            firebase.database().ref(`/chats/${saveChatKey}`).update({
+              key: saveChatKey,
+            })
+            chatmodel.noChat = true;
+          }
+          this.message = null;
+        }
+      }
+    })
+    axios.get(`https://komercia.co/api/front/tienda/${data.id}`).then((response)=>{
+      chatmodel.datatienda = response.data.data.tienda;
+    })
+    var key;
+    var chats = firebase.database().ref('chats/').orderByChild("tienda_id").equalTo(data.id);
+    chats.once('value', function(snapshot) {
+      if(snapshot.val()){
+        chatmodel.key = Object.values(snapshot.val()).filter(chat => chat.comprador_id == data.id)[0].key;
+      }
+      if(chatmodel.key){
+        var chatsMessages = firebase.database().ref(`chats/${chatmodel.key}/mensajes`)
+        chatsMessages.on('value', function(snapshot) {
+          chatmodel.messages = snapshot.val();
+        });
+      }else{
+        chatmodel.noChat = true;
+      }
+
+    });
+    chatmodel.userid = data.user.id;
+    chatmodel.tienda = data.id;
+    chatmodel.nombreuser = data.nombre;
+  }
+
+  var thisDoc = document.currentScript.ownerDocument;
+  var thatDoc = document;
+  var template = thisDoc.querySelector("#chat-komercia");
+  thatDoc.body.appendChild(thatDoc.importNode(template.content, true));
+  setTimeout(()=>{
+    document.getElementById('komerciaChat').style.overflow = 'initial';
+  }, 1000)
+</script>

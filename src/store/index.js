@@ -68,7 +68,9 @@ export const store = new Vuex.Store({
       }
     },
     removeProductsPurchased(state, id) {
-      document.getElementById(id).classList.remove('bought');
+      if(document.getElementById(id)){
+        document.getElementById(id).classList.remove('bought');
+      }
     },
     calculateTotalCart (state) {
       state.totalCart = 0;

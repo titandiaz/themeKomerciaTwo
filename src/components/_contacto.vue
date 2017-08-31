@@ -1,5 +1,9 @@
 <template>
   <div id="contacto">
+    <div :class="{message: true, openMessage: message.open}">
+      <i class="material-icons">done_all</i>
+      <p>{{message.text}}</p>
+    </div>
     <header>
         <header-menu></header-menu>
     </header>
@@ -34,6 +38,10 @@ export default {
       email: '',
       numberphone: '',
       comment: '',
+      message: {
+        text: 'hola',
+        open: false,
+      },
     }
   },
   computed: {
@@ -56,7 +64,21 @@ export default {
         comentario: this.comment,
         tienda: this.$store.state.id,
       }
-      axios.post('https://komercia.co/api/front/mensaje-contacto', json)
+      axios.post('https://komercia.co/api/front/mensaje-contacto', json).then(() =>{
+        this.nombre = '';
+        this.email = '';
+        this.numberphone = '';
+        this.comment = '';
+        this.$store.state.id = '';
+           this.messageAction('Muy pronto te estaremos respondiendo a tu correo');
+      })
+    },
+    messageAction(message){
+      this.message.open = true;
+      this.message.text = message;
+      setTimeout(() => {
+        this.message.open = false;
+      }, 3000)
     },
     makeMap(){
       let place = {latitud:  4.14, longitud: -73.63};
@@ -148,5 +170,39 @@ export default {
     margin: 0 10px 10px 0px;
     color: #FFF;
     border-radius: 15px;
+    outline: none;
+  }
+  .message{
+    position: absolute;
+    max-width: 400px;
+    height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+    background-color: #FFF;
+    z-index: 3;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12), 0 0 6px rgba(0,0,0,.04);
+    border-radius: 5px;
+    overflow: hidden;
+    transform: translateY(0px);
+    opacity: 0;
+    transition: .3s;
+  }
+  .message i{
+    padding: 10px;
+    background-color: #13ce66;
+    color: #FFF;
+  }
+  .message p{
+    margin: 0 10px;
+    text-align: center;
+    font-size: 15px;
+    color: #656565;
+  }
+  .openMessage{
+    height: initial;
+    opacity: 1;
+    transform: translateY(20px);
   }
 </style>

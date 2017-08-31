@@ -9,7 +9,6 @@ import Order from '@/components/_order'
 import Garantias from '@/components/_garantias'
 import ManejoDatos from '@/components/_manejo_datos'
 
-
 Vue.use(Router)
 
 export default new Router({
