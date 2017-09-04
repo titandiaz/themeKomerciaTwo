@@ -293,7 +293,7 @@
   }
   @media(max-width: 700px){
     .menu_responsive_home{
-      display: none;
+      display: none !important;
     }
     .menu_responsive_home2{
       width: 100%;

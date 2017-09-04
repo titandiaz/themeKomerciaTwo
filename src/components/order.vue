@@ -103,6 +103,7 @@ export default {
     right: -430px;
     max-width: 400px;
     width: 100%;
+    max-height: 100vh;
     height: 600px;
     display: flex;
     flex-direction: column;
@@ -175,5 +176,10 @@ export default {
   .actionOrder:hover{
     transform: scale(0.9);
     background-color: rgba(0,0,0,0.1);
+  }
+  @media(max-height: 600px){
+    .order{
+      top: initial;
+    }
   }
 </style>
