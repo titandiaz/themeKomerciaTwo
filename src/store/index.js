@@ -81,7 +81,7 @@ export const store = new Vuex.Store({
   }
 })
 
-axios.get(`http://komercia.co/api/front/tienda/${conf.id}`).then((response) => {
+axios.get(`https://komercia.co/api/front/tienda/${conf.id}`).then((response) => {
   store.state.banners = response.data.data.banners;
   store.state.productos = response.data.data.productos;
   store.state.categorias = response.data.data.categorias;

@@ -49,6 +49,9 @@ export default new Router({
     },{
       path: '/garantias',
       component: Garantias
+    },{
+      path: '*',
+      redirect: '/'
     }
   ]
 })
