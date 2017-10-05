@@ -66,11 +66,12 @@
 	import headerMenu from './menu2.vue';
   import product from './product.vue';
 	import Order from './order.vue';
+	import InfiniteLoading from 'vue-infinite-loading';
 
 	export default {
-		components: { product, Order, headerMenu },
+		components: { product, Order, headerMenu, InfiniteLoading },
 		created(){
-				window.addEventListener('scroll', this.handleScroll);
+			window.addEventListener('scroll', this.handleScroll);
 		},
 		destroyed(){
 			window.removeEventListener('scroll', this.handleScroll);
