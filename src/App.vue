@@ -14,13 +14,6 @@ export default {
     return {
       stylesConf: {
         color: this.$store.state.colorTexto,
-        backgroundImage: ()=>{
-          if(this.$store.state.urlFondo){
-            return`url(http://komercia.co/img/fondos/${this.$store.state.urlFondo})`;
-          }else{
-            return '';
-          }
-        },
       }
     }
   }
@@ -53,6 +46,6 @@ a{
   cursor: pointer;
 }
 .maxcontainer{
-  max-width: 1600px; 
+  max-width: 1600px;
 }
 </style>
