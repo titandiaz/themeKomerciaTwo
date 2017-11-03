@@ -18,10 +18,10 @@
 				<div class="sticky">
 					<ul class="categorias">
 						<li class="categorias_item" v-for="categoria in categorias">
-							<p v-on:click="selectCat(categoria)">{{categoria.nombre_categoria_producto}}</p>
+							<p v-on:click="selectCat($event, categoria)">{{categoria.nombre_categoria_producto}}</p>
 							<ul class="subcategorias" v-show="categoria.id == selCat">
 								<li class="subcategorias_item" v-for="subcategoria in subcategorias" v-if="subcategoria.categoria == categoria.id">
-									<p v-on:click="selectSubcat(subcategoria)">{{subcategoria.nombre_subcategoria}}</p>
+									<p v-on:click="selectSubcat($event, subcategoria)">{{subcategoria.nombre_subcategoria}}</p>
 								</li>
 							</ul>
 						</li>
@@ -159,7 +159,11 @@
 				this.products = filters;
 				this.paginationActions = false;
 			},
-			selectCat(categoria){
+			selectCat(e, categoria){
+				if(document.querySelector('.categorias_item .selected')){
+					document.querySelector('.categorias_item .selected').classList.remove('selected');
+				}
+				e.target.classList.add('selected')
 				this.paginationActions = false;
 				this.selCat = categoria.id;
 				this.filteredProducts = this.productsData.filter(product => product.categoria == categoria.nombre_categoria_producto);
@@ -171,7 +175,11 @@
 				this.pages = 1;
 				this.products = this.productsData.slice(0, this.moreProducts);
 			},
-			selectSubcat(subcategoria){
+			selectSubcat(e, subcategoria){
+				if(document.querySelector('.categorias_item .selected')){
+					document.querySelector('.categorias_item .selected').classList.remove('selected');
+				}
+				e.target.classList.add('selected')
 				this.paginationActions = false;
 				this.filteredProducts = this.productsData.filter(product => product.subcategoria == subcategoria.id)
 				this.products = this.filteredProducts;
@@ -293,6 +301,9 @@
 		cursor: pointer;
 		padding: 5px 0;
 		font-size: 13px;
+	}
+	.categorias_item .selected{
+		font-weight: bold;
 	}
 	.shortcuts_shopping_cart{
 		width: 200px;
