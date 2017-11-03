@@ -1,8 +1,5 @@
 <template>
   <div id="order" v-on:click="backPage" :class="{activeOrder:orderComponent}">
-    <header>
-        <header-menu></header-menu>
-    </header>
     <h2></h2>
     <div :class="{order: true ,active: orderComponent}">
       <div v-show="products.length == 0" class="empty_products">
@@ -36,10 +33,8 @@
 </template>
 
 <script>
-import headerMenu from './menu2.vue';
 
 export default {
-  components: { headerMenu },
   mounted(){
     this.products = this.$store.state.productsCart;
   },

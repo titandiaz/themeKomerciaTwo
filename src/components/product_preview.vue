@@ -11,11 +11,11 @@
       <div class="content">
         <i id="closeModal" class="material-icons close">close</i>
         <h2 class="content_name">{{data.nombre}}</h2>
+        <div class="content_desc" v-html="data.descripcion"></div>
         <div class="content_buy">
           <h3 class="content_buy_price">{{precio}}</h3>
           <button class="content_buy_action" v-show="!bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
         </div>
-        <p class="content_desc" id="contentDesc"></p>
       </div>
     </div>
   </div>
@@ -26,14 +26,10 @@
     created() {
       let data = this.$store.state.productos.filter((product) => { if(product.id == this.$route.params.id){ return product}});
       this.data, this.beforeData = data[0];
-      // this.beforeData = data[0];
       axios.get(`https://komercia.co/api/front/producto/${this.$route.params.id}`).then((response) => {
         this.selectedPhoto(response.data.foto)
-        this.data = Object.assign(response.data, this.data);
-        var html = this.data.descripcion;
-        var div = document.getElementById('contentDesc');
-        div.innerHTML = html;
-        return div.textContent || div.innerText || "";
+        console.log(response.data, data)
+        this.data = Object.assign(response.data, data[0]);
       }).catch((error) => {
       });
       this.ifBoughtYet();
@@ -79,12 +75,21 @@
         this.bought = true;
         this.$store.commit('updateContentCart');
       }
+    },
+    filters: {
+      capitalize(value){
+        if(value){
+          value = value.toLowerCase();
+          return value.replace(/^\w|\s\w/g, l => l.toUpperCase())
+        }
+      },
     }
   }
 </script>
 <style scoped>
   #modalProduct{
     position: fixed;
+    top: 0;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -94,8 +99,8 @@
     z-index: 4;
   }
   .product{
-    width: 650px;
-    height: 380px;
+    width: 750px;
+    height: 500px;
     display: flex;
     background-color: #FFF;
     padding: 30px;
@@ -103,7 +108,7 @@
     box-shadow: 0 0 31px 7px rgba(121, 121, 121, 0.29);
   }
   .photos{
-    width: 250px;
+    width: 350px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -144,6 +149,7 @@
     font-weight: normal;
     color: black;
     margin: 7px 0;
+    margin-top: 25px;
   }
   .content_buy{
     display: flex;

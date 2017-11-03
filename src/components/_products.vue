@@ -2,13 +2,10 @@
 	<div id="products">
 		<router-view></router-view>
 		<order></order>
-		<header>
-			<header-menu></header-menu>
-		</header>
-		<div class="header_fixed">
+		<div class="header_fixed" :style="styles.colorPrincipal">
 			<i class="material-icons toggleFilters" v-on:click="toggleFilters">filter_list</i>
 			<label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto" v-model="search"></label>
-			<div v-on:click="openOrderComponent" class="header__cart" :style="styles.colorPrincipal">
+			<div v-on:click="openOrderComponent" class="header__cart">
 				<i class="material-icons">shopping_cart</i>
 				<p>{{ productsCart }}</p>
 			</div>
@@ -58,13 +55,12 @@
 	</div>
 </template>
 <script>
-	import headerMenu from './menu2.vue';
   import product from './product.vue';
 	import Order from './order.vue';
 	import InfiniteLoading from 'vue-infinite-loading';
 
 	export default {
-		components: { product, Order, headerMenu, InfiniteLoading },
+		components: { product, Order, InfiniteLoading },
 		created(){
 			window.addEventListener('scroll', this.handleScroll);
 		},
@@ -160,41 +156,37 @@
 				this.paginationActions = false;
 			},
 			selectCat(e, categoria){
-				if(document.querySelector('.categorias_item .selected')){
-					document.querySelector('.categorias_item .selected').classList.remove('selected');
-				}
-				e.target.classList.add('selected')
+				this.setSelected(e);
 				this.paginationActions = false;
 				this.selCat = categoria.id;
 				this.filteredProducts = this.productsData.filter(product => product.categoria == categoria.nombre_categoria_producto);
 				this.products = this.filteredProducts;
 			},
-			allSelectCat(){
+			allSelectCat(e){
+				this.setSelected(e);
 				this.paginationActions = true;
 				this.moreProducts = 40;
 				this.pages = 1;
 				this.products = this.productsData.slice(0, this.moreProducts);
 			},
 			selectSubcat(e, subcategoria){
-				if(document.querySelector('.categorias_item .selected')){
-					document.querySelector('.categorias_item .selected').classList.remove('selected');
-				}
-				e.target.classList.add('selected')
+				this.setSelected(e);
 				this.paginationActions = false;
 				this.filteredProducts = this.productsData.filter(product => product.subcategoria == subcategoria.id)
 				this.products = this.filteredProducts;
+			},
+			setSelected(e){
+				if(document.querySelector('.categorias_item .selected')){
+					document.querySelector('.categorias_item .selected').style.backgroundColor = 'initial';
+					document.querySelector('.categorias_item .selected').classList.remove('selected');
+				}
+				e.target.classList.add('selected')
+				document.querySelector('.categorias_item .selected').style.backgroundColor = this.styles.colorSecundario.backgroundColor;
 			}
 		}
 	}
 </script>
 <style scoped>
-	header{
-		position: relative;
-		width: 100%;
-		height: 90px;
-		background-color: #9b9b9b;
-		padding: 0 20px;
-	}
 	.header_fixed{
 		position: sticky;
 		top: 0px;
@@ -203,7 +195,6 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		background-color: #9b9b9b;
 		z-index: 2;
 		padding: 0 10px;
 	}
@@ -241,6 +232,7 @@
 		overflow: hidden;
 		cursor: pointer;
 		flex: none;
+		background-color: rgba(0,0,0,0.25);
 	}
 	.header__cart i{
 		padding-left: 10px;
@@ -250,7 +242,6 @@
 		height: 40px;
 		display: flex;
 		align-items: center;
-		background-color: rgba(0,0,0,0.4);
 		padding: 0 10px;
 		margin-left: 10px;
 		font-size: 1em;
@@ -303,7 +294,10 @@
 		font-size: 13px;
 	}
 	.categorias_item .selected{
-		font-weight: bold;
+		color: #FFF;
+		padding: 5px;
+		border-radius: 5px;
+		transition: .1s;
 	}
 	.shortcuts_shopping_cart{
 		width: 200px;

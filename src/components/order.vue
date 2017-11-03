@@ -11,7 +11,7 @@
           <figure class="photo">
             <img :src="setFoto(product.foto)" alt="">
           </figure>
-          <p class="nombre">{{product.nombre}}</p>
+          <p class="nombre">{{product.nombre | capitalize}}</p>
           <p class="precio">{{product.cantidad}} <span v-show="product.precio">X {{product.precio | currency}}</span></p>
           <i class="material-icons pointer" v-on:click="deleteItemCart(index, product.id)">close</i>
         </div>
@@ -76,9 +76,16 @@ export default {
   },
   filters: {
     currency(value) {
-      // return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-      return value
-    }
+      if(value){
+        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+      }
+    },
+    capitalize(value){
+      if(value){
+        value = value.toLowerCase();
+        return value.replace(/^\w|\s\w/g, l => l.toUpperCase())
+      }
+    },
   }
 }
 </script>
@@ -86,6 +93,7 @@ export default {
 <style scoped>
   #order{
     position: fixed;
+    top: 0;
     width: 100%;
     height: 100vh;
     background-color: rgba(255,255,255,0.5);

@@ -101,7 +101,6 @@
     display: flex;
     align-items: center;
     color: #FFF;
-    font-weight: bold;
   }
   @media(max-width:700px){
     .header__logo{

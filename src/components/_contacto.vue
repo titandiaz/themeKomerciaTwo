@@ -4,9 +4,6 @@
       <i class="material-icons">done_all</i>
       <p>{{message.text}}</p>
     </div>
-    <header>
-        <header-menu></header-menu>
-    </header>
     <div class="contacto_content">
       <div id="map"></div>
       <div class="contact" :style="styles.borderColor">
@@ -21,11 +18,9 @@
 </template>
 
 <script>
-import headerMenu from './menu2.vue';
 import axios from 'axios';
 
 export default {
-  components: { headerMenu },
   mounted(){
     this.makeMap();
   },
@@ -124,12 +119,12 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 20px 0;
   }
   #map {
-    width: 600px;
-    height: 600px;
+    width: 480px;
+    height: 480px;
     background-color: #EEE;
-    margin: 20px 0;
   }
   .contact{
     max-width: 700px;

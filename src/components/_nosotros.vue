@@ -1,8 +1,5 @@
 <template>
   <div id="nosotros">
-    <header>
-        <header-menu></header-menu>
-    </header>
     <section class="abouts maxcontainer">
       <div class="about_item" :style="{ 'boxShadow': styles.boxShadow, 'border': styles.border }">
         <h2>Nosotros</h2>
@@ -21,10 +18,7 @@
 </template>
 
 <script>
-import headerMenu from './menu2.vue';
-
 export default {
-  components: { headerMenu },
   computed: {
     styles(){
       return {

@@ -7,10 +7,10 @@
 			<img :src="`https://komercia.co/tumb/${data.foto}`">
 		</div>
 		<div class="product_content">
-			<h2 class="text">{{data.nombre}}</h2>
+			<h2 class="text">{{ data.nombre | capitalize }}</h2>
 			<div class="product_content_info">
 				<!--<p>&#9733 &#9733 &#9733 &#9733 &#9734;</p>-->
-				<p v-show="precio">{{precio}}</p>
+				<p v-show="precio">{{ precio | currency }}</p>
 			</div>
 			<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
 			<div class="quantity">
@@ -96,6 +96,19 @@
 				this.$store.commit('updateContentCart');
 				this.$store.commit('productsPurchased');
 			}
+		},
+		filters: {
+			currency(value) {
+	      if(value){
+	        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+	      }
+	    },
+			capitalize(value){
+				if(value){
+					value = value.toLowerCase();
+					return value.replace(/^\w|\s\w/g, l => l.toUpperCase())
+				}
+			},
 		}
 	}
 </script>

@@ -1,19 +1,24 @@
 <template>
   <div id="app" :style="stylesConf">
+    <header class="ko_header" :style="stylesConf.colorPrincipal">
+			<header-menu></header-menu>
+		</header>
     <router-view></router-view>
     <footer-component></footer-component>
   </div>
 </template>
 
 <script>
+import headerMenu from './components/menu2.vue';
 import footerComponent from './components/footer.vue'
 export default {
   name: 'app',
-  components: { footerComponent },
+  components: { headerMenu, footerComponent },
   data() {
     return {
       stylesConf: {
         color: this.$store.state.colorTexto,
+        colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
       }
     }
   }
@@ -29,6 +34,13 @@ export default {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
+}
+.ko_header{
+  position: relative;
+  width: 100%;
+  height: 90px;
+  background-color: #9b9b9b;
+  padding: 0 20px;
 }
 .block{
   font-weight: bold;

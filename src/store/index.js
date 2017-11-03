@@ -51,7 +51,14 @@ export const store = new Vuex.Store({
         nombre: 'Nombre del producto',
         precio: '14999',
       }
-    ]
+    ],
+    mediospago: {
+      epayco: false,
+    },
+    politicas: {
+      garantia: '',
+      datos: '',
+    },
   },
   mutations: {
     updateContentCart (state) {
@@ -87,5 +94,7 @@ axios.get(`https://komercia.co/api/front/tienda/${conf.id}`).then((response) => 
   store.state.categorias = response.data.data.categorias;
   store.state.subcategorias = response.data.data.subcategorias;
   store.state.geolocalizacion = response.data.data.geolocalizacion;
+  store.state.mediospago = response.data.data.medios_pago | { epayco: false };
+  store.state.politicas = response.data.data.politicas | { garantia: '', datos: '' };
   store.state.tienda = response.data.data.tienda;
 })

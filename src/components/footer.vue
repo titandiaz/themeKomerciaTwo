@@ -43,11 +43,12 @@
           <router-link to="/garantias">Politicas de garantia</router-link>
           <router-link to="/nosotros">Sobre nosotros</router-link>
         </div>
+        <img class="image_security" v-show="mediospago.epayco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/powered.png" alt="">
       </div>
         <div class="footer_last">
           <span class="effects"></span>
           <p class="text">Desarrollado por komercia.co</p>
-          <img src="https://komercia.co/template3/static/img/komercia.png">
+          <img src="../assets/komercia.png">
         </div>
   </footer>
 </template>
@@ -61,6 +62,12 @@
       }
     },
     computed: {
+      politicas() {
+        return this.$store.state.politicas;
+      },
+      mediospago() {
+          return this.$store.state.mediospago;
+      },
       addresses(){
         if(this.$store.state.geolocalizacion){
           return this.$store.state.geolocalizacion.slice(0, 3);
@@ -199,7 +206,7 @@ footer{
   transform: scale(0.95);
 }
 .footer_about_legal{
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: center;
 }
@@ -207,6 +214,9 @@ footer{
   margin: 0 6px;
   text-decoration: underline;
   color: gray;
+}
+.image_security{
+  width: 600px;
 }
 .footer_last{
   width: 100%;

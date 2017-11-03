@@ -41,6 +41,7 @@ export default {
   .swiper-container {
     width: 100%;
     height: 100%;
+    background-color: #FFF;
   }
   .swiper-slide {
       text-align: center;
