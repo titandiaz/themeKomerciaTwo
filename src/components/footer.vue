@@ -48,7 +48,7 @@
         <div class="footer_last">
           <span class="effects"></span>
           <p class="text">Desarrollado por komercia.co</p>
-          <img src="../assets/komercia.png">
+          <img src="/template3/komercia.png">
         </div>
   </footer>
 </template>

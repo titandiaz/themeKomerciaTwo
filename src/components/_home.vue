@@ -41,7 +41,7 @@
       </div>
       <section class="features maxcontainer">
           <div class="features_item">
-            <img src="../assets/cards.png" alt="">
+            <img src="/template3/cards.png" alt="">
             <div class="features_item_info">
               <h3>Pagos online</h3>
               <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="features_item">
-            <img src="../assets/mensajero.png" alt="">
+            <img src="/template3/mensajero.png" alt="">
             <div class="features_item_info">
               <h3>Recibe tu producto</h3>
               <p>Recibe tus compras sin salir de casa Enviamos tus productos con seguridad</p>
