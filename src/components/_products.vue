@@ -40,23 +40,18 @@
 				</div>
 			</aside>
 			<section class="products_list">
-				<div  v-show="paginationActions" class="pagination_actions">
-					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
-					<button class="prev" v-on:click="prevPagination"><i class="material-icons">keyboard_arrow_left</i></button>
-					<button class="next" v-on:click="nextPagination"><i class="material-icons">keyboard_arrow_right</i></button>
-				</div>
 				<div v-if="products" class="pagination">
 					<product v-for="product in products" :data="product" :key="product.id"></product>
 					<product v-if="productsData.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
+					<infinite-loading @infinite="infiniteHandler">
+						<span slot="no-more">
+							There is no more Hacker News :(
+						</span>
+					</infinite-loading>
 					<div v-show="productsData.length != 0 & products.length == 0" class="empty_products">
 						<p>No hay productos</p>
 						<button :style="styles.colorPrincipal" v-on:click="allSelectCat">Ver todos los productos</button>
 					</div>
-				</div>
-				<div v-show="paginationActions" class="pagination_actions">
-					<p>Pagina {{ pages }}  de {{ calcQuantityPages() }}</p>
-					<button class="prev" v-on:click="prevPagination"><i class="material-icons">keyboard_arrow_left</i></button>
-					<button class="next" v-on:click="nextPagination"><i class="material-icons">keyboard_arrow_right</i></button>
 				</div>
 			</section>
 		</div>
@@ -86,8 +81,7 @@
 				selCat: 0,
 				filteredProducts: null,
 				products: null,
-				moreProducts: 40,
-				pages: 1,
+				moreProducts: 0,
 				paginationActions: true,
 			}
 		},
@@ -102,7 +96,7 @@
 				this.$store.commit('productsPurchased');
 			},
 	    productsData: function (value) {
-				this.products = this.productsData.slice(0, this.moreProducts);
+				this.products = this.productsData.slice(0, 40);
 				this.$store.commit('productsPurchased');
 	    }
   	},
@@ -133,29 +127,17 @@
 			}
 		},
 		methods: {
-			calcQuantityPages(){
-				if(Math.ceil(this.productsData.length / 40) != 0){
-					return Math.ceil(this.productsData.length / 40);
-				}else{
-					return 1;
-				}
-			},
-			nextPagination(){
-				if(this.pages < this.calcQuantityPages()){
-					this.$store.commit('productsPurchased');
-					this.products = this.productsData.slice(this.moreProducts, this.moreProducts + 40);
-					this.moreProducts += 40;
-					this.pages++;
-				}
-				document.body.scrollTop = 0;
-			},
-			prevPagination(){
-				if(this.pages > 1){
-					this.$store.commit('productsPurchased');
-					this.moreProducts -= 40;
-					this.products = this.productsData.slice(this.moreProducts - 40, this.moreProducts);
-					this.pages--;
-				}
+			infiniteHandler($state) {
+				let data = this.productsData.slice(this.moreProducts, this.moreProducts + 40);
+				this.moreProducts += 40;
+				this.products = this.products.concat(data);
+				setTimeout(() => {
+					if(this.productsData.length <= this.moreProducts){
+						$state.complete();
+					}else{
+						$state.loaded();
+					}
+				}, 1000)
 			},
 			handleScroll(){
 				if (document.body.scrollTop > 60) {

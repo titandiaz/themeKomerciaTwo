@@ -117,6 +117,9 @@ footer{
   align-items: center;
   padding: 20px 50px;
 }
+.footer_info, .footer_content_social, .footer_actions{
+  width: 33%;
+}
 .footer_info{
   display: flex;
   flex-direction: column;
@@ -142,7 +145,7 @@ footer{
 }
 .footer_content_social{
   display: flex;
-  margin-left: 190px;
+  justify-content: center;
 }
 .footer_content_social_item{
   width: 50px;
@@ -161,8 +164,6 @@ footer{
   transform: scale(3);
 }
 .footer_actions{
-  max-width: 505px;
-  width: 100%;
   display: flex;
   justify-content: center;
   padding: 30px 0;

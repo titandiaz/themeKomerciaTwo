@@ -7,13 +7,15 @@
     <header>
         <header-menu></header-menu>
     </header>
-    <div id="map"></div>
-    <div class="contact" :style="styles.borderColor">
+    <div class="contacto_content">
+      <div id="map"></div>
+      <div class="contact" :style="styles.borderColor">
         <input type="text" placeholder="Nombres" v-model="nombre">
         <input type="text" placeholder="Correo Electronica" v-model="email">
         <input type="text" placeholder="Celular" v-model="numberphone">
         <textarea rows="8" placeholder="Comentrario" v-model="comment"></textarea>
         <button class="submitContact" :style="styles.backgroundColor" v-on:click="submitContact">Enviar</button>
+      </div>
     </div>
   </div>
 </template>
@@ -106,7 +108,6 @@ export default {
 <style scoped>
   #contacto{
     width: 100%;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,24 +119,28 @@ export default {
     background-color: #9b9b9b;
     padding: 0 20px;
   }
+  .contacto_content{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
   #map {
-    width: 98%;
-    height: 500px;
-    margin-top: 10px;
+    width: 600px;
+    height: 600px;
     background-color: #EEE;
+    margin: 20px 0;
   }
   .contact{
-    position: absolute;
     max-width: 700px;
     width: 96%;
-    margin: 0 auto;
     bottom: 10px;
     background-color: #FFF;
     padding: 0px 16px;
     border-radius: 12px;
     border-width: 1px;
     border-style: solid;
-    box-shadow: 0 14px 31px 6px rgba(121, 121, 121, 0.3);
+    box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.1);
   }
   .contact input, .contact textarea{
     width: 100%;
@@ -171,6 +176,7 @@ export default {
     color: #FFF;
     border-radius: 15px;
     outline: none;
+    cursor: pointer;
   }
   .message{
     position: absolute;

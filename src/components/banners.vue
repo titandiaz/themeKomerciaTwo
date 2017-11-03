@@ -1,7 +1,7 @@
 <template>
   <swiper :options="swiperOption">
     <!-- slides -->
-    <swiper-slide v-for="banner in banners" :key="banner.id"><img :src="`https://komercia.co/banners/${banner.ruta_banner}`" alt=""></swiper-slide>
+    <swiper-slide v-for="banner in banners" :key="banner.id"><div class="banner" :style="setBackground(banner.ruta_banner)"></div></swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
   </swiper>
@@ -27,6 +27,11 @@ export default {
         computed: {
           banners(){
             return this.$store.state.banners;
+          }
+        },
+        methods: {
+          setBackground(banner){
+            return `background-image: url('https://komercia.co/banners/${banner}'); background-size: cover; background-position: 50%;`;
           }
         }
       }
@@ -55,9 +60,9 @@ export default {
       -webkit-align-items: center;
       align-items: center;
   }
-  .swiper-slide img{
+  .swiper-slide .banner{
     width: 100%;
-    height: 100%;
+    height: 500px;
     margin: 0 auto;
   }
   .swiper-pagination-bullet{
