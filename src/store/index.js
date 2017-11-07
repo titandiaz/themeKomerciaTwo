@@ -23,7 +23,7 @@ export const store = new Vuex.Store({
     categorias: [],
     productos: [],
     subcategorias: [],
-    geolocalizacion: [],
+    geolocalizacion: null,
     tienda: {},
     productsCart: cart,
     totalCart: 0,
@@ -70,6 +70,9 @@ export const store = new Vuex.Store({
         setTimeout(()=>{
           if(document.getElementById(product.id)){
             document.getElementById(product.id).classList.add('bought');
+            document.getElementById(product.id).style.borderColor = state.colorSecundario;
+            document.getElementById(product.id).querySelector('.quantity_add').style.cssText = `border-color: ${state.colorSecundario}; color: ${state.colorSecundario};`;
+            document.getElementById(product.id).querySelector('.quantity_remove').style.cssText = `border-color: ${state.colorSecundario}; color: ${state.colorSecundario};`;
           }
         }, 500)
       }
