@@ -98,9 +98,9 @@ export default {
     height: 100vh;
     background-color: rgba(255,255,255,0.5);
     z-index: 10;
-    right: -100%;
     opacity: 0;
-    transition: opacity .1s, right .3s;
+    visibility: hidden;
+    transition: .2s;
   }
   #closeOrder{
     cursor: pointer;
@@ -123,7 +123,7 @@ export default {
   }
   #order.activeOrder{
     opacity: 1;
-    right: 0%;
+    visibility: visible;
   }
   .order.active{
     right: 0;
