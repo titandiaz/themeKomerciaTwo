@@ -100,7 +100,7 @@
 		filters: {
 			currency(value) {
 	      if(value){
-	        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+	        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
 	      }
 	    },
 			capitalize(value){
@@ -125,7 +125,8 @@
 		transition: all .3s;
 	}
 	.product.bought{
-		border: solid 0.5px green;
+		border-style: solid;
+		border-width: 1px;
 	}
 	.product:hover {
 		transform: scale(1.05);
@@ -173,19 +174,19 @@
 		transition: .5s;
 	}
 	.product.bought .product_content #actionAddCart{
-		color: green;
-		border: 1px solid green;
+		/*color: green;
+		border: 1px solid green;*/
 	}
 	.product_content #actionAddCart i{
 		height: 100%;
 		font-size: 15px;
-		border-left: solid 1px #e9e9e9;
+		/*border-left: solid 1px #e9e9e9;*/
 		margin-left: 10px;
 		padding-left: 10px;
 		pointer-events: none;
 	}
 	.product.bought .product_content #actionAddCart i{
-		border-left: solid 1px green;
+		/*border-left: solid 1px green;*/
 	}
 	.product.bought #actionAddCart{
 		display: none;
@@ -208,8 +209,8 @@
 		border-style: none;
 		background-color: transparent;
 		border-radius: 19px;
-		color: green;
-		border: 1px solid green;
+		border-style: solid;
+		border-width: 1px;
 		padding: 5px 20px;
 		display: flex;
 		align-items: center;

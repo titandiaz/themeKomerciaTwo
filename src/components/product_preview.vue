@@ -28,7 +28,6 @@
       this.data, this.beforeData = data[0];
       axios.get(`https://komercia.co/api/front/producto/${this.$route.params.id}`).then((response) => {
         this.selectedPhoto(response.data.foto)
-        console.log(response.data, data)
         this.data = Object.assign(response.data, data[0]);
       }).catch((error) => {
       });

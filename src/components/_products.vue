@@ -40,10 +40,8 @@
 				<div v-if="products" class="pagination">
 					<product v-for="product in products" :data="product" :key="product.id"></product>
 					<product v-if="productsData.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
-					<infinite-loading @infinite="infiniteHandler">
-						<span slot="no-more">
-							There is no more Hacker News :(
-						</span>
+					<infinite-loading @infinite="infiniteHandler" spinner="spiral">
+						<span slot="no-more">AA </span>
 					</infinite-loading>
 					<div v-show="productsData.length != 0 & products.length == 0" class="empty_products">
 						<p>No hay productos</p>
