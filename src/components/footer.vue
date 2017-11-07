@@ -39,9 +39,9 @@
           <button class="footer_actions_subscribe" v-on:click="submitNewsletter">Suscribete</button>
         </div>
         <div class="footer_about_legal">
-          <router-link to="/manejo-de-datos">Politicas de manejo de datos</router-link>
-          <router-link to="/garantias">Politicas de garantia</router-link>
-          <router-link to="/nosotros">Sobre nosotros</router-link>
+          <router-link to="/manejo-de-datos" v-show="politicas.datos != ''">Politicas de manejo de datos</router-link>
+          <router-link to="/garantias" v-show="politicas.garantia != ''">Politicas de garantia</router-link>
+          <router-link to="/nosotros" v-show="tienda.nosotros != '' || tienda.mision != '' || tienda.vision != ''">Sobre nosotros</router-link>
         </div>
         <img class="image_security" v-show="mediospago.epayco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/powered.png" alt="">
       </div>
@@ -62,6 +62,9 @@
       }
     },
     computed: {
+      tienda() {
+        return this.$store.state.tienda;
+      },
       politicas() {
         return this.$store.state.politicas;
       },
