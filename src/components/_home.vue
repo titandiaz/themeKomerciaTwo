@@ -127,7 +127,7 @@
   .placeholder_banners svg{
     display: block;
     fill: rgba(120,129,136,0.35);
-    background-color: rgba(120,129,136,0.1);
+    background-color: #FFF;
     width: 100%;
     height: 100%;
     max-width: 100%;

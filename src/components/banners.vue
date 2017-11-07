@@ -63,7 +63,8 @@ export default {
   }
   .swiper-slide .banner{
     width: 100%;
-    height: 500px;
+    max-height: 500px;
+    height: 60vw;
     margin: 0 auto;
   }
   .swiper-pagination-bullet{
