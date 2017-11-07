@@ -19,7 +19,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: #FFF;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 0 40px;
   }
   header{
     width: 100%;
