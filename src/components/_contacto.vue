@@ -5,7 +5,10 @@
       <p>{{message.text}}</p>
     </div>
     <div class="contacto_content">
-      <div id="map"></div>
+      <div class="maps">
+        <div id="map"></div>
+        <!-- <div class="map_degrade"></div> -->
+      </div>
       <div class="contact" :style="styles.borderColor">
         <input type="text" placeholder="Nombres" v-model="nombre">
         <input type="text" placeholder="Correo Electronica" v-model="email">
@@ -25,7 +28,7 @@ export default {
     this.makeMap();
   },
   watch: {
-    '$store.state.geolocalizacion': function(){
+    '$store.state.geolocalizacion': () => {
       this.makeMap();
     },
   },
@@ -121,10 +124,38 @@ export default {
     align-items: center;
     margin: 20px 0;
   }
+  .maps{
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    max-height: 480px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    margin: 0 10px;
+  }
   #map {
-    width: 480px;
+    max-width: 480px;
+    width: 100%;
     height: 480px;
+
     background-color: #EEE;
+  }
+  .map_degrade{
+    pointer-events: none;
+    position: absolute;
+    width: 580px;
+    height: 580px;
+    background: rgba(255,255,255,0);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0) 0%, rgba(192,202,51,0.74) 45%, rgba(192,202,51,1) 61%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,255,255,0)), color-stop(45%, rgba(192,202,51,0.74)), color-stop(61%, rgba(192,202,51,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0) 0%, rgba(192,202,51,0.74) 45%, rgba(192,202,51,1) 61%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,0) 0%, rgba(192,202,51,0.74) 45%, rgba(192,202,51,1) 61%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,0) 0%, rgba(192,202,51,0.74) 45%, rgba(192,202,51,1) 61%);
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0) 0%, rgba(192,202,51,0.74) 45%, rgba(192,202,51,1) 61%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c0ca33', GradientType=1 );
   }
   .contact{
     max-width: 700px;
@@ -136,6 +167,7 @@ export default {
     border-width: 1px;
     border-style: solid;
     box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
   }
   .contact input, .contact textarea{
     width: 100%;
@@ -205,5 +237,13 @@ export default {
     height: initial;
     opacity: 1;
     transform: translateY(20px);
+  }
+  @media(max-width: 920px){
+    .contacto_content{
+      flex-direction: column;
+    }
+    .maps{
+      margin-bottom: 10px;
+    }
   }
 </style>
