@@ -1,6 +1,5 @@
 <template>
 	<div id="products">
-		<router-view></router-view>
 		<order></order>
 		<div class="header_fixed" :style="styles.colorPrincipal">
 			<i class="material-icons toggleFilters" v-on:click="toggleFilters">filter_list</i>
@@ -38,27 +37,27 @@
 			</aside>
 			<section class="products_list">
 				<div v-if="products" class="pagination">
-					<product v-for="product in products" :data="product" :key="product.id"></product>
-					<product v-if="productsData.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
-					<infinite-loading @infinite="infiniteHandler" spinner="spiral">
-						<span slot="no-more">AA </span>
-					</infinite-loading>
+					<product v-for="product in products" v-show="product.foto != ''" :data="product" :key="product.id"></product>
+					<product v-if="productsData.length == 0" v-for="product in productsPlaceholder" v-show="product.foto != ''" :data="product" :key="product.id"></product>
 					<div v-show="productsData.length != 0 & products.length == 0" class="empty_products">
 						<p>No hay productos</p>
 						<button :style="styles.colorPrincipal" v-on:click="allSelectCat">Ver todos los productos</button>
 					</div>
+					<infinite-loading @infinite="infiniteHandler" spinner="spiral">
+						<span slot="no-more"></span>
+					</infinite-loading>
 				</div>
 			</section>
 		</div>
 	</div>
 </template>
 <script>
-  import product from './product.vue';
+  import Product from './product.vue';
 	import Order from './order.vue';
 	import InfiniteLoading from 'vue-infinite-loading';
 
 	export default {
-		components: { product, Order, InfiniteLoading },
+		components: { Product, Order, InfiniteLoading },
 		created(){
 			window.addEventListener('scroll', this.handleScroll);
 		},
@@ -96,7 +95,7 @@
   	},
 		computed: {
 			productsPlaceholder(){
-				return this.$store.state.productsPlaceholder
+				return this.$store.state.productsPlaceholder;
 			},
 			productsCart(){
 				return	this.$store.state.productsCart.length;
@@ -245,6 +244,7 @@
 		font-size: 1em;
 	}
 	.material-icons.toggleFilters{
+		color: #FFF;
 		cursor: pointer;
 	}
 	.products{
@@ -260,7 +260,6 @@
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
-		/*background-color: #EEE;*/
 	}
 	.sticky{
 		position: sticky;
