@@ -1,139 +1,285 @@
 <template>
-  <div id="modalProduct" v-on:click="closeModal">
-    <div class="product">
-      <div class="photos">
-        <img :src="`https://komercia.co/tumb/${selectPhotoUrl}`" :alt="data.nombre" class="photo_main">
-        <div class="photos_selected">
-          <img :src="`https://komercia.co/tumb/${data.foto}`" v-on:click="selectedPhoto(data.foto)">
-          <img :src="`https://komercia.co/tumb/${foto.foto}`" v-on:click="selectedPhoto(foto.foto)" v-for="foto in data.fotos">
+    <div class="product" v-if="data.detalle">
+      <div class="wrapper">
+        <div class="section">
+          <div class="photos">
+            <div class="photos_selected">
+              <img :src="setMiniPhoto(data.detalle.foto)" v-on:mouseover="selectedPhoto(data.detalle.foto)">
+              <img :src="setMiniPhoto(foto.foto)" v-on:mouseover="selectedPhoto(foto.foto)" v-for="foto in data.fotos">
+              <img :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
+            </div>
+            <div class="photo_main">
+              <zoomed v-show="!existYoutube" :photo="selectPhotoUrl"></zoomed>
+              <iframe v-show="existYoutube" width="400" height="250" :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+          <div class="content">
+            <h2 class="content_name">{{data.detalle.nombre}}</h2>
+            <div class="content_buy_price">
+              <h3 class="colorPrincipal">{{ precio }}</h3>
+              <p class="colorPrincipal">COP</p>
+            </div>
+            <p><strong>{{ data.info.marca }}</strong></p>
+            <!-- <p>{{beforeCombination}}</p> -->
+            <div class="content_variant">
+              <div class="content_variant_item" v-for="(variant, index) in data.variantes">
+                <label>{{ variant.nombre }}:</label><ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
+              </div>
+            </div>
+            <div class="content_buy">
+              <div class="quantity">
+                <button class="quantity_remove" v-on:click="removeQuantity()"><i class="material-icons">remove</i></button>
+                <p class="quantity_value">{{ quantityValue }}</p>
+                <button class="quantity_add" v-on:click="addQuantity()"><i class="material-icons">add</i></button>
+              </div>
+              <button class="content_buy_action" v-if="bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">VER CARRITO<i class="material-icons">add_shopping_cart</i></button>
+              <button class="content_buy_action" v-else :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="content">
-        <i id="closeModal" class="material-icons close">close</i>
-        <h2 class="content_name">{{data.nombre}}</h2>
-        <div class="content_buy">
-          <h3 class="content_buy_price">{{precio}}</h3>
-          <button class="content_buy_action" v-show="!bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+        <div class="section">
+          <div class="content_desc" v-show="data.info.descripcion.length > 12">
+            <h3>Descripcion del producto</h3>
+            <div v-html="data.info.descripcion"></div>
+          </div>
+          <div class="features">
+            <div class="features_item">
+              <img v-show="false" class="epayco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/epayco/epayco_pago_seguro_black.png">
+              <img v-show="false" class="efecty" src="../assets/efecty.png" alt="">
+              <img v-show="false" class="convenir" src="../assets/conversation.png" alt="">
+              <img v-show="true" class="tienda" src="../assets/pagos_store.png" alt="">
+              <div class="features_item_info">
+                <h3>Medios de pago</h3>
+                <p>Esta tienda cuenta con</p>
+              </div>
+            </div>
+            <div class="features_item">
+              <img src="/template3/mensajero.png" alt="">
+              <div class="features_item_info">
+                <h3>{{ envio.titulo }}</h3>
+                <p>{{ envio.desc }}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="content_desc" id="contentDesc"></p>
+        <ko-collapse></ko-collapse>
       </div>
     </div>
-  </div>
 </template>
 <script>
   import axios from 'axios';
+  import zoomed from './zoomed.vue';
   export default{
+    components: { zoomed },
     created() {
-      let data = this.$store.state.productos.filter((product) => { if(product.id == this.$route.params.id){ return product}});
-      this.data, this.beforeData = data[0];
-      // this.beforeData = data[0];
-      axios.get(`https://komercia.co/api/front/producto/${this.$route.params.id}`).then((response) => {
-        this.selectedPhoto(response.data.foto)
-        this.data = Object.assign(response.data, this.data);
-        var html = this.data.descripcion;
-        var div = document.getElementById('contentDesc');
-        div.innerHTML = html;
-        return div.textContent || div.innerText || "";
-      }).catch((error) => {
-      });
-      this.ifBoughtYet();
+      axios.get(`${this.$urlHttp}/api/front/producto/${this.$route.params.id}`).then((response) => {
+        this.selectedPhoto(response.data.detalle.foto);
+        this.videoYoutube(response.data.info.video);
+        this.data = response.data;
+        for(let [index, productCart] of this.$store.state.productsCart.entries()){
+          if(this.data.detalle.id == productCart.id){
+            this.bought = true;
+            this.quantity(productCart)
+            this.data.cantidad = productCart.cantidad;
+            this.productIndexCart = index;
+          }
+        }
+      })
+    },
+    mounted(){
+      if(Object.keys(this.$store.state.envios).length){
+        this.setOptionEnvio();
+      }
     },
     data() {
       return {
         data: {},
         selectPhotoUrl: '',
         bought: false,
+        idYoutube: '',
+        existYoutube: false,
+        quantityValue: 1,
+        productIndexCart: 0,
+        productCart: {},
+        envio: {
+          titulo: '',
+          desc: ''
+        },
+      }
+    },
+    watch: {
+      envios(value){
+        this.setOptionEnvio();
+      },
+      beforeCombination(value){
+        let combinaciones = JSON.parse(this.data.combinaciones.combinaciones);
+        combinaciones.filter((combinacion, index) => {
+            if(value[0] != ''){
+              if(value[0] == combinacion.combinacion[0]){
+                // console.log(index)
+              }
+            }
+            if(value[1] != ''){
+              if(value[1] == combinacion.combinacion[1]){
+                // console.log(index)
+              }
+            }
+            if(value[2] != ''){
+              if(value[2] == combinacion.combinacion[2]){
+                // console.log(index)
+              }
+            }
+        })
       }
     },
     computed: {
+      beforeCombination(){
+        return this.$store.state.beforeCombination;
+      },
       styles(){
         return {
           backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
         }
       },
+      envios(){
+        return this.$store.state.envios;
+      },
       precio() {
-				if(this.data.precio){
-					return `$${this.data.precio}`;
+				if(this.data.detalle.precio){
+          return `$${this.data.detalle.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
 				}
 			}
     },
     methods: {
-      closeModal(e){
-        if(e.target.id == "modalProduct" || e.target.id == "closeModal"){
-          this.$router.push('/catalogo');
+      setOptionEnvio(){
+        switch (this.envios.valores.envio_metodo) {
+          case 'gratis':
+            this.envio = {
+              titulo: 'Envío gratis',
+              desc: 'Disfruta de este obsequio por parte de la tienda.',
+            }
+          break;
+          case 'tarifa_plana':
+            this.envio = {
+              titulo: 'Tarifa plana',
+              desc: 'Este costo de envio no varia',
+            }
+          break;
+          case 'precio':
+            this.envio = {
+              titulo: 'Tarifa por precio',
+              desc: 'Segun la suma del costo de tus productos te cobraran el envio',
+            }
+          break;
+          case 'peso':
+            this.envio = {
+              titulo: 'Tarifa por peso',
+              desc: '',
+            }
+          break;
+          default:
+
         }
       },
-      selectedPhoto(f){
-        this.selectPhotoUrl = f;
+      quantity(productCart){
+					this.quantityValue = productCart.cantidad;
+			},
+      addQuantity(){
+        this.quantityValue++;
+        this.data.cantidad = this.quantityValue;
+			},
+			removeQuantity(){
+				if(this.productCart.cantidad >= 2){
+          this.quantityValue--;
+          this.data.cantidad = this.quantityValue;
+				}
+			},
+      setMiniPhoto(photo){
+        if(photo){
+          return `${this.$urlHttp}/mini/${photo}`;
+        }
       },
-      ifBoughtYet(){
-        for(let productCart of this.$store.state.productsCart){
-          if(this.beforeData.id == productCart.id){
-            this.bought = true;
-          }
+      selectedPhoto(photo){
+        if(photo){
+          this.selectPhotoUrl = `${this.$urlHttp}/productos/${photo}`;
+          this.existYoutube = false;
+        }
+      },
+      videoYoutube(video){
+        if(video != ''){
+          let index = video.indexOf('?v=')+3;
+          this.idYoutube = video.substring(index);
         }
       },
       addShoppingCart(){
-        this.beforeData.cantidad = 1;
-        this.$store.state.productsCart.push(this.beforeData);
+        let product = {
+          id: this.data.detalle.id,
+          precio: this.data.detalle.precio,
+          cantidad: this.data.cantidad,
+          foto: this.data.detalle.foto,
+          nombre: this.data.detalle.nombre,
+        }
+        this.$store.state.productsCart.push(product);
         this.bought = true;
         this.$store.commit('updateContentCart');
+        this.$router.push('/pedido');
       }
     }
   }
 </script>
 <style scoped>
-  #modalProduct{
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(255,255,255,0.8);
-    z-index: 4;
-  }
   .product{
-    width: 650px;
-    height: 380px;
-    display: flex;
     background-color: #FFF;
-    padding: 30px;
-    border-radius: 4px;
-    box-shadow: 0 0 31px 7px rgba(121, 121, 121, 0.29);
   }
-  .photos{
-    width: 250px;
-    height: 100%;
+  .wrapper{
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    padding: 30px;
+  }
+  .section{
+    display: flex;
+    justify-content: space-between;
+  }
+  .photos{
+    display: flex;
     justify-content: center;
     align-items: center;
   }
-  .photo_main{
-    max-width: 90%;
-    max-height: 70%;
-    box-shadow: 0 1px 5px 0px rgba(0,0,0,0.3);
-    border-radius: 12px;
-    margin-bottom: 10px;
-  }
   .photos_selected{
-    width: 100%;
+    width: 80px;
     display: flex;
-    justify-content: space-around;
+    flex: none;
+    flex-direction: column;
     align-items: center;
+    margin-right: 20px;
   }
   .photos_selected img{
-    width: 23%;
+    width: 100%;
     box-shadow: 0 0px 5px 0px rgba(0,0,0,0.1);
     border-radius: 4px;
     cursor: pointer;
+    margin: 5px;
+  }
+  .photo_main{
+    max-width: 450px;
+    max-height: 400px;
+    height: 100%;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .content{
-    width: calc(100% - 250px);
-    height: 100%;
+    width: 350px;
+    height: 400px;
     display: flex;
     flex-direction: column;
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   }
   i.close{
     color: black;
@@ -142,26 +288,36 @@
   }
   .content_name{
     font-weight: normal;
-    color: black;
+    color: #333;
     margin: 7px 0;
   }
   .content_buy{
-    display: flex;
     flex: none;
+    display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 7px 0;
   }
   .content_buy_price{
+    display: flex;
+    align-items: flex-end;
+    margin: 10px 0;
+  }
+  .content_buy_price h3{
     font-weight: normal;
+    font-size: 40px;
+  }
+  .content_buy_price p{
+    margin-bottom: 8px;
   }
   .content_buy_action{
     display: flex;
-    padding: 0 15px;
+    padding: 5px 20px;
     align-items: center;
     color: #FFF;
     border-style: none;
     border-radius: 12px;
-    box-shadow: 0 1px 7px 0 rgba(155, 155, 155, 0.6);
+    /*box-shadow: 0 1px 7px 0 rgba(155, 155, 155, 0.6);*/
     font-size: 13px;
     cursor: pointer;
     outline: none;
@@ -173,33 +329,164 @@
   .content_buy_action i{
     font-size: 19px;
     margin-left: 10px;
-    border-left: 1px solid #FFF;
     padding: 4px 0px;
     padding-left: 10px;
   }
   .content_desc{
+    display: flex;
+    flex-direction: column;
     color: black;
-    margin: 7px 0;
+    padding: 30px 0;
+    margin-right: 20px;
     font-size: 14px;
     line-height: 1.5;
     overflow-y: auto;
+    text-align: justify;
   }
-@media(max-width: 710px){
-  .product{
-    position: relative;
-    width: 95%;
-    min-height: 97vh;
+  .content_desc *{
+    color: #333;
+  }
+  .content_variant{
     display: flex;
     flex-direction: column;
+    margin: 5px 0;
+  }
+  .content_variant_item{
+    display: flex;
     align-items: center;
   }
-  .photos{
-    width: 70%;
-    height: initial;
+  .content_variant_item label{
+    margin-right: 10px;
+    color: #333;
+  }
+  .quantity{
+		width: 140px;
+    display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+    align-items: center;
+  }
+	.quantity em{
+		width: 100%;
+		text-align: center;
+		margin-bottom: 10px;
+		font-size: 13px;
+	}
+	.product.bought .quantity{
+		display: flex;
+	}
+	.quantity_remove, .quantity_add{
+		border-style: none;
+		background-color: #FFF;
+		border-radius: 10px;
+		box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.1);
+		padding: 5px 10px;
+		display: flex;
+		align-items: center;
+		outline: none;
+		cursor: pointer;
+		transition: .3s;
+	}
+	.quantity_value{
+		margin: 0 10px;
+    font-weight: normal;
+    color: #333;
+	}
+	.quantity_remove:hover, .quantity_add:hover, #actionAddCart:hover{
+		transform: scale(1.1);
+	}
+	.quantity_remove i, .quantity_add i{
+    color: #333;
+		font-size: 14px;
+    font-weight: bold;
+		pointer-events: none;
+	}
+  .features{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 30px 0px;
+    background-color: #FFF;
+  }
+  .features_item{
+    width: 500px;
+    min-height: 155px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
+    margin: 10px 0;
+    padding: 0 25px;
+  }
+  .features_item:nth-child(2) img{
+    align-self: flex-end;
+  }
+  .features_item_info{
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .features_item_info h3{
+    font-size: 16px;
+    color: #333;
+  }
+  .features_item_info p{
+    font-size: 14px;
+    margin: 8px 0;
+    color: #333;
+  }
+  .features_item_info a{
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+  }
+  .features_item .epayco{
+    width: 85%;
+    margin: 8px 0;
+  }
+  .features_item .efecty{
+    max-width: 200px;
+    max-height: 200px;
+  }
+  .features_item .convenir{
+    max-width: 100px;
+    max-height: 100px;
+  }
+  .features_item .tienda{
+    max-width: 100px;
+    max-height: 100px;
+  }
+@media(max-width: 1150px){
+  .section:nth-child(2){
+    flex-direction: column;
+  }
+  .features_item{
+    max-width: 500px;
+    width: 100%;
+  }
+}
+@media(max-width: 1000px){
+  .section:nth-child(1){
+    flex-direction: column;
   }
   .content{
     width: 100%;
     height: initial;
+  }
+}
+@media(max-width: 710px){
+  .product{
+    position: relative;
+    width: 100%;
+    min-height: 97vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   i.close{
     position: absolute;
