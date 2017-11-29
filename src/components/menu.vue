@@ -1,11 +1,11 @@
 <template>
 	<div class="menu">
 		<ul class="maxcontainer">
-			<li><router-link to="/">Inicio</router-link></li>
-			<li><router-link to="/catalogo">Catalogo</router-link></li>
+			<li><router-link to="/" v-show="">Inicio</router-link></li>
+			<li><router-link to="/catalogo" v-show="$route.path != 'catalogo'">Catalogo</router-link></li>
 			<router-link to="/" class="logo_full">
 				<figure class="logo">
-					<img v-if="info.logo" :src="`https://komercia.co/logos/${info.logo}`" alt="">
+					<img v-if="info.logo" :src="`${$urlHttp}/logos/${info.logo}`" alt="">
 				</figure>
 			</router-link>
 			<li><router-link to="/pedido">Carrito</router-link></li>

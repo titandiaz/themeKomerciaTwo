@@ -31,7 +31,7 @@ export default {
         },
         methods: {
           setBanner(banner){
-            return `https://komercia.app/banners/${banner}`;
+            return `${this.$urlHttp}/banners/${banner}`;
           }
         }
       }

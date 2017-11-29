@@ -2,7 +2,7 @@
   <div class="header_main maxcontainer">
     <router-link to="/" class="header_brand">
         <figure class="header__logo">
-          <img v-if="info.logo" :src="`https://komercia.co/logos/${info.logo}`" alt="">
+          <img v-if="info.logo" :src="`${$urlHttp}/logos/${info.logo}`" alt="">
         </figure>
         <h1 class="header__title">{{ info.nombre }}</h1>
     </router-link>

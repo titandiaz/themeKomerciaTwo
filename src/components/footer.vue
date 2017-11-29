@@ -106,7 +106,7 @@
           correo: this.email,
           tienda: this.$store.state.id,
         }
-        axios.post('https://komercia.co/api/front/suscriptores', json)
+        axios.post(`${this.$urlHttp}/api/front/suscriptores`, json)
       }
     }
   }
@@ -123,7 +123,7 @@ footer{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 20px 50px;
 }
@@ -215,6 +215,7 @@ footer{
 }
 .footer_about_legal a{
   margin: 0 6px;
+  font-size: 15px;
   text-decoration: underline;
   color: gray;
 }

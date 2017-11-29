@@ -64,7 +64,7 @@ export default {
         comentario: this.comment,
         tienda: this.$store.state.id,
       }
-      axios.post('https://komercia.co/api/front/mensaje-contacto', json).then(() =>{
+      axios.post(`${this.$urlHttp}/api/front/mensaje-contacto`, json).then(() =>{
         this.nombre = '';
         this.email = '';
         this.numberphone = '';

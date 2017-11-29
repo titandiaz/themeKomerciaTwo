@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     setFoto(f) {
-      return `http://komercia.co/productos/${f}`;
+      return `${this.$urlHttp}/productos/${f}`;
     },
     deleteItemCart(i, id){
       this.$store.state.productsCart.splice(i, 1);
@@ -71,7 +71,7 @@ export default {
         direccion_entrega: 1
       }
       json = JSON.stringify(json)
-      location.href = `https://komercia.co/before/checkout/${json}`;
+      location.href = `${this.$urlHttp}/before/checkout/${json}`;
     }
   },
   filters: {

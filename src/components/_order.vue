@@ -73,7 +73,7 @@ export default {
       }
     },
     setFoto(f) {
-      return `http://komercia.co/productos/${f}`;
+      return `${this.$urlHttp}/productos/${f}`;
     },
     deleteItemCart(i){
       this.$store.state.productsCart.splice(i, 1);
@@ -95,14 +95,15 @@ export default {
         direccion_entrega: 1
       }
       json = JSON.stringify(json)
-      location.href = `https://komercia.co/before/checkout/${json}`;
+      location.href = `${this.$urlHttp}/before/checkout/${json}`;
     }
   },
   filters: {
     currency(value) {
-      // return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
-      return value
-    }
+      if(value){
+        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+      }
+    },
   }
 }
 </script>
