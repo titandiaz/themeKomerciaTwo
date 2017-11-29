@@ -3,6 +3,7 @@
     <header class="ko_header" :style="stylesConf.colorPrincipal">
 			<header-menu></header-menu>
 		</header>
+    <product-preview v-if="existCurrentProduct"></product-preview>
     <router-view></router-view>
     <footer-component></footer-component>
   </div>
@@ -10,10 +11,11 @@
 
 <script>
 import headerMenu from './components/menu2.vue';
+import productPreview from './components/product_preview.vue';
 import footerComponent from './components/footer.vue'
 export default {
   name: 'app',
-  components: { headerMenu, footerComponent },
+  components: { headerMenu, productPreview, footerComponent },
   data() {
     return {
       stylesConf: {
@@ -21,6 +23,11 @@ export default {
         colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
       }
     }
+  },
+  computed: {
+    existCurrentProduct(){
+      return this.$store.state.existCurrentProduct;
+    },
   }
 }
 </script>
