@@ -2,13 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/_home'
 import Products from '@/components/_products'
-import Product from '@/components/product_preview'
+import Product from '@/components/_product'
 import About from '@/components/_nosotros'
 import Contact from '@/components/_contacto'
 import Order from '@/components/_order'
 import Garantias from '@/components/_garantias'
 import ManejoDatos from '@/components/_manejo_datos'
-
+import Prueba from '@/components/prueba'
 Vue.use(Router)
 
 export default new Router({
@@ -28,12 +28,9 @@ export default new Router({
     },{
     	path: '/catalogo',
     	component: Products,
-      children: [
-        {
-          path: ':id',
-          component: Product
-        }
-      ]
+    },{
+    	path: '/catalogo/:id',
+    	component: Product,
     },{
       path: '/pedido',
       component: Order
@@ -50,6 +47,9 @@ export default new Router({
       path: '/garantias',
       component: Garantias
     },{
+    //   path: '/e',
+    //   component: Prueba
+    // },{
       path: '*',
       redirect: '/'
     }

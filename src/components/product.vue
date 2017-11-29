@@ -1,23 +1,25 @@
 <template>
-	<div class="product" :id="data.id" v-on:click="openModal">
+	<div class="product" :id="data.id">
 		<div  v-if="data.placeholder" class="product_image placeholder">
 			<img :src="setImagePLaceholder()">
 		</div>
-		<div v-else class="product_image">
-			<img :src="`https://komercia.co/tumb/${data.foto}`">
+		<div v-else class="product_image" v-on:click="redirectToProduct">
+			<img :src="`${$urlHttp}/tumb/${data.foto}`">
 		</div>
 		<div class="product_content">
-			<h2 class="text">{{ data.nombre | capitalize }}</h2>
+			<h2 class="text" v-on:click="redirectToProduct">{{ data.nombre | capitalize }}</h2>
 			<div class="product_content_info">
 				<!--<p>&#9733 &#9733 &#9733 &#9733 &#9734;</p>-->
 				<p v-show="precio">{{ precio | currency }}</p>
 			</div>
-			<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
-			<div class="quantity">
-				<em>cantidad del producto</em>
-				<button class="quantity_remove" v-on:click="removeQuantity(data)"><i class="material-icons">remove</i></button>
-				<p class="quantity_value"><strong>{{ quantityValue }} und</strong></p>
-				<button class="quantity_add" v-on:click="addQuantity(data)"><i class="material-icons">add</i></button>
+			<div class="actions">
+				<button id="preview" v-on:click="previewProduct">Vista rapida</button>
+				<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+				<div class="quantity">
+					<button class="quantity_remove" v-on:click="removeQuantity(data)"><i class="material-icons">remove</i></button>
+					<p class="quantity_value">{{ quantityValue }}</p>
+					<button class="quantity_add" v-on:click="addQuantity(data)"><i class="material-icons">add</i></button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -45,6 +47,11 @@
 			}
 		},
 		methods: {
+			previewProduct(){
+				this.$store.state.currentProduct = this.data;
+				this.$store.state.existCurrentProduct = true;
+				this.$store.commit('getDataProduct');
+			},
 			quantity(productCart){
 					this.quantityValue = productCart.cantidad;
 			},
@@ -71,10 +78,10 @@
 			setImagePLaceholder(){
 				return require(`../assets/${this.data.foto}`);
 			},
-			openModal(e) {
-				if(e.target.id != "actionAddCart" & e.target.className != 'quantity_remove' & e.target.className != 'quantity_add'){
+			redirectToProduct(e) {
+				if(e.target.id != "preview" & e.target.className != 'quantity_remove' & e.target.className != 'quantity_add'){
 					if(this.data.placeholder){
-						window.location.href = 'https://komercia.co/panel/inventario/productos';
+						window.location.href = `${this.$urlHttp}/panel/inventario/productos`;
 					}else{
 						this.$router.push(`/catalogo/${this.data.id}`);
 					}
@@ -119,17 +126,17 @@
 		border-radius: 10px;
 		overflow: hidden;
 		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
-		border: solid 0.5px #e8e9ed;
+		border: solid 1px #e8e9ed;
 		margin: 16px 16px;
 		cursor: pointer;
 		transition: all .3s;
 	}
 	.product.bought{
 		border-style: solid;
-		border-width: 1px;
+		border-width: 2px;
 	}
 	.product:hover {
-		transform: scale(1.05);
+		transform: scale(0.98);
 	}
 	.product_image{
 		height: 240px;
@@ -142,7 +149,8 @@
 		background-color: #e8e9ed;
 	}
 	.product_image img{
-		max-width: 300px;
+		max-width: 288px;
+		max-height: 240px;
 	}
 	.product_image.placeholder img{
 		width: 100%;
@@ -160,7 +168,13 @@
 		justify-content: space-around;
 		margin: 10px 0;
 	}
-	.product_content #actionAddCart{
+	.actions{
+		width: 100%;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+	}
+	.product_content #actionAddCart, .product_content #preview{
 		border-style: none;
 		background-color: transparent;
 		border: solid 1px #e9e9e9;
@@ -192,6 +206,7 @@
 		display: none;
 	}
 	.quantity{
+		width: 140px;
     display: none;
 		flex-wrap: wrap;
 		justify-content: center;
@@ -201,6 +216,7 @@
 		width: 100%;
 		text-align: center;
 		margin-bottom: 10px;
+		font-size: 13px;
 	}
 	.product.bought .quantity{
 		display: flex;
@@ -211,7 +227,7 @@
 		border-radius: 19px;
 		border-style: solid;
 		border-width: 1px;
-		padding: 5px 20px;
+		padding: 5px 10px;
 		display: flex;
 		align-items: center;
 		outline: none;
@@ -220,6 +236,7 @@
 	}
 	.quantity_value{
 		margin: 0 10px;
+		font-weight: normal;
 	}
 	.quantity_remove:hover, .quantity_add:hover, #actionAddCart:hover{
 		transform: scale(1.1);

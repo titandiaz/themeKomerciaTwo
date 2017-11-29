@@ -2,16 +2,21 @@
   <div id="modalProduct" v-on:click="closeModal">
     <div class="product">
       <div class="photos">
-        <img :src="`https://komercia.co/tumb/${selectPhotoUrl}`" :alt="data.nombre" class="photo_main">
+        <img :src="selectPhotoUrl" :alt="data.nombre" class="photo_main">
         <div class="photos_selected">
-          <img :src="`https://komercia.co/tumb/${data.foto}`" v-on:click="selectedPhoto(data.foto)">
-          <img :src="`https://komercia.co/tumb/${foto.foto}`" v-on:click="selectedPhoto(foto.foto)" v-for="foto in data.fotos">
+          <img :src="`${$urlHttp}/mini/${data.foto}`" v-on:click="selectedPhoto(data.foto)">
+          <img :src="`${$urlHttp}/mini/${foto.foto}`" v-on:click="selectedPhoto(foto.foto)" v-for="foto in data.fotos">
         </div>
       </div>
       <div class="content">
         <i id="closeModal" class="material-icons close">close</i>
         <h2 class="content_name">{{data.nombre}}</h2>
         <div class="content_desc" v-html="data.descripcion"></div>
+        <div class="content_variant">
+          <div class="content_variant_item" v-for="variant in data.variantes">
+            <label>{{ variant.nombre }}:</label><ko-radio-group :options="variant.valores"></ko-radio-group>
+          </div>
+        </div>
         <div class="content_buy">
           <h3 class="content_buy_price">{{precio}}</h3>
           <button class="content_buy_action" v-show="!bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
@@ -23,24 +28,22 @@
 <script>
   import axios from 'axios';
   export default{
-    created() {
-      let data = this.$store.state.productos.filter((product) => { if(product.id == this.$route.params.id){ return product}});
-      this.data, this.beforeData = data[0];
-      axios.get(`https://komercia.co/api/front/producto/${this.$route.params.id}`).then((response) => {
-        this.selectedPhoto(response.data.foto)
-        this.data = Object.assign(response.data, data[0]);
-      }).catch((error) => {
-      });
-      this.ifBoughtYet();
-    },
     data() {
       return {
-        data: {},
         selectPhotoUrl: '',
         bought: false,
       }
     },
+    watch: {
+      data(value){
+        this.selectedPhoto(value.foto);
+        this.ifBoughtYet();
+      }
+    },
     computed: {
+      data(){
+        return this.$store.state.currentProduct;
+      },
       styles(){
         return {
           backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
@@ -55,11 +58,11 @@
     methods: {
       closeModal(e){
         if(e.target.id == "modalProduct" || e.target.id == "closeModal"){
-          this.$router.push('/catalogo');
+          this.$store.state.existCurrentProduct = false;
         }
       },
       selectedPhoto(f){
-        this.selectPhotoUrl = f;
+        this.selectPhotoUrl = `${this.$urlHttp}/tumb/${f}`;
       },
       ifBoughtYet(){
         for(let productCart of this.$store.state.productsCart){
@@ -188,6 +191,19 @@
     font-size: 14px;
     line-height: 1.5;
     overflow-y: auto;
+  }
+  .content_variant{
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+  }
+  .content_variant_item{
+    display: flex;
+    align-items: center;
+  }
+  .content_variant_item label{
+    margin-right: 10px;
+    color: #333;
   }
 @media(max-width: 710px){
   .product{
