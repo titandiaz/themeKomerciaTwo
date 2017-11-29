@@ -12,23 +12,27 @@ if(localStorage.getItem('ShoppingCart')){
 
 export const store = new Vuex.Store({
   state: {
+    tienda: {},
+    envios: {},
+    banners: [],
     id: conf.id,
+    urlHttp: '',
+    totalCart: 0,
+    productos: [],
+    categorias: [],
+    tema: conf.tema,
+    subcategorias: [],
+    productsCart: cart,
+    currentProduct: {},
+    menuComponent: false,
+    geolocalizacion: null,
+    orderComponent: false,
+    urlFondo: conf.url_fondo,
+    existCurrentProduct: false,
+    colorTexto: conf.color_texto,
+    nombreFuente: conf.nombre_fuente,
     colorPrincipal: conf.color_principal,
     colorSecundario: conf.color_secundario,
-    colorTexto: conf.color_texto,
-    tema: conf.tema,
-    urlFondo: conf.url_fondo,
-    nombreFuente: conf.nombre_fuente,
-    banners: [],
-    categorias: [],
-    productos: [],
-    subcategorias: [],
-    geolocalizacion: null,
-    tienda: {},
-    productsCart: cart,
-    totalCart: 0,
-    orderComponent: false,
-    menuComponent: false,
     productsPlaceholder: [
       {
         placeholder: true,
@@ -52,6 +56,7 @@ export const store = new Vuex.Store({
         precio: '14999',
       }
     ],
+    beforeCombination: ['','',''],
     mediospago: {
       epayco: false,
     },
@@ -61,6 +66,26 @@ export const store = new Vuex.Store({
     },
   },
   mutations: {
+    getData(state){
+      axios.get(`${state.urlHttp}/api/front/tienda/${conf.id}`).then((response) => {
+        store.state.banners = response.data.data.banners;
+        store.state.productos = response.data.data.productos;
+        store.state.categorias = response.data.data.categorias;
+        store.state.subcategorias = response.data.data.subcategorias;
+        store.state.geolocalizacion = response.data.data.geolocalizacion;
+        store.state.mediospago = response.data.data.medios_pago || { epayco: false };
+        store.state.politicas = response.data.data.politicas || { garantia: '', datos: '' };
+        store.state.tienda = response.data.data.tienda;
+        store.state.envios = response.data.data.medios_envio;
+        store.state.envios.valores = JSON.parse(response.data.data.medios_envio.valores);
+      })
+    },
+    getDataProduct(state){
+      axios.get(`${state.urlHttp}/api/front/producto/${state.currentProduct.id}`).then((response) => {
+          state.currentProduct = Object.assign(response.data, state.currentProduct);
+      }).catch((error) => {
+      });
+    },
     updateContentCart (state) {
       localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart))
       store.commit('calculateTotalCart');
@@ -89,15 +114,4 @@ export const store = new Vuex.Store({
       }
     }
   }
-})
-
-axios.get(`https://komercia.co/api/front/tienda/${conf.id}`).then((response) => {
-  store.state.banners = response.data.data.banners;
-  store.state.productos = response.data.data.productos;
-  store.state.categorias = response.data.data.categorias;
-  store.state.subcategorias = response.data.data.subcategorias;
-  store.state.geolocalizacion = response.data.data.geolocalizacion;
-  store.state.mediospago = response.data.data.medios_pago || { epayco: false };
-  store.state.politicas = response.data.data.politicas || { garantia: '', datos: '' };
-  store.state.tienda = response.data.data.tienda;
 })
