@@ -38,7 +38,6 @@
 			<section class="products_list">
 				<div v-if="products" class="pagination">
 					<product v-for="product in products" v-show="product.foto != ''" :data="product" :key="product.id"></product>
-					<product v-if="productsData.length == 0" v-for="product in productsPlaceholder" v-show="product.foto != ''" :data="product" :key="product.id"></product>
 					<div v-show="productsData.length != 0 & products.length == 0" class="empty_products">
 						<p>No hay productos</p>
 						<button :style="styles.colorPrincipal" v-on:click="allSelectCat">Ver todos los productos</button>
@@ -102,8 +101,7 @@
 			},
 			styles(){
 				return {
-					colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
-					colorSecundario: {backgroundColor: this.$store.state.colorSecundario}
+					colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal}
 				}
 			},
 			productsData() {
