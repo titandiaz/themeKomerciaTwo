@@ -18,8 +18,9 @@
         </div>
         <div class="items_item login">
           <div class="items_item_info">
-            <h3>Contactanos</h3>
+            <h3>Contáctanos</h3>
             <p class="detail">Estaremos pendientes de responderte</p>
+            <br>
             <router-link to="/contacto" class="detail">CONTACTANOS</router-link>
           </div>
         </div>
