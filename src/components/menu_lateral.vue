@@ -42,7 +42,7 @@ export default {
     height: 100vh;
     display: none;
     background-color: rgba(255,255,255,0.8);
-    z-index: 4;
+    z-index: 5;
     transition: .3s;
   }
   .menu{
