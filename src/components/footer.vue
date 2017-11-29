@@ -3,7 +3,7 @@
         <div class="footer_content maxcontainer">
           <div class="footer_info">
             <p v-show="phone"><i class="material-icons">phone</i>{{ phone }}</p>
-            <p v-for="address in addresses" v-show="address.direccion"><i class="material-icons">location_on</i>Direccion: {{ address.direccion }} <a  class="footer_info_address detail" :style="styles.colorPrincipal" target="_blank" :href="`https://www.google.com/maps/dir//${address.latitud},${address.longitud}`">Como Llegar</a></p>
+            <p v-for="address in addresses" v-show="address.direccion"><i class="material-icons">location_on</i>Dirección: {{ address.direccion }} <a  class="footer_info_address detail" :style="styles.colorPrincipal" target="_blank" :href="`https://www.google.com/maps/dir//${address.latitud},${address.longitud}`">Como Llegar</a></p>
             <!-- <p><i class="material-icons">watch_later</i>Horario: Lunes a viernes 8:00 am a 6: pm</p> -->
           </div>
           <div class="footer_content_social">
@@ -39,8 +39,8 @@
           <button class="footer_actions_subscribe" v-on:click="submitNewsletter">Suscribete</button>
         </div>
         <div class="footer_about_legal">
-          <router-link to="/manejo-de-datos" v-show="politicas.datos != ''">Politicas de manejo de datos</router-link>
-          <router-link to="/garantias" v-show="politicas.garantia != ''">Politicas de garantia</router-link>
+          <router-link to="/manejo-de-datos" v-show="politicas.datos != ''">Políticas de manejo de datos</router-link>
+          <router-link to="/garantias" v-show="politicas.garantia != ''">Políticas de garantia</router-link>
           <router-link to="/nosotros" v-show="tienda.nosotros != '' || tienda.mision != '' || tienda.vision != ''">Sobre nosotros</router-link>
         </div>
         <img class="image_security" v-show="mediospago.epayco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/powered.png" alt="">
