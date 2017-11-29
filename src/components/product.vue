@@ -13,8 +13,8 @@
 				<p v-show="precio">{{ precio | currency }}</p>
 			</div>
 			<div class="actions">
-				<button id="preview" v-on:click="previewProduct">Vista rapida</button>
-				<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+				<button id="preview" v-on:click="previewProduct">Vista rápida</button>
+				<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
 				<div class="quantity">
 					<button class="quantity_remove" v-on:click="removeQuantity(data)"><i class="material-icons">remove</i></button>
 					<p class="quantity_value">{{ quantityValue }}</p>
@@ -53,7 +53,7 @@
 				this.$store.commit('getDataProduct');
 			},
 			quantity(productCart){
-					this.quantityValue = productCart.cantidad;
+				this.quantityValue = productCart.cantidad;
 			},
 			addQuantity(product){
 				for(let productCart of this.$store.state.productsCart){
