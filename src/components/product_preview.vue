@@ -11,15 +11,16 @@
       <div class="content">
         <i id="closeModal" class="material-icons close">close</i>
         <h2 class="content_name">{{data.nombre}}</h2>
-        <div class="content_desc" v-html="data.descripcion"></div>
+        <h3 class="content_buy_price" :style="styles.colorTexto">{{precio}}</h3>
+        <div class="content_desc" v-html="data.info.descripcion"></div>
         <div class="content_variant">
           <div class="content_variant_item" v-for="variant in data.variantes">
             <label>{{ variant.nombre }}:</label><ko-radio-group :options="variant.valores"></ko-radio-group>
           </div>
         </div>
         <div class="content_buy">
-          <h3 class="content_buy_price">{{precio}}</h3>
-          <button class="content_buy_action" v-show="!bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+          <h3 class="content_buy_price"></h3>
+          <button class="content_buy_action" v-show="!bought" :style="styles.backgroundColor" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
         </div>
       </div>
     </div>
@@ -47,6 +48,7 @@
       styles(){
         return {
           backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
+          colorTexto:{color: this.$store.state.colorTexto},
         }
       },
       precio() {
@@ -71,11 +73,21 @@
           }
         }
       },
-      addShoppingCart(){
-        this.beforeData.cantidad = 1;
-        this.$store.state.productsCart.push(this.beforeData);
-        this.bought = true;
+      addShoppingCart(product){
+        let productExist = false;
+          for(let productCart of this.$store.state.productsCart){
+            if(product.id == productCart.id){
+                 productCart.cantidad ++;
+                 product = productCart;
+                 productExist = true;
+            }
+          }
+          if(!productExist){
+            product.cantidad = 1;
+            this.$store.state.productsCart.push(product);
+          }
         this.$store.commit('updateContentCart');
+        this.$store.commit('productsPurchased');
       }
     },
     filters: {
@@ -161,6 +173,8 @@
   }
   .content_buy_price{
     font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
   .content_buy_action{
     display: flex;
@@ -191,6 +205,7 @@
     font-size: 14px;
     line-height: 1.5;
     overflow-y: auto;
+    margin-bottom: 20px; 
   }
   .content_variant{
     display: flex;
