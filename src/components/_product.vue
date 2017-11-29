@@ -6,7 +6,7 @@
             <div class="photos_selected">
               <img :src="setMiniPhoto(data.detalle.foto)" v-on:mouseover="selectedPhoto(data.detalle.foto)">
               <img :src="setMiniPhoto(foto.foto)" v-on:mouseover="selectedPhoto(foto.foto)" v-for="foto in data.fotos">
-              <img :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
+              <img v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
             </div>
             <div class="photo_main">
               <zoomed v-show="!existYoutube" :photo="selectPhotoUrl"></zoomed>
@@ -16,8 +16,8 @@
           <div class="content">
             <h2 class="content_name">{{data.detalle.nombre}}</h2>
             <div class="content_buy_price">
-              <h3 class="colorPrincipal">{{ precio }}</h3>
-              <p class="colorPrincipal">COP</p>
+              <h3 class="colorPrincipal" v-show="precio">{{ precio }}</h3>
+              <p class="colorPrincipal" v-show="precio">COP</p>
             </div>
             <p><strong>{{ data.info.marca }}</strong></p>
             <!-- <p>{{beforeCombination}}</p> -->
@@ -29,17 +29,17 @@
             <div class="content_buy">
               <div class="quantity">
                 <button class="quantity_remove" v-on:click="removeQuantity()"><i class="material-icons">remove</i></button>
-                <p class="quantity_value">{{ quantityValue }}</p>
+                <p class="quantity_value"> {{ quantityValue }}</p>
                 <button class="quantity_add" v-on:click="addQuantity()"><i class="material-icons">add</i></button>
               </div>
               <button class="content_buy_action" v-if="bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">VER CARRITO<i class="material-icons">add_shopping_cart</i></button>
-              <button class="content_buy_action" v-else :style="styles.backgroundColor" v-on:click="addShoppingCart">AGREGAR<i class="material-icons">add_shopping_cart</i></button>
+              <button class="content_buy_action" v-else :style="styles.backgroundColor" v-on:click="addShoppingCart">Agregar<i class="material-icons">add_shopping_cart</i></button>
             </div>
           </div>
         </div>
         <div class="section">
           <div class="content_desc" v-show="data.info.descripcion.length > 12">
-            <h3>Descripcion del producto</h3>
+            <h3>Descripción del producto</h3>
             <div v-html="data.info.descripcion"></div>
           </div>
           <div class="features">
@@ -206,12 +206,15 @@
         }
       },
       videoYoutube(video){
-        if(video != ''){
+        if(video){
           let index = video.indexOf('?v=')+3;
           this.idYoutube = video.substring(index);
         }
       },
       addShoppingCart(){
+        if(!this.data.cantidad){
+          this.data.cantidad = this.quantityValue;
+        }
         let product = {
           id: this.data.detalle.id,
           precio: this.data.detalle.precio,
