@@ -40,7 +40,7 @@
 					<product v-for="product in products" v-show="product.foto != ''" :data="product" :key="product.id"></product>
 					<div v-show="productsData.length != 0 & products.length == 0" class="empty_products">
 						<p>No hay productos</p>
-						<button :style="styles.colorPrincipal" v-on:click="allSelectCat">Ver todos los productos</button>
+						<button :style="styles.backgroundColor" v-on:click="allSelectCat">Ver todos los productos</button>
 					</div>
 					<infinite-loading @infinite="infiniteHandler" spinner="spiral">
 						<span slot="no-more"></span>
@@ -101,7 +101,9 @@
 			},
 			styles(){
 				return {
-					colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal}
+					backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
+					colorPrincipal:{colorPrincipal: this.$store.state.colorPrincipal},
+					colorTexto: {colorTexto: this.$store.state.colorTexto}
 				}
 			},
 			productsData() {
@@ -172,11 +174,11 @@
 			},
 			setSelected(e){
 				if(document.querySelector('.categorias_item .selected')){
-					document.querySelector('.categorias_item .selected').style.backgroundColor = 'initial';
+					document.querySelector('.categorias_item .selected').style.color = this.styles.colorTexto;
 					document.querySelector('.categorias_item .selected').classList.remove('selected');
 				}
-				e.target.classList.add('selected')
-				document.querySelector('.categorias_item .selected').style.backgroundColor = this.styles.colorSecundario.backgroundColor;
+				e.target.classList.add('selected');
+				document.querySelector('.selected').style.backgroundColor = this.styles.backgroundColor;	
 			}
 		}
 	}
@@ -289,10 +291,10 @@
 		font-size: 13px;
 	}
 	.categorias_item .selected{
-		color: #FFF;
 		padding: 5px;
 		border-radius: 5px;
 		transition: .1s;
+		background: rgb(240,240,240);
 	}
 	.shortcuts_shopping_cart{
 		width: 200px;

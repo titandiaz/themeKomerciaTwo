@@ -16,8 +16,8 @@
           <div class="content">
             <h2 class="content_name">{{data.detalle.nombre}}</h2>
             <div class="content_buy_price">
-              <h3 class="colorPrincipal" v-show="precio">{{ precio }}</h3>
-              <p class="colorPrincipal" v-show="precio">COP</p>
+              <h3 class="colorTexto" v-show="precio">{{ precio }}</h3>
+              <p class="colorTexto" v-show="precio">COP</p>
             </div>
             <p><strong>{{ data.info.marca }}</strong></p>
             <!-- <p>{{beforeCombination}}</p> -->
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="section">
-          <div class="content_desc" v-show="data.info.descripcion.length > 12">
+          <div class="content_desc" v-if="data.info.descripcion && data.info.descripcion.length > 12">
             <h3>Descripción del producto</h3>
             <div v-html="data.info.descripcion"></div>
           </div>
@@ -139,6 +139,7 @@
       styles(){
         return {
           backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
+          colorTexto:{colorTexto: this.$store.state.colorTexto},
         }
       },
       envios(){
