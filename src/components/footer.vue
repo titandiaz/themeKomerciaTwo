@@ -3,7 +3,7 @@
         <div class="footer_content maxcontainer">
           <div class="footer_info">
             <p v-show="phone"><i class="material-icons">phone</i>{{ phone }}</p>
-            <p v-for="address in addresses" v-show="address.direccion"><i class="material-icons">location_on</i>Dirección: {{ address.direccion }} <a  class="footer_info_address detail" :style="styles.colorPrincipal" target="_blank" :href="`https://www.google.com/maps/dir//${address.latitud},${address.longitud}`">Como Llegar</a></p>
+            <p v-for="address in addresses" v-show="address.direccion"><i class="material-icons">location_on</i>Dirección: {{ address.direccion }} <a  class="footer_info_address detail" :style="styles.colorPrincipal" target="_blank" :href="`https://www.google.com/maps/dir//${address.latitud},${address.longitud}`">¿Cómo llegar?</a></p>
             <!-- <p><i class="material-icons">watch_later</i>Horario: Lunes a viernes 8:00 am a 6: pm</p> -->
           </div>
           <div class="footer_content_social">
@@ -36,7 +36,7 @@
           </div>
         <div class="footer_actions">
           <input type="text" class="footer_actions_email" placeholder="Correo electrónico" v-model="email">
-          <button class="footer_actions_subscribe" v-on:click="submitNewsletter">Suscribete</button>
+          <button class="footer_actions_subscribe" v-on:click="submitNewsletter">Suscríbete</button>
         </div>
         <div class="footer_about_legal">
           <router-link to="/manejo-de-datos" v-show="politicas.datos != ''">Políticas de manejo de datos</router-link>
