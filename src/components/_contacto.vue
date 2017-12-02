@@ -11,7 +11,7 @@
       </div>
       <div class="contact" :style="styles.borderColor">
         <input type="text" placeholder="Nombres" v-model="nombre">
-        <input type="text" placeholder="Correo Electronica" v-model="email">
+        <input type="text" placeholder="Correo electrónico" v-model="email">
         <input type="text" placeholder="Celular" v-model="numberphone">
         <textarea rows="8" placeholder="Comentrario" v-model="comment"></textarea>
         <button class="submitContact" :style="styles.backgroundColor" v-on:click="submitContact">Enviar</button>
@@ -106,6 +106,7 @@ export default {
 <style scoped>
   #contacto{
     width: 100%;
+    min-height: calc(100vh - 306px);
     display: flex;
     flex-direction: column;
     align-items: center;
