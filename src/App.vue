@@ -67,4 +67,7 @@ a{
 .maxcontainer{
   max-width: 1600px;
 }
+.infinite-status-prompt{
+    display: none;
+}
 </style>
