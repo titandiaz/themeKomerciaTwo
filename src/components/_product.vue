@@ -184,7 +184,7 @@
         this.data.cantidad = this.quantityValue;
 			},
 			removeQuantity(){
-				if(this.productCart.cantidad >= 2){
+				if(this.data.cantidad >= 2){
           this.quantityValue--;
           this.data.cantidad = this.quantityValue;
 				}
