@@ -16,7 +16,7 @@
           <div class="content">
             <h2 class="content_name">{{data.detalle.nombre}}</h2>
             <div class="content_buy_price">
-              <h3 class="colorTexto" v-show="precio">{{ precio }}</h3>
+              <h3 class="colorTexto" v-show="precio">${{ salesData.precio | currency }}</h3>
               <p class="colorTexto" v-show="precio">COP</p>
             </div>
             <p><strong>{{ data.info.marca }}</strong></p>
@@ -76,6 +76,11 @@
         this.selectedPhoto(response.data.detalle.foto);
         this.videoYoutube(response.data.info.video);
         this.data = response.data;
+        this.salesData = {
+          precio: this.data.detalle.precio,
+          unidades: this.data.info.inventario,
+          sku: this.data.info.sku,
+        };
         for(let [index, productCart] of this.$store.state.productsCart.entries()){
           if(this.data.detalle.id == productCart.id){
             this.bought = true;
@@ -101,6 +106,7 @@
         quantityValue: 1,
         productIndexCart: 0,
         productCart: {},
+        salesData: {},
         envio: {
           titulo: '',
           desc: ''
@@ -112,24 +118,12 @@
         this.setOptionEnvio();
       },
       beforeCombination(value){
+        let combinationSelected = JSON.stringify(value);
         let combinaciones = JSON.parse(this.data.combinaciones.combinaciones);
-        combinaciones.filter((combinacion, index) => {
-            if(value[0] != ''){
-              if(value[0] == combinacion.combinacion[0]){
-                // console.log(index)
-              }
-            }
-            if(value[1] != ''){
-              if(value[1] == combinacion.combinacion[1]){
-                // console.log(index)
-              }
-            }
-            if(value[2] != ''){
-              if(value[2] == combinacion.combinacion[2]){
-                // console.log(index)
-              }
-            }
-        })
+        let result = combinaciones.filter((combinacion, index) => JSON.stringify(combinacion.combinacion) == combinationSelected)[0];
+        if(result){
+          this.salesData = result;
+        }
       }
     },
     computed: {
@@ -228,6 +222,13 @@
         this.$store.commit('updateContentCart');
         this.$router.push('/pedido');
       }
+    },
+    filters: {
+      currency(value) {
+	      if(value){
+	        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+	      }
+	    },
     }
   }
 </script>
@@ -346,6 +347,7 @@
     line-height: 1.5;
     overflow-y: auto;
     text-align: justify;
+    word-break: break-all;
   }
   .content_desc *{
     color: #333;
