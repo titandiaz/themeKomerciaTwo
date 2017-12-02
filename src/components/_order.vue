@@ -111,6 +111,7 @@ export default {
 <style scoped>
   #order{
     width: 100%;
+    min-height: calc(100vh - 306px);
     background-color: rgba(255,255,255,1);
     z-index: 10;
     display: flex;
