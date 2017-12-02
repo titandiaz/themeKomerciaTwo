@@ -11,6 +11,9 @@
 <script>
 export default {
   props: ['options', 'index'],
+  mounted(){
+    this.selectOption(this.options[0], 0)
+  },
   data(){
     return {
       beforeNode: '',
