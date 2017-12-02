@@ -7,29 +7,31 @@
       </div>
       <!--<label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto"></label>-->
     </header>
-      <section class="items maxcontainer">
-        <div class="items_item offers">
-          <div class="items_item_info">
-            <h3>Nuestras Ofertas</h3>
-            <p class="detail">Encuentra lo que</br> siempre has querido</p>
-            <router-link to="/catalogo" class="detail block" :style="styles.colorSecundario">Ver Catalogo</router-link>
+      <section class="items">
+        <div class="wrapper">
+          <div class="items_item offers">
+            <div class="items_item_info">
+              <h3>Nuestras Ofertas</h3>
+              <p class="detail">Encuentra lo que</br> siempre has querido</p>
+              <router-link to="/catalogo" class="detail block" :style="styles.colorSecundario">Ver Catalogo</router-link>
+            </div>
+            <img src="../assets/offers.png">
           </div>
-          <img src="../assets/offers.png">
-        </div>
-        <div class="items_item login">
-          <div class="items_item_info">
-            <h3>Contáctanos</h3>
-            <p class="detail">Estaremos pendientes de responderte</p>
-            <br>
-            <router-link to="/contacto" class="detail">CONTACTANOS</router-link>
+          <div class="items_item login">
+            <div class="items_item_info">
+              <h3>Contáctanos</h3>
+              <p class="detail">Estaremos pendientes de responderte</p>
+              <br>
+              <router-link to="/contacto" class="detail">CONTACTANOS</router-link>
+            </div>
           </div>
-        </div>
-        <div class="items_item shopping_cart">
-          <img src="../assets/shopping.png">
-          <div class="items_item_info">
-            <h3>Carrito de compras</h3>
-            <p class="detail">Añade tus productos</br> favoritos al carrito</p>
-            <router-link to="/pedido" class="detail block">Ir al carrito</router-link>
+          <div class="items_item shopping_cart">
+            <img src="../assets/shopping.png">
+            <div class="items_item_info">
+              <h3>Carrito de compras</h3>
+              <p class="detail">Añade tus productos</br> favoritos al carrito</p>
+              <router-link to="/pedido" class="detail block">Ir al carrito</router-link>
+            </div>
           </div>
         </div>
       </section>
@@ -40,7 +42,8 @@
       <div class="goProducts">
           <router-link to="/catalogo" :style="styles.colorPrincipal" >Ir a  Productos</router-link>
       </div>
-      <section class="features maxcontainer">
+      <section class="features">
+        <div class="wrapper">
           <div class="features_item">
             <img src="/template3/cards.png" alt="">
             <div class="features_item_info">
@@ -57,6 +60,7 @@
               <router-link to="/catalogo" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
+        </div>
       </section>
   </div>
 </template>
@@ -278,6 +282,13 @@
     font-size: 12px;
     font-weight: bold;
     color: #1c65b9;
+  }
+  .wrapper{
+    max-width: 1600px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
   }
   @media(max-width: 800px){
     header{
