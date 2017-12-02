@@ -56,7 +56,7 @@ export const store = new Vuex.Store({
         precio: '14999',
       }
     ],
-    beforeCombination: ['','',''],
+    beforeCombination: [],
     mediospago: {
       epayco: false,
     },
