@@ -1,7 +1,7 @@
 <template>
 	<div id="products">
 		<order></order>
-		<div class="header_fixed" :style="styles.colorPrincipal">
+		<div class="header_fixed">
 			<i class="material-icons toggleFilters" v-on:click="toggleFilters">filter_list</i>
 			<label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto" v-model="search"></label>
 			<div v-on:click="openOrderComponent" class="header__cart">
@@ -178,7 +178,7 @@
 					document.querySelector('.categorias_item .selected').classList.remove('selected');
 				}
 				e.target.classList.add('selected');
-				document.querySelector('.selected').style.backgroundColor = this.styles.backgroundColor;	
+				document.querySelector('.selected').style.backgroundColor = this.styles.backgroundColor;
 			}
 		}
 	}
@@ -194,6 +194,7 @@
 		align-items: center;
 		z-index: 2;
 		padding: 0 10px;
+		background-color: var(--main-color);
 	}
 	.header_fixed > span{
 		width: 200px;
