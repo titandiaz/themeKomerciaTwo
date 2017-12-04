@@ -40,7 +40,7 @@
 					<product v-for="product in products" v-show="product.foto != ''" :data="product" :key="product.id"></product>
 					<div v-show="productsData.length != 0 & products.length == 0" class="empty_products">
 						<p>No hay productos</p>
-						<button :style="styles.backgroundColor" v-on:click="allSelectCat">Ver todos los productos</button>
+						<button v-on:click="allSelectCat">Ver todos los productos</button>
 					</div>
 					<infinite-loading @infinite="infiniteHandler" spinner="spiral">
 						<span slot="no-more"></span>
@@ -99,18 +99,11 @@
 			productsCart(){
 				return	this.$store.state.productsCart.length;
 			},
-			styles(){
-				return {
-					backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
-					colorPrincipal:{colorPrincipal: this.$store.state.colorPrincipal},
-					colorTexto: {colorTexto: this.$store.state.colorTexto}
-				}
-			},
 			productsData() {
-				return this.$store.state.productos
+				return this.$store.state.productos;
 			},
 			info() {
-				return this.$store.state.tienda
+				return this.$store.state.tienda;
 			},
 			categorias() {
 				return this.$store.state.categorias
@@ -174,11 +167,9 @@
 			},
 			setSelected(e){
 				if(document.querySelector('.categorias_item .selected')){
-					document.querySelector('.categorias_item .selected').style.color = this.styles.colorTexto;
 					document.querySelector('.categorias_item .selected').classList.remove('selected');
 				}
 				e.target.classList.add('selected');
-				document.querySelector('.selected').style.backgroundColor = this.styles.backgroundColor;
 			}
 		}
 	}
@@ -194,7 +185,7 @@
 		align-items: center;
 		z-index: 2;
 		padding: 0 10px;
-		background-color: var(--main-color);
+		background-color: var(--color_principal);
 	}
 	.header_fixed > span{
 		width: 200px;
@@ -296,6 +287,9 @@
 		border-radius: 5px;
 		transition: .1s;
 		background: rgb(240,240,240);
+		color: #FFF;
+		background-color: var(--color_principal);
+
 	}
 	.shortcuts_shopping_cart{
 		width: 200px;
@@ -386,6 +380,7 @@
 		border-radius: 10px;
 		outline: none;
 		transition: .3s;
+		background-color: var(--color_principal);
 	}
 	.empty_products button:hover{
 		transform: scale(0.9);

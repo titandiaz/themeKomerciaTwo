@@ -18,9 +18,9 @@
       </div>
       <div class="total">
         <p>Total</p>
-        <h3 :style="styles.colorSecundarioTotal">{{ totalCart | currency }}</h3>
+        <h3>{{ totalCart | currency }}</h3>
       </div>
-      <div class="actionOfCheckout" :style="styles.colorSecundario">
+      <div class="actionOfCheckout">
         <button class="actionOrder" v-on:click="next">Finalizar compra</button>
       </div>
     </div>
@@ -163,12 +163,14 @@ export default {
   }
   .order .total h3{
     font-size: 1.2em;
+    color: var(--color_secundario);
   }
   .order .actionOfCheckout{
     width: 100%;
     padding: 5px 0;
     display: flex;
     justify-content: center;
+    background-color: var(--color_secundario);
   }
   .actionOrder{
     border-style: none;

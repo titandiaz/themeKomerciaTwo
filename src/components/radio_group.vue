@@ -1,6 +1,6 @@
 <template>
   <ul class="ko-radio_group">
-    <li :class="{'ko-radio_group_option': true, 'backgroundColorPrincipal': option.selected, 'option-selected': option.selected}"
+    <li :class="{'ko-radio_group_option': true, 'option-selected': option.selected}"
         v-for="(option, index) in optionsData"
         v-on:click="selectOption(option, index)">
         {{ option.option }}
@@ -58,8 +58,9 @@ export default {
     box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.0);
     transition: .2s;
   }
-  .backgroundColorPrincipal.option-selected{
+  .option-selected{
     color: #FFF;
-    border: 0px solid #EEE;
+    border: 0px solid #FFF;
+    background-color: var(--color_principal);
   }
 </style>

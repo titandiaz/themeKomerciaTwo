@@ -30,7 +30,7 @@
 		justify-content: center;
 		padding: 10px;
 		z-index: 3;
-		background-color: rgba(0,0,0,0.3);
+		background-color: var(--color_principal);
 	}
 	ul{
 		width: 100%;

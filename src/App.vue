@@ -38,6 +38,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  background-color: var(--color_fondo);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -46,7 +47,7 @@ export default {
   position: relative;
   width: 100%;
   height: 90px;
-  background-color: #9b9b9b;
+  background-color: var(--color_principal);
   padding: 0 20px;
 }
 .block{

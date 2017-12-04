@@ -54,6 +54,7 @@
     justify-content: space-between;
     align-items: center;
     margin: auto;
+    background-color: var(--color_principal);
   }
   .header_brand{
     display: flex;
