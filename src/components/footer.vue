@@ -3,7 +3,7 @@
         <div class="footer_content maxcontainer">
           <div class="footer_info">
             <p v-show="phone"><i class="material-icons">phone</i>{{ phone }}</p>
-            <p v-for="address in addresses" v-show="address.direccion"><i class="material-icons">location_on</i>Dirección: {{ address.direccion }} <a  class="footer_info_address detail" :style="styles.colorPrincipal" target="_blank" :href="`https://www.google.com/maps/dir//${address.latitud},${address.longitud}`">¿Cómo llegar?</a></p>
+            <p v-for="address in addresses" v-show="address.direccion"><i class="material-icons">location_on</i>Dirección: {{ address.direccion }} <a  class="footer_info_address detail" target="_blank" :href="`https://www.google.com/maps/dir//${address.latitud},${address.longitud}`">¿Cómo llegar?</a></p>
             <!-- <p><i class="material-icons">watch_later</i>Horario: Lunes a viernes 8:00 am a 6: pm</p> -->
           </div>
           <div class="footer_content_social">
@@ -149,6 +149,7 @@ footer{
   padding: 5px 10px;
   transition: .3s;
   border-radius: 5px;
+  background-color: var(--color_secundario); 
 }
 .footer_info_address:hover{
   transform: scale(0.95);

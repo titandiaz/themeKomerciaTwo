@@ -40,7 +40,7 @@
           <product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
       </section>
       <div class="goProducts">
-          <router-link to="/catalogo" :style="styles.colorPrincipal" >Ir a  Productos</router-link>
+          <router-link to="/catalogo" >Ir a  Productos</router-link>
       </div>
       <section class="features">
         <div class="wrapper">
@@ -49,7 +49,7 @@
             <div class="features_item_info">
               <h3>Pagos online</h3>
               <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
-              <router-link to="/catalogo" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
+              <router-link to="/catalogo">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
           <div class="features_item">
@@ -57,7 +57,7 @@
             <div class="features_item_info">
               <h3>Recibe tu producto</h3>
               <p>Recibe tus compras sin salir de casa Enviamos tus productos con seguridad</p>
-              <router-link to="/catalogo" :style="styles.colorSecundario">EMPEZAR A COMPRAR</router-link>
+              <router-link to="/catalogo">EMPEZAR A COMPRAR</router-link>
             </div>
           </div>
         </div>
@@ -240,7 +240,7 @@
   }
   .goProducts a{
     border-style: none;
-    background-color: #4383ff;
+    background-color: var(--color_principal);
     color: #FFF;
     border-radius: 100px;
     padding: 15px 45px;
@@ -281,7 +281,7 @@
   .features_item_info a{
     font-size: 12px;
     font-weight: bold;
-    color: #1c65b9;
+    color: var(--color_secundario);
   }
   .wrapper{
     max-width: 1600px;

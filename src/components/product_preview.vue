@@ -11,7 +11,7 @@
       <div class="content">
         <i id="closeModal" class="material-icons close">close</i>
         <h2 class="content_name">{{data.nombre}}</h2>
-        <h3 class="content_buy_price" :style="styles.colorTexto">{{precio}}</h3>
+        <h3 class="content_buy_price">{{precio}}</h3>
         <div class="content_desc" v-html="data.info.descripcion"></div>
         <div class="content_variant">
           <div class="content_variant_item" v-for="variant in data.variantes">
@@ -20,7 +20,7 @@
         </div>
         <div class="content_buy">
           <h3 class="content_buy_price"></h3>
-          <button class="content_buy_action" v-show="!bought" :style="styles.backgroundColor" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
+          <button class="content_buy_action" v-show="!bought" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
         </div>
       </div>
     </div>
@@ -44,12 +44,6 @@
     computed: {
       data(){
         return this.$store.state.currentProduct;
-      },
-      styles(){
-        return {
-          backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
-          colorTexto:{color: this.$store.state.colorTexto},
-        }
       },
       precio() {
 				if(this.data.precio){
@@ -175,6 +169,7 @@
     font-weight: normal;
     margin-top: 10px;
     margin-bottom: 10px;
+    color: var(--color_texto);
   }
   .content_buy_action{
     display: flex;
@@ -187,6 +182,7 @@
     font-size: 13px;
     cursor: pointer;
     outline: none;
+    background-color: var(--color_principal);
     transition: .3s;
   }
   .content_buy_action:hover{
@@ -205,7 +201,7 @@
     font-size: 14px;
     line-height: 1.5;
     overflow-y: auto;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
   }
   .content_variant{
     display: flex;

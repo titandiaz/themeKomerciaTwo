@@ -4,7 +4,7 @@
     <div :class="{order: true ,active: orderComponent}">
       <div v-show="products.length == 0" class="empty_products">
         <img src="../assets/empty_cart.png" alt="">
-        <router-link to="/catalogo" :style="styles.colorPrincipalFont">Comprar</router-link>
+        <router-link to="/catalogo">Comprar</router-link>
       </div>
       <div v-show="products.length != 0"  class="products">
         <div v-for="(product, index) in products" class="product">
@@ -12,6 +12,9 @@
             <img :src="setFoto(product.foto)" alt="">
           </figure>
           <p class="nombre">{{product.nombre}}</p>
+          <div class="">
+            <p v-for="opcion in product.combinacion">{{opcion}} -</p>
+          </div>
           <p class="precio" v-show="product.precio">{{product.cantidad}} X {{product.precio | currency}}</p>
           <div class="quantity">
             <button class="quantity_remove" v-on:click="removeQuantity(product, index)"><i class="material-icons">remove</i></button>
@@ -21,7 +24,7 @@
           <i class="material-icons pointer" v-on:click="deleteItemCart(index)">close</i>
         </div>
       </div>
-      <div class="content" :style="styles.colorSecundario">
+      <div class="content">
         <div class="total">
           <p>Total</p>
           <h3>{{ totalCart | currency }}</h3>
@@ -37,6 +40,7 @@
 export default {
   mounted(){
     this.products = this.$store.state.productsCart;
+    console.log(this.products)
   },
   data(){
     return {
@@ -49,14 +53,6 @@ export default {
     },
     orderComponent(){
       return this.$store.state.orderComponent;
-    },
-    styles(){
-      return {
-        colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
-        colorSecundario: {backgroundColor: this.$store.state.colorSecundario},
-        colorPrincipalFont:{color: this.$store.state.colorPrincipal, border: `2px solid ${this.$store.state.colorPrincipal}`},
-        colorSecundarioTotal: {color: this.$store.state.colorSecundario}
-      }
     }
   },
   methods: {
@@ -163,6 +159,8 @@ export default {
     cursor: pointer;
     transition: .3s;
     outline: none;
+    color: var(--color_principal);
+    border: 2px solid var(--color_principal);
   }
   .products{
     width: 100%;
@@ -201,6 +199,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    background-color: var(--color_secundario);
   }
   .order .total{
     width: 25%;
