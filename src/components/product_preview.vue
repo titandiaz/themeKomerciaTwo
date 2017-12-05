@@ -12,7 +12,7 @@
         <i id="closeModal" class="material-icons close">close</i>
         <h2 class="content_name">{{data.nombre}}</h2>
         <h3 class="content_buy_price">{{precio}}</h3>
-        <div class="content_desc" v-html="data.info.descripcion"></div>
+        <div class="content_desc" v-if="data.info.descripcion" v-html="data.info.descripcion"></div>
         <div class="content_variant">
           <div class="content_variant_item" v-for="variant in data.variantes">
             <label>{{ variant.nombre }}:</label><ko-radio-group :options="variant.valores"></ko-radio-group>
@@ -20,7 +20,8 @@
         </div>
         <div class="content_buy">
           <h3 class="content_buy_price"></h3>
-          <button class="content_buy_action" v-show="!bought" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
+          <button v-if="spent" class="content_buy_action spent">Producto agotado<i class="material-icons">add_shopping_cart</i></button>
+          <button v-else class="content_buy_action" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
         </div>
       </div>
     </div>
@@ -32,13 +33,15 @@
     data() {
       return {
         selectPhotoUrl: '',
-        bought: false,
+        spent: false,
       }
     },
     watch: {
       data(value){
         this.selectedPhoto(value.foto);
-        this.ifBoughtYet();
+        if(value.info.inventario == 0){
+          this.spent = true;
+        }
       }
     },
     computed: {
@@ -59,13 +62,6 @@
       },
       selectedPhoto(f){
         this.selectPhotoUrl = `${this.$urlHttp}/tumb/${f}`;
-      },
-      ifBoughtYet(){
-        for(let productCart of this.$store.state.productsCart){
-          if(this.beforeData.id == productCart.id){
-            this.bought = true;
-          }
-        }
       },
       addShoppingCart(product){
         let productExist = false;
@@ -183,6 +179,10 @@
     outline: none;
     background-color: var(--color_principal);
     transition: .3s;
+  }
+  .content_buy_action.spent{
+    background-color: #b0b0b0;
+    pointer-events: none;
   }
   .content_buy_action:hover{
     transform: scale(0.9);
