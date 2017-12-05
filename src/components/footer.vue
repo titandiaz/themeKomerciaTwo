@@ -43,7 +43,7 @@
           <router-link to="/garantias" v-show="politicas.garantia != ''">Políticas de garantia</router-link>
           <router-link to="/nosotros" v-show="tienda.nosotros != '' || tienda.mision != '' || tienda.vision != ''">Sobre nosotros</router-link>
         </div>
-        <img class="image_security" v-show="mediospago.epayco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/powered.png" alt="">
+        <img class="image_security" v-show="mediospago.payco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/powered.png" alt="">
       </div>
         <div class="footer_last">
           <span class="effects"></span>
@@ -149,7 +149,7 @@ footer{
   padding: 5px 10px;
   transition: .3s;
   border-radius: 5px;
-  background-color: var(--color_secundario); 
+  background-color: var(--color_secundario);
 }
 .footer_info_address:hover{
   transform: scale(0.95);
@@ -159,20 +159,20 @@ footer{
   justify-content: center;
 }
 .footer_content_social_item{
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   border: 1px solid #9b9b9b;
-  padding: 20px;
+  padding: 14px;
   margin: 0 5px;
   cursor: pointer;
 }
 .footer_content_social_item svg{
   fill: #616061;
-  transform: scale(3);
+  transform: scale(2);
 }
 .footer_actions{
   display: flex;
@@ -210,7 +210,6 @@ footer{
   transform: scale(0.95);
 }
 .footer_about_legal{
-  width: 50%;
   display: flex;
   justify-content: center;
 }
@@ -221,7 +220,8 @@ footer{
   color: gray;
 }
 .image_security{
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
 }
 .footer_last{
   width: 100%;
@@ -248,6 +248,23 @@ footer{
   width: 120px;
   z-index: 2;
 }
+@media(max-width: 1185px){
+  .footer_actions_email{
+    width: 100%;
+  }
+  .footer_info{
+    width: 50%;
+  }
+  .footer_content_social{
+    width: 50%;
+  }
+  .footer_actions{
+    width: 100%;
+  }
+  .footer_about_legal{
+    margin: 10px 0;
+  }
+}
 @media(max-width: 1050px){
   .footer_content{
     justify-content: center;
@@ -257,18 +274,27 @@ footer{
     margin: 30px 0 10px 0;
   }
 }
-@media(max-width: 500px){
+@media(max-width: 750px){
   .footer_content{
+    flex-direction: column;
     justify-content: center;
+    padding: 20px 20px;
   }
-}
-@media(max-width: 380px){
+  .footer_info{
+    width: 100%;
+  }
   .footer_actions{
+    width: 100%;
     flex-direction: column;
     align-items: center;
   }
   .footer_actions button{
     margin: 6px 0px;
+  }
+  .footer_about_legal{
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
   }
 }
 </style>
