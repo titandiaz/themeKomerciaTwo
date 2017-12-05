@@ -9,12 +9,12 @@
         <div id="map"></div>
         <!-- <div class="map_degrade"></div> -->
       </div>
-      <div class="contact" :style="styles.borderColor">
+      <div class="contact">
         <input type="text" placeholder="Nombres" v-model="nombre">
         <input type="text" placeholder="Correo electrónico" v-model="email">
         <input type="text" placeholder="Celular" v-model="numberphone">
         <textarea rows="8" placeholder="Comentrario" v-model="comment"></textarea>
-        <button class="submitContact" :style="styles.backgroundColor" v-on:click="submitContact">Enviar</button>
+        <button class="submitContact" v-on:click="submitContact">Enviar</button>
       </div>
     </div>
   </div>
@@ -26,6 +26,7 @@ import axios from 'axios';
 export default {
   mounted(){
     this.makeMap();
+    console.log('dispatch')
   },
   watch: {
     '$store.state.geolocalizacion': () => {
@@ -48,12 +49,6 @@ export default {
     geolocalizacion(){
       return this.$store.state.geolocalizacion;
     },
-    styles(){
-      return {
-        borderColor:{borderColor: this.$store.state.colorPrincipal},
-        backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
-      }
-    }
   },
   methods: {
     submitContact(){
@@ -167,6 +162,7 @@ export default {
     border-radius: 12px;
     border-width: 1px;
     border-style: solid;
+    border-color: var(--color_principal);
     box-shadow: 0 3px 12px 3px rgba(0, 0, 0, 0.1);
     margin: 0 10px;
   }
@@ -205,6 +201,7 @@ export default {
     border-radius: 15px;
     outline: none;
     cursor: pointer;
+    background-color: var(--color_principal);
   }
   .message{
     position: absolute;
