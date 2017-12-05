@@ -1,5 +1,6 @@
 <template>
     <div class="product" v-if="data.detalle">
+      <!-- <ko-modal v-show="togglePayment"></ko-modal> -->
       <div class="wrapper">
         <div class="section">
           <div class="photos">
@@ -16,8 +17,8 @@
           <div class="content">
             <h2 class="content_name">{{data.detalle.nombre}}</h2>
             <div class="content_buy_price">
-              <h3 class="colorTexto" v-show="precio">${{ salesData.precio | currency }}</h3>
-              <p class="colorTexto" v-show="precio">COP</p>
+              <h3 class="colorTexto" v-show="salesData.precio">${{ salesData.precio | currency }}</h3>
+              <p class="colorTexto" v-show="salesData.precio">COP</p>
             </div>
             <p><strong>{{ data.info.marca }}</strong></p>
             <!-- <p>{{beforeCombination}}</p> -->
@@ -32,8 +33,10 @@
                 <p class="quantity_value"> {{ quantityValue }}</p>
                 <button class="quantity_add" v-on:click="addQuantity()"><i class="material-icons">add</i></button>
               </div>
-              <button class="content_buy_action" v-if="bought" :style="styles.backgroundColor" v-on:click="addShoppingCart">VER CARRITO<i class="material-icons">add_shopping_cart</i></button>
-              <button class="content_buy_action" v-else :style="styles.backgroundColor" v-on:click="addShoppingCart">Agregar<i class="material-icons">add_shopping_cart</i></button>
+              <div class="content_buy_action">
+                <button v-if="spent" class="spent">Producto agotado<i class="material-icons">add_shopping_cart</i></button>
+                <button v-else v-on:click="addShoppingCart">Agregar<i class="material-icons">add_shopping_cart</i></button>
+              </div>
             </div>
           </div>
         </div>
@@ -44,13 +47,11 @@
           </div>
           <div class="features">
             <div class="features_item">
-              <img v-show="false" class="epayco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/epayco/epayco_pago_seguro_black.png">
-              <img v-show="false" class="efecty" src="../assets/efecty.png" alt="">
-              <img v-show="false" class="convenir" src="../assets/conversation.png" alt="">
-              <img v-show="true" class="tienda" src="../assets/pagos_store.png" alt="">
+              <img src="/template3/cards.png" alt="">
               <div class="features_item_info">
-                <h3>Medios de pago</h3>
-                <p>Esta tienda cuenta con</p>
+                <h3>Pagos online</h3>
+                <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
+                <button v-on:click="togglePayment">VER MEDIOS DE PAGOS</button>
               </div>
             </div>
             <div class="features_item">
@@ -81,14 +82,6 @@
           unidades: this.data.info.inventario,
           sku: this.data.info.sku,
         };
-        for(let [index, productCart] of this.$store.state.productsCart.entries()){
-          if(this.data.detalle.id == productCart.id){
-            this.bought = true;
-            this.quantity(productCart)
-            this.data.cantidad = productCart.cantidad;
-            this.productIndexCart = index;
-          }
-        }
       })
     },
     mounted(){
@@ -103,10 +96,12 @@
         bought: false,
         idYoutube: '',
         existYoutube: false,
+        maxQuantityValue: 1,
         quantityValue: 1,
-        productIndexCart: 0,
+        productIndexCart: null,
         productCart: {},
         salesData: {},
+        spent: false,
         envio: {
           titulo: '',
           desc: ''
@@ -121,20 +116,37 @@
         let combinationSelected = JSON.stringify(value);
         let combinaciones = JSON.parse(this.data.combinaciones.combinaciones);
         let result = combinaciones.filter((combinacion, index) => JSON.stringify(combinacion.combinacion) == combinationSelected)[0];
+        this.productCart = [];
+        this.productIndexCart = null;
+        for(let [index, productCart] of this.$store.state.productsCart.entries()){
+          if(this.data.detalle.id == productCart.id && JSON.stringify(productCart.combinacion) == JSON.stringify(result.combinacion)){
+            this.productIndexCart = index;
+            this.productCart = productCart;
+          }
+        }
         if(result){
+          this.spent = false;
+          this.maxQuantityValue = result.unidades;
+          if(result.unidades == 0){
+            this.spent = true;
+          }
+          if(this.productCart.cantidad){
+            this.maxQuantityValue = (parseInt(result.unidades) - this.productCart.cantidad);
+            if(this.maxQuantityValue == 0){
+              this.spent = true;
+            }
+          }
           this.salesData = result;
+          this.quantityValue = 1;
         }
       }
     },
     computed: {
+      togglePayment(){
+        return this.$store.state.togglePayment;
+      },
       beforeCombination(){
         return this.$store.state.beforeCombination;
-      },
-      styles(){
-        return {
-          backgroundColor:{backgroundColor: this.$store.state.colorPrincipal},
-          colorTexto:{colorTexto: this.$store.state.colorTexto},
-        }
       },
       envios(){
         return this.$store.state.envios;
@@ -146,6 +158,9 @@
 			}
     },
     methods: {
+      togglePayment(){
+        this.store.state.togglePayment = !this.store.state.togglePayment;
+      },
       setOptionEnvio(){
         switch (this.envios.valores.envio_metodo) {
           case 'gratis':
@@ -180,8 +195,12 @@
 					this.quantityValue = productCart.cantidad;
 			},
       addQuantity(){
-        this.quantityValue++;
-        this.data.cantidad = this.quantityValue;
+        if(this.maxQuantityValue > this.quantityValue){
+          this.quantityValue++;
+          this.data.cantidad = this.quantityValue;
+        }else{
+          // Alerta de limite de sku
+        }
 			},
 			removeQuantity(){
 				if(this.data.cantidad >= 2){
@@ -216,11 +235,20 @@
           cantidad: this.data.cantidad,
           foto: this.data.detalle.foto,
           nombre: this.data.detalle.nombre,
+          combinacion: this.salesData.combinacion,
         }
-        this.$store.state.productsCart.push(product);
-        this.bought = true;
-        this.$store.commit('updateContentCart');
-        this.$router.push('/pedido');
+
+        if(typeof this.productIndexCart == 'number'){
+          let mutableProduct = this.$store.state.productsCart[this.productIndexCart];
+          mutableProduct.cantidad += this.data.cantidad;
+          this.$store.state.productsCart.splice(this.productIndexCart, 1, mutableProduct);
+          this.$store.commit('updateContentCart');
+          this.$router.push('/pedido');
+        }else{
+          this.$store.state.productsCart.push(product);
+          this.$store.commit('updateContentCart');
+          this.$router.push('/pedido');
+        }
       }
     },
     filters: {
@@ -299,6 +327,7 @@
   .content_buy{
     flex: none;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     margin: 7px 0;
@@ -316,22 +345,35 @@
     margin-bottom: 8px;
   }
   .content_buy_action{
+    width: 100%;
     display: flex;
+    justify-content: center;
+    margin: 5px 0;
+  }
+  .content_buy_action button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
     padding: 5px 20px;
     align-items: center;
     color: #FFF;
     border-style: none;
     border-radius: 12px;
+    background-color: var(--color_principal);
     /*box-shadow: 0 1px 7px 0 rgba(155, 155, 155, 0.6);*/
     font-size: 13px;
     cursor: pointer;
     outline: none;
     transition: .3s;
   }
-  .content_buy_action:hover{
+  .content_buy_action button.spent{
+    background-color: #b0b0b0;
+    pointer-events: none;
+  }
+  .content_buy_action button:hover{
     transform: scale(0.9);
   }
-  .content_buy_action i{
+  .content_buy_action button i{
     font-size: 19px;
     margin-left: 10px;
     padding: 4px 0px;
@@ -366,11 +408,12 @@
     color: #333;
   }
   .quantity{
-		width: 140px;
+		width: 100%;
     display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
+		/*justify-content: center;*/
     align-items: center;
+    margin: 5px;
   }
 	.quantity em{
 		width: 100%;
@@ -446,10 +489,14 @@
     margin: 8px 0;
     color: #333;
   }
-  .features_item_info a{
+  .features_item_info button{
+    border-style: none;
+    background-color: transparent;
     font-size: 12px;
     font-weight: bold;
-    color: #333;
+    color: var(--color_secundario);
+    cursor: pointer;
+    outline: none;
   }
   .features_item .epayco{
     width: 85%;
