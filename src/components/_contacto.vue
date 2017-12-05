@@ -26,7 +26,6 @@ import axios from 'axios';
 export default {
   mounted(){
     this.makeMap();
-    console.log('dispatch')
   },
   watch: {
     '$store.state.geolocalizacion': () => {
