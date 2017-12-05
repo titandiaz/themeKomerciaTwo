@@ -24,6 +24,7 @@ export const store = new Vuex.Store({
     subcategorias: [],
     productsCart: cart,
     currentProduct: {},
+    togglePayment: false,
     menuComponent: false,
     geolocalizacion: null,
     orderComponent: false,
