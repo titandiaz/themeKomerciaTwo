@@ -83,7 +83,6 @@ export default {
   .ko-collapse_tab_content{
     opacity: 1;
     visibility: visible;
-    height: 100px;
     transition: all .3s;
     color: #333;
   }
@@ -94,5 +93,6 @@ export default {
     opacity: 0;
     visibility: hidden;
     height: 0px;
+    overflow: hidden;
   }
 </style>
