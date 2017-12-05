@@ -14,12 +14,6 @@
 			</div>
 			<div class="actions">
 				<button id="preview" v-on:click="previewProduct">Vista rápida</button>
-				<button id="actionAddCart" class="detail" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
-				<div class="quantity">
-					<button class="quantity_remove" v-on:click="removeQuantity(data)"><i class="material-icons">remove</i></button>
-					<p class="quantity_value">{{ quantityValue }}</p>
-					<button class="quantity_add" v-on:click="addQuantity(data)"><i class="material-icons">add</i></button>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -186,24 +180,6 @@
 		outline: none;
 		cursor: pointer;
 		transition: .5s;
-	}
-	.product.bought .product_content #actionAddCart{
-		/*color: green;
-		border: 1px solid green;*/
-	}
-	.product_content #actionAddCart i{
-		height: 100%;
-		font-size: 15px;
-		/*border-left: solid 1px #e9e9e9;*/
-		margin-left: 10px;
-		padding-left: 10px;
-		pointer-events: none;
-	}
-	.product.bought .product_content #actionAddCart i{
-		/*border-left: solid 1px green;*/
-	}
-	.product.bought #actionAddCart{
-		display: none;
 	}
 	.quantity{
 		width: 140px;
