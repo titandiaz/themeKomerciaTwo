@@ -1,6 +1,6 @@
 <template>
     <div class="product" v-if="data.detalle">
-      <!-- <ko-modal v-show="togglePayment"></ko-modal> -->
+      <ko-modal v-show="modalPayment"></ko-modal>
       <div class="wrapper">
         <div class="section">
           <div class="photos">
@@ -142,7 +142,7 @@
       }
     },
     computed: {
-      togglePayment(){
+      modalPayment(){
         return this.$store.state.togglePayment;
       },
       beforeCombination(){
@@ -159,7 +159,7 @@
     },
     methods: {
       togglePayment(){
-        this.store.state.togglePayment = !this.store.state.togglePayment;
+        this.$store.state.togglePayment = !this.$store.state.togglePayment;
       },
       setOptionEnvio(){
         switch (this.envios.valores.envio_metodo) {
