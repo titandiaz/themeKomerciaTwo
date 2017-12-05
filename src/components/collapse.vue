@@ -1,7 +1,8 @@
 <template lang="html">
   <div class="ko-collapse">
     <div class="ko-collapse_tab"
-         v-for="(tab, index) in data">
+         v-for="(tab, index) in data"
+         v-show="tab.content != ''">
       <div class="ko-collapse_tab_header"
            v-on:click="toggleTab(tab, index)">
         <h3>{{tab.title}}</h3>
