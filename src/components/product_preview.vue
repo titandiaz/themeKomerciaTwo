@@ -103,7 +103,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(0,0,0,0.5);
     z-index: 4;
   }
   .product{
@@ -112,8 +112,7 @@
     display: flex;
     background-color: #FFF;
     padding: 30px;
-    border-radius: 4px;
-    box-shadow: 0 0 31px 7px rgba(121, 121, 121, 0.29);
+    border-radius: 10px;
   }
   .photos{
     width: 350px;
