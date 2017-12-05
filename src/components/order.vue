@@ -96,7 +96,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.5);
     z-index: 10;
     opacity: 0;
     visibility: hidden;
@@ -117,8 +117,9 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     background-color: #FFF;
-    box-shadow: 0 0 19px 7px rgba(121, 121, 121, 0.45);
     color: rgba(0,0,0,0.6);
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
     transition: all .3s;
   }
   #order.activeOrder{
