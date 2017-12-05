@@ -51,7 +51,7 @@
               <div class="features_item_info">
                 <h3>Pagos online</h3>
                 <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
-                <button v-on:click="togglePayment">VER MEDIOS DE PAGOS</button>
+                <button v-show="existPayments" v-on:click="togglePayment">VER MEDIOS DE PAGOS</button>
               </div>
             </div>
             <div class="features_item">
@@ -82,6 +82,9 @@
           unidades: this.data.info.inventario,
           sku: this.data.info.sku,
         };
+        if(this.salesData.unidades == 0){
+          this.spent = true;
+        }
       })
     },
     mounted(){
@@ -132,7 +135,7 @@
           }
           if(this.productCart.cantidad){
             this.maxQuantityValue = (parseInt(result.unidades) - this.productCart.cantidad);
-            if(this.maxQuantityValue == 0){
+            if(this.maxQuantityValue <= 0){
               this.spent = true;
             }
           }
@@ -142,6 +145,14 @@
       }
     },
     computed: {
+      existPayments(){
+        let mediospago = this.$store.state.mediospago;
+        if(mediospago.consignacion || mediospago.convenir || mediospago.payco || mediospago.tienda || mediospago.efecty){
+          return true;
+        }else{
+          return false;
+        }
+      },
       modalPayment(){
         return this.$store.state.togglePayment;
       },
@@ -451,6 +462,7 @@
 		pointer-events: none;
 	}
   .features{
+    max-width: 500px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -518,6 +530,9 @@
   .section:nth-child(2){
     flex-direction: column;
   }
+  .features{
+    max-width: 100%;
+  }
   .features_item{
     max-width: 500px;
     width: 100%;
@@ -545,6 +560,15 @@
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+}
+@media(max-width: 320px){
+  .features_item{
+      flex-direction: column;
+  }
+  .features_item_info{
+    text-align: center;
+    margin: 10px 0;
   }
 }
 </style>
