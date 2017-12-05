@@ -40,7 +40,6 @@
 export default {
   mounted(){
     this.products = this.$store.state.productsCart;
-    console.log(this.products)
   },
   data(){
     return {
