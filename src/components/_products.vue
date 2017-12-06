@@ -30,7 +30,7 @@
 						<p>Añade tus productos favoritos al carrito</p>
 						<div>
 							<img src="../assets/shopping.png">
-							<p v-on:click="openOrderComponent" :style="">Ir al Carrito</p>
+							<p v-on:click="openOrderComponent">Ir al Carrito</p>
 						</div>
 					</div>
 				</div>
