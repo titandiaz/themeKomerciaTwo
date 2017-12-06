@@ -30,10 +30,6 @@ export const store = new Vuex.Store({
     orderComponent: false,
     urlFondo: conf.url_fondo,
     existCurrentProduct: false,
-    colorTexto: conf.color_texto,
-    nombreFuente: conf.nombre_fuente,
-    colorPrincipal: conf.color_principal,
-    colorSecundario: conf.color_secundario,
     productsPlaceholder: [
       {
         placeholder: true,
@@ -92,16 +88,16 @@ export const store = new Vuex.Store({
       store.commit('calculateTotalCart');
     },
     productsPurchased(state) {
-      for(let product of state.productsCart){
-        setTimeout(()=>{
-          if(document.getElementById(product.id)){
-            document.getElementById(product.id).classList.add('bought');
-            document.getElementById(product.id).style.borderColor = state.colorSecundario;
-            document.getElementById(product.id).querySelector('.quantity_add').style.cssText = `border-color: ${state.colorSecundario}; color: ${state.colorSecundario};`;
-            document.getElementById(product.id).querySelector('.quantity_remove').style.cssText = `border-color: ${state.colorSecundario}; color: ${state.colorSecundario};`;
-          }
-        }, 500)
-      }
+      // for(let product of state.productsCart){
+      //   setTimeout(()=>{
+      //     if(document.getElementById(product.id)){
+      //       document.getElementById(product.id).classList.add('bought');
+      //       document.getElementById(product.id).style.borderColor = state.colorSecundario;
+      //       document.getElementById(product.id).querySelector('.quantity_add').style.cssText = `border-color: ${state.colorSecundario}; color: ${state.colorSecundario};`;
+      //       document.getElementById(product.id).querySelector('.quantity_remove').style.cssText = `border-color: ${state.colorSecundario}; color: ${state.colorSecundario};`;
+      //     }
+      //   }, 500)
+      // }
     },
     removeProductsPurchased(state, id) {
       if(document.getElementById(id)){
