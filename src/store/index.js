@@ -24,6 +24,7 @@ export const store = new Vuex.Store({
     subcategorias: [],
     productsCart: cart,
     currentProduct: {},
+    notifyProduct: null,
     togglePayment: false,
     menuComponent: false,
     geolocalizacion: null,
@@ -98,6 +99,12 @@ export const store = new Vuex.Store({
       //     }
       //   }, 500)
       // }
+    },
+    notifyProduct(state, product){
+      state.notifyProduct = product;
+      setTimeout(() => {
+        state.notifyProduct = null;
+      }, 2000)
     },
     removeProductsPurchased(state, id) {
       if(document.getElementById(id)){

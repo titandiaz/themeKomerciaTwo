@@ -39,7 +39,7 @@ export default {
       numberphone: '',
       comment: '',
       message: {
-        text: 'hola',
+        text: '',
         open: false,
       },
     }
