@@ -42,7 +42,7 @@ Vue.use(VueAnalytics, {
   }
 })
 
-Vue.prototype.$urlHttp = 'https://komercia.app';
+Vue.prototype.$urlHttp = 'https://komercia.co';
 store.state.urlHttp = Vue.prototype.$urlHttp;
 store.commit('getData');
 
