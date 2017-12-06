@@ -96,7 +96,6 @@
       return {
         data: {},
         selectPhotoUrl: '',
-        bought: false,
         idYoutube: '',
         existYoutube: false,
         maxQuantityValue: 1,
@@ -431,9 +430,6 @@
 		text-align: center;
 		margin-bottom: 10px;
 		font-size: 13px;
-	}
-	.product.bought .quantity{
-		display: flex;
 	}
 	.quantity_remove, .quantity_add{
 		border-style: none;
