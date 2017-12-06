@@ -28,7 +28,7 @@ export default {
     this.makeMap();
   },
   watch: {
-    '$store.state.geolocalizacion': () => {
+    geolocalizacion() {
       this.makeMap();
     },
   },
@@ -76,7 +76,7 @@ export default {
     },
     makeMap(){
       let place = {latitud:  4.14, longitud: -73.63};
-      if(this.geolocalizacion){
+      if(this.geolocalizacion && this.geolocalizacion.length != 0){
         place = this.geolocalizacion[0];
       }
       var firstPlace = {lat: place.latitud, lng: place.longitud};
