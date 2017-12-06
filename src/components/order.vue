@@ -12,6 +12,9 @@
             <img :src="setFoto(product.foto)" alt="">
           </figure>
           <p class="nombre">{{product.nombre | capitalize}}</p>
+          <div class="">
+            <p v-for="opcion in product.combinacion">{{opcion}} -</p>
+          </div>
           <p class="precio">{{product.cantidad}} <span v-show="product.precio">X {{product.precio | currency}}</span></p>
           <i class="material-icons pointer" v-on:click="deleteItemCart(index, product.id)">close</i>
         </div>
@@ -49,7 +52,7 @@ export default {
   },
   methods: {
     setFoto(f) {
-      return `${this.$urlHttp}/productos/${f}`;
+      return `${this.$urlHttp}/mini/${f}`;
     },
     deleteItemCart(i, id){
       this.$store.state.productsCart.splice(i, 1);

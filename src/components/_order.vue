@@ -68,7 +68,7 @@ export default {
       }
     },
     setFoto(f) {
-      return `${this.$urlHttp}/productos/${f}`;
+      return `${this.$urlHttp}/mini/${f}`;
     },
     deleteItemCart(i){
       this.$store.state.productsCart.splice(i, 1);
