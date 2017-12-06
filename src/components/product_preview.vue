@@ -105,7 +105,7 @@
         }
         let product = {
           id: this.data.detalle.id,
-          precio: this.data.detalle.precio,
+          precio: this.salesData.precio,
           cantidad: this.data.cantidad,
           foto: this.data.detalle.foto,
           nombre: this.data.detalle.nombre,
@@ -119,7 +119,7 @@
           this.$store.state.productsCart.push(product);
         }
         this.$store.commit('updateContentCart');
-        this.$router.push('/pedido');
+        this.$store.commit('notifyProduct', product)
         this.$store.state.existCurrentProduct = false;
       }
     },
@@ -130,6 +130,11 @@
           return value.replace(/^\w|\s\w/g, l => l.toUpperCase())
         }
       },
+      currency(value) {
+	      if(value){
+	        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+	      }
+	    },
     }
   }
 </script>
@@ -210,17 +215,18 @@
     color: var(--color_texto);
   }
   .content_buy_action{
+    width: 100%;
     display: flex;
-    padding: 0 15px;
+    justify-content: center;
+    padding: 5px 20px;
     align-items: center;
     color: #FFF;
     border-style: none;
     border-radius: 12px;
-    box-shadow: 0 1px 7px 0 rgba(155, 155, 155, 0.6);
+    background-color: var(--color_principal);
     font-size: 13px;
     cursor: pointer;
     outline: none;
-    background-color: var(--color_principal);
     transition: .3s;
   }
   .content_buy_action.spent{
@@ -233,7 +239,6 @@
   .content_buy_action i{
     font-size: 19px;
     margin-left: 10px;
-    border-left: 1px solid #FFF;
     padding: 4px 0px;
     padding-left: 10px;
   }
