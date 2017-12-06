@@ -1,5 +1,6 @@
 <template>
   <div id="app" :style="stylesConf">
+    <ko-notify></ko-notify>
     <header class="ko_header" :style="stylesConf.colorPrincipal">
 			<header-menu></header-menu>
 		</header>
@@ -10,12 +11,13 @@
 </template>
 
 <script>
+import koNotify from './components/notify_product.vue'
 import headerMenu from './components/menu2.vue';
 import productPreview from './components/product_preview.vue';
 import footerComponent from './components/footer.vue'
 export default {
   name: 'app',
-  components: { headerMenu, productPreview, footerComponent },
+  components: { koNotify, headerMenu, productPreview, footerComponent },
   data() {
     return {
       stylesConf: {
