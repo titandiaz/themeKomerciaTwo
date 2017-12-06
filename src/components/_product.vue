@@ -241,7 +241,7 @@
         }
         let product = {
           id: this.data.detalle.id,
-          precio: this.data.detalle.precio,
+          precio: this.salesData.precio,
           cantidad: this.data.cantidad,
           foto: this.data.detalle.foto,
           nombre: this.data.detalle.nombre,
@@ -252,13 +252,11 @@
           let mutableProduct = this.$store.state.productsCart[this.productIndexCart];
           mutableProduct.cantidad += this.data.cantidad;
           this.$store.state.productsCart.splice(this.productIndexCart, 1, mutableProduct);
-          this.$store.commit('updateContentCart');
-          this.$router.push('/pedido');
         }else{
           this.$store.state.productsCart.push(product);
-          this.$store.commit('updateContentCart');
-          this.$router.push('/pedido');
         }
+        this.$store.commit('updateContentCart');
+        this.$store.commit('notifyProduct', product)
       }
     },
     filters: {
@@ -370,7 +368,6 @@
     border-style: none;
     border-radius: 12px;
     background-color: var(--color_principal);
-    /*box-shadow: 0 1px 7px 0 rgba(155, 155, 155, 0.6);*/
     font-size: 13px;
     cursor: pointer;
     outline: none;

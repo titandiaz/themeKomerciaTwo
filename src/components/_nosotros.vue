@@ -1,17 +1,17 @@
 <template>
   <div id="nosotros">
     <section class="abouts maxcontainer">
-      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow, 'border': styles.border }">
+      <div class="about_item">
         <h2>Nosotros</h2>
-        <p>{{ info.nosotros | htmlToString}}</p>
+        <div v-html="info.nosotros"></div>
       </div>
-      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow2, 'border': styles.border }" v-show="info.mision">
+      <div class="about_item" v-show="info.mision">
         <h2>Misión</h2>
-        <p>{{ info. mision | htmlToString}}</p>
+        <div v-html="info.mision"></div>
       </div>
-      <div class="about_item" :style="{ 'boxShadow': styles.boxShadow3, 'border': styles.border }">
+      <div class="about_item">
         <h2>Visión</h2>
-        <p>{{ info.vision | htmlToString}}</p>
+        <div v-html="info.vision"></div>
       </div>
     </section>
   </div>
@@ -20,26 +20,10 @@
 <script>
 export default {
   computed: {
-    styles(){
-      return {
-        boxShadow: `35px 15px 0 0px ${this.$store.state.colorPrincipal}`,
-        boxShadow2: `0px 15px 0 0px ${this.$store.state.colorPrincipal}`,
-        boxShadow3: `-35px 15px 0 0px ${this.$store.state.colorPrincipal}`,
-        border: `1px solid ${this.$store.state.colorPrincipal}`,
-      }
-    },
     info(){
       return this.$store.state.tienda;
     }
   },
-  filters: {
-    htmlToString(value){
-      var html = value;
-      var div = document.createElement("div");
-      div.innerHTML = html;
-      return div.textContent || div.innerText || "";
-    }
-  }
 }
 </script>
 
@@ -71,14 +55,11 @@ export default {
     margin: 10px 10px 0 0;
     background-color: #FFF;
     border-radius: 3px;
-    border: 1px solid peru;
     text-align: justify;
-    box-shadow: 0px 15px 0 0px #e4e4e4;
     transition: all .5s;
     z-index: 2;
   }
   .about_item:first-of-type{
-    box-shadow: 15px 5px 0 0px;
     z-index: 1;
   }
   .about_item:last-of-type{
