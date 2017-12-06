@@ -11,17 +11,17 @@
       <div class="content">
         <i id="closeModal" class="material-icons close">close</i>
         <h2 class="content_name">{{data.nombre}}</h2>
-        <h3 class="content_buy_price">{{precio}}</h3>
-        <div class="content_desc" v-if="data.info.descripcion" v-html="data.info.descripcion"></div>
+        <h3 class="content_buy_price" v-show="salesData.precio">${{ salesData.precio | currency }}</h3>
+        <div class="content_desc" v-if="data.info" v-html="data.info.descripcion"></div>
         <div class="content_variant">
-          <div class="content_variant_item" v-for="variant in data.variantes">
-            <label>{{ variant.nombre }}:</label><ko-radio-group :options="variant.valores"></ko-radio-group>
+          <div class="content_variant_item" v-for="(variant, index) in data.variantes">
+            <label>{{ variant.nombre }}:</label><ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
           </div>
         </div>
         <div class="content_buy">
           <h3 class="content_buy_price"></h3>
           <button v-if="spent" class="content_buy_action spent">Producto agotado<i class="material-icons">add_shopping_cart</i></button>
-          <button v-else class="content_buy_action" v-on:click="addShoppingCart(data)">Agregar<i class="material-icons">add_shopping_cart</i></button>
+          <button v-else class="content_buy_action" v-on:click="addShoppingCart">Agregar<i class="material-icons">add_shopping_cart</i></button>
         </div>
       </div>
     </div>
@@ -34,6 +34,11 @@
       return {
         selectPhotoUrl: '',
         spent: false,
+        maxQuantityValue: 1,
+        quantityValue: 1,
+        productIndexCart: null,
+        productCart: {},
+        salesData: {},
       }
     },
     watch: {
@@ -42,11 +47,42 @@
         if(value.info.inventario == 0){
           this.spent = true;
         }
+      },
+      beforeCombination(value){
+        let combinationSelected = JSON.stringify(value);
+        let combinaciones = JSON.parse(this.data.combinaciones.combinaciones);
+        let result = combinaciones.filter((combinacion, index) => JSON.stringify(combinacion.combinacion) == combinationSelected)[0];
+        this.productCart = [];
+        this.productIndexCart = null;
+        for(let [index, productCart] of this.$store.state.productsCart.entries()){
+          if(this.data.detalle.id == productCart.id && JSON.stringify(productCart.combinacion) == JSON.stringify(result.combinacion)){
+            this.productIndexCart = index;
+            this.productCart = productCart;
+          }
+        }
+        if(result){
+          this.spent = false;
+          this.maxQuantityValue = result.unidades;
+          if(result.unidades == 0){
+            this.spent = true;
+          }
+          if(this.productCart.cantidad){
+            this.maxQuantityValue = (parseInt(result.unidades) - this.productCart.cantidad);
+            if(this.maxQuantityValue <= 0){
+              this.spent = true;
+            }
+          }
+          this.salesData = result;
+          this.quantityValue = 1;
+        }
       }
     },
     computed: {
       data(){
         return this.$store.state.currentProduct;
+      },
+      beforeCombination(){
+        return this.$store.state.beforeCombination;
       },
       precio() {
 				if(this.data.precio){
@@ -63,21 +99,28 @@
       selectedPhoto(f){
         this.selectPhotoUrl = `${this.$urlHttp}/tumb/${f}`;
       },
-      addShoppingCart(product){
-        let productExist = false;
-          for(let productCart of this.$store.state.productsCart){
-            if(product.id == productCart.id){
-                 productCart.cantidad ++;
-                 product = productCart;
-                 productExist = true;
-            }
-          }
-          if(!productExist){
-            product.cantidad = 1;
-            this.$store.state.productsCart.push(product);
-          }
+      addShoppingCart(){
+        if(!this.data.cantidad){
+          this.data.cantidad = this.quantityValue;
+        }
+        let product = {
+          id: this.data.detalle.id,
+          precio: this.data.detalle.precio,
+          cantidad: this.data.cantidad,
+          foto: this.data.detalle.foto,
+          nombre: this.data.detalle.nombre,
+          combinacion: this.salesData.combinacion,
+        }
+        if(typeof this.productIndexCart == 'number'){
+          let mutableProduct = this.$store.state.productsCart[this.productIndexCart];
+          mutableProduct.cantidad += this.data.cantidad;
+          this.$store.state.productsCart.splice(this.productIndexCart, 1, mutableProduct);
+        }else{
+          this.$store.state.productsCart.push(product);
+        }
         this.$store.commit('updateContentCart');
-        this.$store.commit('productsPurchased');
+        this.$router.push('/pedido');
+        this.$store.state.existCurrentProduct = false;
       }
     },
     filters: {
@@ -104,7 +147,7 @@
   }
   .product{
     width: 750px;
-    height: 500px;
+    height: 550px;
     display: flex;
     background-color: #FFF;
     padding: 30px;
