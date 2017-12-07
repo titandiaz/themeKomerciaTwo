@@ -8,6 +8,8 @@ import VueAnalytics from 'vue-analytics'
 import koRadioGroup from './components/radio_group.vue'
 import koCollapse from './components/collapse.vue'
 import koModal from './components/modal.vue'
+import VueFuse from 'vue-fuse'
+
   var result = {};
   var regexParse = new RegExp('([a-z\-0-9]{2,63})\.([a-z\.]{2,5})$');
   var urlParts = regexParse.exec(window.location.hostname);
@@ -28,6 +30,7 @@ import koModal from './components/modal.vue'
 Vue.use(koRadioGroup);
 Vue.use(koCollapse);
 Vue.use(koModal);
+Vue.use(VueFuse);
 Vue.use(VueAnalytics, {
   id: ['UA-92934137-1'],
   router,

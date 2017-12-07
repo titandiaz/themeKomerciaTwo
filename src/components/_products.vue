@@ -139,10 +139,20 @@
 				document.getElementById('shortcuts').classList.toggle('toggleFilter');
 			},
 			searchProduct(){
-				let search = this.search;
-				search = search.toLowerCase()
-				let filters = this.productsData.filter(product => product.nombre.toLowerCase().includes(search))
-				this.products = filters;
+				var options = {
+					shouldSort: true,
+					threshold: 0.6,
+					location: 0,
+					distance: 100,
+					maxPatternLength: 32,
+					minMatchCharLength: 1,
+					keys: [
+						"nombre",
+				]
+				};
+				this.$search(this.search, this.productsData, options).then(results => {
+					this.products = results;
+				})
 				this.paginationActions = false;
 			},
 			selectCat(e, categoria){
