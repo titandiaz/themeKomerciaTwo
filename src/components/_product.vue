@@ -14,6 +14,9 @@
               <iframe v-show="existYoutube" width="400" height="250" :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
+          <div class="photos responsive">
+            <product-slide :photos="data.fotos" :photo="data.detalle.foto"></product-slide>
+          </div>
           <div class="content">
             <h2 class="content_name">{{data.detalle.nombre}}</h2>
             <div class="content_buy_price">
@@ -70,8 +73,9 @@
 <script>
   import axios from 'axios';
   import zoomed from './zoomed.vue';
+  import productSlide from './product_slide.vue';
   export default{
-    components: { zoomed },
+    components: { zoomed, productSlide },
     created() {
       axios.get(`${this.$urlHttp}/api/front/producto/${this.$route.params.id}`).then((response) => {
         this.selectedPhoto(response.data.detalle.foto);
@@ -82,7 +86,15 @@
           unidades: this.data.info.inventario,
           sku: this.data.info.sku,
         };
-        if(this.salesData.unidades == 0){
+        this.maxQuantityValue = this.data.info.inventario;
+        for(let [index, productCart] of this.$store.state.productsCart.entries()){
+          if(this.data.detalle.id == productCart.id){
+            this.productIndexCart = index;
+            this.productCart = productCart;
+            this.maxQuantityValue = (this.data.info.inventario - productCart.cantidad);
+          }
+        }
+        if(this.salesData.unidades == 0 || this.maxQuantityValue <= 0){
           this.spent = true;
         }
       })
@@ -246,6 +258,7 @@
           foto: this.data.detalle.foto,
           nombre: this.data.detalle.nombre,
           combinacion: this.salesData.combinacion,
+          limitQuantity: this.data.info.inventario,
         }
 
         if(typeof this.productIndexCart == 'number'){
@@ -274,6 +287,7 @@
   }
   .wrapper{
     max-width: 1100px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -287,6 +301,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .photos.responsive{
+    display: none;
   }
   .photos_selected{
     width: 80px;
@@ -553,6 +570,16 @@
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+}
+@media(max-width: 600px){
+  .photos{
+    max-width: 100%;
+    width: 100%;
+    display: none;
+  }
+  .photos.responsive{
+    display: flex;
   }
 }
 @media(max-width: 320px){
