@@ -148,7 +148,7 @@
 					minMatchCharLength: 1,
 					keys: [
 						"nombre",
-				]
+					]
 				};
 				this.$search(this.search, this.productsData, options).then(results => {
 					this.products = results;
