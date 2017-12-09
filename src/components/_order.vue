@@ -56,9 +56,11 @@ export default {
   },
   methods: {
     addQuantity(product, index){
-      product.cantidad = product.cantidad + 1;
-      this.products.splice(index, 1, product)
-      this.$store.commit('updateContentCart');
+      if(product.limitQuantity > product.cantidad){
+        product.cantidad = product.cantidad + 1;
+        this.products.splice(index, 1, product)
+        this.$store.commit('updateContentCart');
+      }
     },
     removeQuantity(product, index){
       if(this.products[index].cantidad >= 2){
