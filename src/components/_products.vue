@@ -180,6 +180,7 @@
 					document.querySelector('.categorias_item .selected').classList.remove('selected');
 				}
 				e.target.classList.add('selected');
+				this.toggleFilters();
 			}
 		}
 	}
