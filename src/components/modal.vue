@@ -24,7 +24,7 @@
         <div class="modal_content_item" v-if="mediospago.consignacion">
           <h3>Consignación Bancaria</h3>
           <p>Elige esta opción en caso de que desees procesar el pago mediante consignación bancaria. En este caso, debe ser confirmado el pago y te haran envió del producto o entrega del servicio según el caso.</p>
-          <img src="../assets/pagos_store.png">
+          <img src="../assets/receipt.png">
         </div>
         <div class="modal_content_item" v-if="mediospago.efecty">
           <h3>Consignación Efecty</h3>
