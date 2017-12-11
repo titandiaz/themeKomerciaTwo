@@ -11,7 +11,7 @@
       <div class="content">
         <i id="closeModal" class="material-icons close">close</i>
         <h2 class="content_name">{{data.nombre}}</h2>
-        <h3 class="content_buy_price" v-show="salesData.precio">${{ salesData.precio | currency }}</h3>
+        <h3 class="content_buy_price" v-if="salesData">${{ salesData.precio | currency }}</h3>
         <div class="content_desc" v-if="data.info" v-html="data.info.descripcion"></div>
         <div class="content_variant">
           <div class="content_variant_item" v-for="(variant, index) in data.variantes">
