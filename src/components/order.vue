@@ -74,7 +74,9 @@ export default {
         direccion_entrega: 1
       }
       json = JSON.stringify(json)
-      location.href = `${this.$urlHttp}/before/checkout/${json}`;
+      if(this.$store.state.productsCart.length != 0){
+        location.href = `${this.$urlHttp}/before/checkout/${json}`;
+      }
     }
   },
   filters: {
