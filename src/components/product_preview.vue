@@ -38,7 +38,7 @@
         quantityValue: 1,
         productIndexCart: null,
         productCart: {},
-        salesData: {},
+        salesData: null,
       }
     },
     watch: {
@@ -110,6 +110,11 @@
           foto: this.data.detalle.foto,
           nombre: this.data.detalle.nombre,
           combinacion: this.salesData.combinacion,
+        }
+        if(this.salesData){
+          product.limitQuantity = this.salesData.unidades;
+        }else{
+          product.limitQuantity = this.data.info.inventario;
         }
         if(typeof this.productIndexCart == 'number'){
           let mutableProduct = this.$store.state.productsCart[this.productIndexCart];

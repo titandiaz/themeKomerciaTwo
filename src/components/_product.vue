@@ -114,7 +114,7 @@
         quantityValue: 1,
         productIndexCart: null,
         productCart: {},
-        salesData: {},
+        salesData: null,
         spent: false,
         envio: {
           titulo: '',
@@ -258,9 +258,12 @@
           foto: this.data.detalle.foto,
           nombre: this.data.detalle.nombre,
           combinacion: this.salesData.combinacion,
-          limitQuantity: this.data.info.inventario,
         }
-
+        if(this.salesData){
+          product.limitQuantity = this.salesData.unidades;
+        }else{
+          product.limitQuantity = this.data.info.inventario;
+        }
         if(typeof this.productIndexCart == 'number'){
           let mutableProduct = this.$store.state.productsCart[this.productIndexCart];
           mutableProduct.cantidad += this.data.cantidad;
