@@ -416,7 +416,7 @@
     line-height: 1.5;
     overflow-y: auto;
     text-align: justify;
-    word-break: break-all;
+    word-break: break-word;
   }
   .content_desc *{
     color: #333;
