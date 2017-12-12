@@ -34,7 +34,7 @@ export default {
       }
     </script>
 
-<style>
+<style scoped>
   .swiper-container {
     max-width: 100%;
     overflow: hidden;
@@ -60,18 +60,18 @@ export default {
       -webkit-align-items: center;
       align-items: center;
   }
-  .swiper-slide .photo{
+  .photos .responsive .swiper-slide .photo{
     max-width: 100%;
     max-height: 100%;
     margin: 0 auto;
   }
-  .swiper-slide.swiper-slide-next .photo{
+  .photos .responsive .swiper-slide.swiper-slide-next .photo{
     /*visibility: hidden;*/
   }
-  .swiper-pagination-bullet{
+  .photos .responsive .swiper-pagination-bullet{
     background-color: rgba(255,255,255,0.5);
   }
-  .swiper-pagination-bullet-active{
+  .photos .responsive .swiper-pagination-bullet-active{
     background-color: #FFF;
   }
 </style>
