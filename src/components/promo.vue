@@ -1,7 +1,7 @@
 <template>
   <div class="container-promo">
-      <div class="promo-item promo-item-left promo-imagen" :style="{backgroundImage:`url(https://brainmakers.net/productos/${products[2].foto})`}">
-          <!-- <div class="promo-imagen" :style="{backgroundImage:`url(https://brainmakers.net/tumb/${products[5].foto})`}"></div> -->
+      <div class="promo-item promo-item-left promo-imagen" :style="{backgroundImage:`url(${$urlHttp}/productos/${products[2].foto})`}">
+          <!-- <div class="promo-imagen" :style="{backgroundImage:`url(${$urlHttp}/tumb/${products[5].foto})`}"></div> -->
           <div class="border-promo"></div>
           <div class="promo-info">
             <h2 class="title-promo">{{products[2].nombre}}</h2>
@@ -10,13 +10,13 @@
           </div>
       </div>
       <div class="promo-item promo-item-center">
-          <div class="promo-item-center-top promo-item-center-imagen" :style="{backgroundImage:`url(https://brainmakers.net/tumb/${products[0].foto})`}">
+          <div class="promo-item-center-top promo-item-center-imagen" :style="{backgroundImage:`url(${$urlHttp}/tumb/${products[0].foto})`}">
           <div class="border-item-center"><h1 class="title-promo-center">{{products[0].nombre}}</h1></div></div>
-          <div class="promo-item-center-bottom promo-item-center-imagen" :style="{backgroundImage:`url(https://brainmakers.net/tumb/${products[1].foto})`}">
+          <div class="promo-item-center-bottom promo-item-center-imagen" :style="{backgroundImage:`url(${$urlHttp}/tumb/${products[1].foto})`}">
           <div class="border-item-center"><h1 class="title-promo-center">{{products[1].nombre}}</h1></div></div>
       </div>
-      <div class="promo-item promo-item-right promo-imagen" :style="{backgroundImage:`url(https://brainmakers.net/productos/${products[3].foto})`}">
-          <!-- <div class="promo-imagen" :style="{backgroundImage:`url(https://brainmakers.net/tumb/${products[0].foto})`}" ></div> -->
+      <div class="promo-item promo-item-right promo-imagen" :style="{backgroundImage:`url(${$urlHttp}/productos/${products[3].foto})`}">
+          <!-- <div class="promo-imagen" :style="{backgroundImage:`url(${$urlHttp}/tumb/${products[0].foto})`}" ></div> -->
           <div class="border-promo"></div>
           <div class="promo-info">
               <h2 class="title-promo">{{products[3].nombre}}</h2>
@@ -31,8 +31,8 @@ export default {
   computed: {
     products() {
       return this.$store.state.productos.slice(0, 6);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -95,7 +95,7 @@ export default {
 }
 .description-promo {
   text-align: center;
-  font-family: "Helvetica", sans-serif;
+  font-family: 'Helvetica', sans-serif;
   padding: 10px 30px;
   font-size: 15px;
 }
@@ -128,7 +128,7 @@ export default {
   bottom: 30px;
   transition: all 0.3s;
 }
-[class*="promo-item-center"] {
+[class*='promo-item-center'] {
   width: 100%;
   height: 265px;
   margin-bottom: 30px;

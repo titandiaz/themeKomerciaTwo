@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import koNotify from "./components/notify_product.vue";
-import headerMenu from "./components/menu2.vue";
-import productPreview from "./components/product_preview.vue";
-import footerComponent from "./components/footer.vue";
-import order from "./components/order.vue";
+import koNotify from './components/notify_product.vue';
+import headerMenu from './components/menu2.vue';
+import productPreview from './components/product_preview.vue';
+import footerComponent from './components/footer.vue';
+import order from './components/order.vue';
 export default {
-  name: "app",
+  name: 'app',
   components: { koNotify, headerMenu, productPreview, footerComponent, order },
   data() {
     return {
@@ -37,9 +37,9 @@ export default {
 </script>
 
 <style>
-@import url("../node_modules/font-awesome/css/font-awesome.min.css");
+/* @import url("../node_modules/font-awesome/css/font-awesome.min.css"); */
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
