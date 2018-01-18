@@ -53,12 +53,12 @@
   </footer>
 </template>
 <script>
-import axios from "axios";
+import axios from 'axios';
 
 export default {
   data() {
     return {
-      email: null
+      email: null,
     };
   },
   computed: {
@@ -81,7 +81,7 @@ export default {
     styles() {
       return {
         colorPrincipal: { backgroundColor: this.$store.state.colorPrincipal },
-        colorSecundario: { color: this.$store.state.colorSecundario }
+        colorSecundario: { color: this.$store.state.colorSecundario },
       };
     },
     phone() {
@@ -98,17 +98,17 @@ export default {
     },
     twitter() {
       return this.$store.state.tienda.red_twitter;
-    }
+    },
   },
   methods: {
     submitNewsletter() {
       let json = {
         correo: this.email,
-        tienda: this.$store.state.id
+        tienda: this.$store.state.id,
       };
       axios.post(`${this.$urlHttp}/api/front/suscriptores`, json);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -149,8 +149,9 @@ footer {
   margin-left: 10px;
   color: #fff;
   padding: 5px 10px;
-  transition: 0.3s;
-  border-radius: 5px;
+  /* transition: 0.3s; */
+  text-align: center;
+  /* border-radius: 5px; */
   background-color: var(--color_secundario);
 }
 .footer_info_address:hover {
@@ -210,9 +211,6 @@ footer {
   /* box-shadow: 3px 4px 7px 0 rgba(0, 0, 0, 0.5); */
   cursor: pointer;
   transition: 0.3s;
-}
-.footer_actions_subscribe:hover {
-  /* transform: scale(0.97); */
 }
 .footer_about_legal {
   display: flex;

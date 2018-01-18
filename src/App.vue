@@ -24,20 +24,20 @@ export default {
     return {
       stylesConf: {
         color: this.$store.state.colorTexto,
-        colorPrincipal: { backgroundColor: this.$store.state.colorPrincipal }
-      }
+        colorPrincipal: { backgroundColor: this.$store.state.colorPrincipal },
+      },
     };
   },
   computed: {
     existCurrentProduct() {
       return this.$store.state.existCurrentProduct;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style>
-/* @import url("../node_modules/font-awesome/css/font-awesome.min.css"); */
+@import url('../node_modules/font-awesome/css/font-awesome.min.css');
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -1,13 +1,13 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import axios from "axios";
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
-const conf = JSON.parse(localStorage.getItem("conf"));
+const conf = JSON.parse(localStorage.getItem('conf'));
 let cart = [];
-if (localStorage.getItem("ShoppingCart")) {
-  cart = JSON.parse(localStorage.getItem("ShoppingCart"));
+if (localStorage.getItem('ShoppingCart')) {
+  cart = JSON.parse(localStorage.getItem('ShoppingCart'));
 }
 
 export const store = new Vuex.Store({
@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
     envios: {},
     banners: [],
     id: conf.id,
-    urlHttp: "",
+    urlHttp: '',
     totalCart: 0,
     productos: [],
     categorias: [],
@@ -35,41 +35,42 @@ export const store = new Vuex.Store({
     productsPlaceholder: [
       {
         placeholder: true,
-        foto: "placeholder1.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
+        foto: 'placeholder1.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
       },
       {
         placeholder: true,
-        foto: "placeholder2.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
+        foto: 'placeholder2.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
       },
       {
         placeholder: true,
-        foto: "placeholder3.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
+        foto: 'placeholder3.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
       },
       {
         placeholder: true,
-        foto: "placeholder4.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
-      }
+        foto: 'placeholder4.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },
     ],
     beforeCombination: [],
     mediospago: {
-      epayco: false
+      epayco: false,
     },
     politicas: {
-      garantia: "",
-      datos: ""
-    }
+      garantia: '',
+      datos: '',
+    },
   },
   mutations: {
     getData(state) {
       axios
+        // .get(`${state.urlHttp}/api/front/tienda/${conf.id}`)
         .get(`${state.urlHttp}/api/front/tienda/${conf.id}`)
         .then(response => {
           store.state.banners = response.data.data.banners;
@@ -78,11 +79,11 @@ export const store = new Vuex.Store({
           store.state.subcategorias = response.data.data.subcategorias;
           store.state.geolocalizacion = response.data.data.geolocalizacion;
           store.state.mediospago = response.data.data.medios_pago || {
-            epayco: false
+            epayco: false,
           };
           store.state.politicas = response.data.data.politicas || {
-            garantia: "",
-            datos: ""
+            garantia: '',
+            datos: '',
           };
           store.state.tienda = response.data.data.tienda;
           store.state.envios = response.data.data.medios_envio;
@@ -103,8 +104,8 @@ export const store = new Vuex.Store({
         .catch(error => {});
     },
     updateContentCart(state) {
-      localStorage.setItem("ShoppingCart", JSON.stringify(state.productsCart));
-      store.commit("calculateTotalCart");
+      localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart));
+      store.commit('calculateTotalCart');
     },
     productsPurchased(state) {
       // for(let product of state.productsCart){
@@ -126,7 +127,7 @@ export const store = new Vuex.Store({
     },
     removeProductsPurchased(state, id) {
       if (document.getElementById(id)) {
-        document.getElementById(id).classList.remove("bought");
+        document.getElementById(id).classList.remove('bought');
       }
     },
     calculateTotalCart(state) {
@@ -134,6 +135,6 @@ export const store = new Vuex.Store({
       for (let product of state.productsCart) {
         state.totalCart += product.precio * product.cantidad;
       }
-    }
-  }
+    },
+  },
 });
