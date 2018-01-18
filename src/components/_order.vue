@@ -36,53 +36,52 @@
 </template>
 
 <script>
-
 export default {
-  mounted(){
+  mounted() {
     this.products = this.$store.state.productsCart;
   },
-  data(){
+  data() {
     return {
-      products: [],
-    }
+      products: []
+    };
   },
   computed: {
-    totalCart(){
+    totalCart() {
       return this.$store.state.totalCart;
     },
-    orderComponent(){
+    orderComponent() {
       return this.$store.state.orderComponent;
     }
   },
   methods: {
-    addQuantity(product, index){
-      if(product.limitQuantity > product.cantidad){
+    addQuantity(product, index) {
+      if (product.limitQuantity > product.cantidad) {
         product.cantidad = product.cantidad + 1;
-        this.products.splice(index, 1, product)
-        this.$store.commit('updateContentCart');
+        this.products.splice(index, 1, product);
+        this.$store.commit("updateContentCart");
       }
     },
-    removeQuantity(product, index){
-      if(this.products[index].cantidad >= 2){
+    removeQuantity(product, index) {
+      if (this.products[index].cantidad >= 2) {
         product.cantidad = product.cantidad - 1;
-        this.products.splice(index, 1, product)
-        this.$store.commit('updateContentCart');
+        this.products.splice(index, 1, product);
+        this.$store.commit("updateContentCart");
       }
     },
     setFoto(f) {
       return `${this.$urlHttp}/mini/${f}`;
     },
-    deleteItemCart(i){
+    deleteItemCart(i) {
       this.$store.state.productsCart.splice(i, 1);
-      this.$store.commit('updateContentCart');
-      this.$store.commit('removeProductsPurchased');
+      this.$store.commit("updateContentCart");
+      this.$store.commit("removeProductsPurchased");
     },
     backPage(e) {
-      if(e.target.id == 'order' || e.target.id == 'closeOrder'){
+      if (e.target.id == "order" || e.target.id == "closeOrder") {
         this.$store.state.orderComponent = false;
       }
     },
-    next(){
+    next() {
       let json = {
         products: this.$store.state.productsCart,
         tienda: this.$store.state.id,
@@ -90,175 +89,180 @@ export default {
         total: this.$store.state.totalCart,
         estado: 0,
         direccion_entrega: 1
-      }
-      json = JSON.stringify(json)
-      if(this.$store.state.productsCart.length != 0){
+      };
+      json = JSON.stringify(json);
+      if (this.$store.state.productsCart.length != 0) {
         location.href = `${this.$urlHttp}/before/checkout/${json}`;
       }
     }
   },
   filters: {
     currency(value) {
-      if(value){
+      if (value) {
         return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
-    },
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-  #order{
-    width: 100%;
-    min-height: calc(100vh - 306px);
-    background-color: rgba(255,255,255,1);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#order {
+  width: 100%;
+  min-height: calc(100vh - 306px);
+  background-color: rgba(255, 255, 255, 1);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#closeOrder {
+  cursor: pointer;
+}
+header {
+  width: 100%;
+  background-color: #9b9b9b;
+  padding: 0 20px;
+}
+.order {
+  max-width: 1000px;
+  width: 95%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fff;
+  box-shadow: 0 0 19px 7px rgba(121, 121, 121, 0.25);
+  color: rgba(0, 0, 0, 0.6);
+  margin: 50px auto;
+  transition: all 0.3s;
+}
+#order.activeOrder {
+  opacity: 1;
+  right: 0%;
+}
+.order.active {
+  right: 0;
+}
+.empty_products {
+  width: 100%;
+  height: calc(100% - 50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.empty_products a {
+  border-style: none;
+  border: 2px solid red;
+  background-color: transparent;
+  border-radius: 15px;
+  padding: 10px 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+  color: var(--color_principal);
+  border: 2px solid var(--color_principal);
+}
+.products {
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  overflow-y: auto;
+  align-content: flex-start;
+}
+.product {
+  width: 45%;
+  max-height: 100px;
+  display: flex;
+  flex: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 10px 20px;
+  border-radius: 4px;
+  border: solid 1px #e5e5e5;
+}
+.product .photo img {
+  max-width: 50px;
+  max-height: 50px;
+}
+.product .nombre {
+  max-width: 160px;
+  font-size: 13px;
+}
+.content {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: var(--color_secundario);
+}
+.order .total {
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #fff;
+}
+.order .total h3 {
+  font-size: 1.2em;
+  color: #fff;
+}
+.order .quantity {
+  display: flex;
+  align-items: center;
+}
+.quantity_remove,
+.quantity_add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-style: none;
+  background-color: transparent;
+  border: 1px solid black;
+  padding: 2.5px;
+  outline: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.quantity_value {
+  margin: 0 10px;
+}
+.quantity_remove:hover,
+.quantity_add:hover {
+  transform: scale(0.9);
+}
+.quantity_remove i,
+.quantity_add i {
+  font-size: 14px;
+}
+.actionOrder {
+  border-style: none;
+  color: #fff;
+  border: 2px solid #fff;
+  background-color: transparent;
+  /* border-radius: 15px; */
+  padding: 8px 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+}
+.actionOrder:hover {
+  transform: scale(0.97);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 1000px) {
+  .products {
+    justify-content: center;
   }
-  #closeOrder{
-    cursor: pointer;
-  }
-  header{
-    width: 100%;
-    background-color: #9b9b9b;
-    padding: 0 20px;
-  }
-  .order{
-    max-width: 1000px;
+  .product {
     width: 95%;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #FFF;
-    box-shadow: 0 0 19px 7px rgba(121, 121, 121, 0.25);
-    color: rgba(0,0,0,0.6);
-    margin: 50px auto;
-    transition: all .3s;
   }
-  #order.activeOrder{
-    opacity: 1;
-    right: 0%;
-  }
-  .order.active{
-    right: 0;
-  }
-  .empty_products{
-    width: 100%;
-    height: calc(100% - 50px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-  .empty_products a{
-    border-style: none;
-    border: 2px solid red;
-    background-color: transparent;
-    border-radius: 15px;
-    padding: 10px 30px;
-    cursor: pointer;
-    transition: .3s;
-    outline: none;
-    color: var(--color_principal);
-    border: 2px solid var(--color_principal);
-  }
-  .products{
-    width: 100%;
-    height: calc(100% - 50px);
-    overflow-y: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    overflow-y: auto;
-    align-content: flex-start;
-  }
-  .product{
-    width: 45%;
-    max-height: 100px;
-    display: flex;
-    flex: none;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    margin: 10px 20px;
-    border-radius: 4px;
-    border: solid 1px #e5e5e5;
-  }
-  .product .photo img{
-    max-width: 50px;
-    max-height: 50px;
-  }
-  .product .nombre{
-    max-width: 160px;
-    font-size: 13px;
-  }
-  .content{
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    background-color: var(--color_secundario);
-  }
-  .order .total{
-    width: 25%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .order .total h3{
-    font-size: 1.2em;
-  }
-  .order .quantity{
-    display: flex;
-    align-items: center;
-  }
-  .quantity_remove, .quantity_add{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-style: none;
-    background-color: transparent;
-    border: 1px solid black;
-    padding: 2.5px;
-    outline: none;
-    cursor: pointer;
-    transition: .5s;
-  }
-  .quantity_value{
-    margin: 0 10px;
-  }
-  .quantity_remove:hover, .quantity_add:hover{
-    transform: scale(0.9);
-  }
-  .quantity_remove i, .quantity_add i{
-    font-size: 14px;
-  }
-  .actionOrder{
-    border-style: none;
-    color: #FFF;
-    border: 2px solid #FFF;
-    background-color: transparent;
-    border-radius: 15px;
-    padding: 10px 30px;
-    cursor: pointer;
-    transition: .3s;
-    outline: none;
-  }
-  .actionOrder:hover{
-    transform: scale(0.9);
-    background-color: rgba(0,0,0,0.1);
-  }
-  @media (max-width: 1000px) {
-    .products{
-      justify-content: center;
-    }
-    .product{
-      width: 95%;
-    }
-  }
+}
 </style>

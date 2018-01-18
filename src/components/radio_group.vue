@@ -10,57 +10,60 @@
 
 <script>
 export default {
-  props: ['options', 'index'],
-  mounted(){
-    this.selectOption(this.options[0], 0)
+  props: ["options", "index"],
+  mounted() {
+    this.selectOption(this.options[0], 0);
   },
-  data(){
+  data() {
     return {
-      beforeNode: '',
+      beforeNode: "",
       optionsData: this.options,
-      beforeIndexOption: '',
-    }
+      beforeIndexOption: ""
+    };
   },
   methods: {
-    selectOption(option, index){
-      if(typeof this.beforeIndexOption == 'number'){
-        let changeOption = this.optionsData[this.beforeIndexOption].selected = false;
-        this.optionsData.splice(index, 1, changeOption)
+    selectOption(option, index) {
+      if (typeof this.beforeIndexOption == "number") {
+        let changeOption = (this.optionsData[
+          this.beforeIndexOption
+        ].selected = false);
+        this.optionsData.splice(index, 1, changeOption);
       }
       option.selected = true;
-      this.optionsData.splice(index, 1, option)
+      this.optionsData.splice(index, 1, option);
       this.beforeIndexOption = index;
       this.saveOption(option);
     },
-    saveOption(option){
+    saveOption(option) {
       this.$store.state.beforeCombination.splice(this.index, 1, option.option);
     }
   }
-}
+};
 </script>
 
 <style scoped>
-  .ko-radio_group{
-    display: flex;
-    list-style: none;
-  }
-  .ko-radio_group_option{
-    margin: 3px;
-    border: 1px solid #EEE;
-    padding: 5px 8px;
-    background-color: #FFF;
-    cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.1);
-    font-size: 15px;
-  }
-  .ko-radio_group_option:hover{
-    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.0);
-    transition: .2s;
-  }
-  .option-selected{
-    color: #FFF;
-    border: 0px solid #FFF;
-    background-color: var(--color_principal);
-  }
+.ko-radio_group {
+  display: flex;
+  list-style: none;
+}
+.ko-radio_group_option {
+  margin: 3px;
+  border: 1px solid #eee;
+  padding: 5px 8px;
+  background-color: #fff;
+  cursor: pointer;
+  /* border: 1px solid grey; */
+  /* border-radius: 5px; */
+  /* box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.1); */
+  font-size: 15px;
+}
+.ko-radio_group_option:hover {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  transition: 0.2s;
+}
+.option-selected {
+  color: #fff;
+  /* border: 0px solid #fff; */
+  background-color: var(--color_secundario);
+}
 </style>

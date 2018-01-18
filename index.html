@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-    <title>{{$tiendas->nombre}}</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/css/swiper.min.css" />
-    <!-- Make sure to import chart.html -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.8/webcomponents-lite.js"></script>
-    <script src="https://polygit.org/components/webcomponentsjs/webcomponents-loader.js"></script> -->
-    <!-- <link rel="import" href="/static/chat-komercia.html"> -->
-    <!-- <link rel="import" href="http://komercia.app/padmin/src/my-app.html"> -->
-    <style media="screen">
-      @import url('https://fonts.googleapis.com/css?family=Oswald:300,400,700');
-      *{
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        font-family: 'Oswald', sans-serif;
-      }
-      :root {
-        --color_principal: #F4F6F8;
-        --color_secundario: #DA1F3F;
-        --color_texto: rgb(255, 0, 0);
-        --color_fondo: rgb(255, 255, 255);
-        --url_fondo: '';
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- <chat-komercia></chat-komercia> -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByh33xchBmphNi10U-eB3oCX9sVVT4fiY"></script>
-    <script>
-      const conf = {
-        "id": "229",
-        "tema": 0,
-        "user": {
-          "id": "79",
-          "foto": "user.jpeg",
-          "nombre": "Diego Aguilar",
-        }
-      }
-      localStorage.setItem("conf", JSON.stringify(conf));
 
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+  <title>{{$tiendas->nombre}}</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.2/css/swiper.min.css" />
+  <!-- Make sure to import chart.html -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.8/webcomponents-lite.js"></script>
+    <script src="https://polygit.org/components/webcomponentsjs/webcomponents-loader.js"></script> -->
+  <!-- <link rel="import" href="/static/chat-komercia.html"> -->
+  <!-- <link rel="import" href="http://komercia.app/padmin/src/my-app.html"> -->
+  <style media="screen">
+    @import url('https://fonts.googleapis.com/css?family=Oswald:300,400,700');
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    :root {
+      --color_principal: #F4F6F8;
+      --color_secundario: #DA1F3F;
+      --color_texto: rgb(0, 0, 0);
+      --color_fondo: rgb(255, 255, 255);
+      --url_fondo: '';
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- <chat-komercia></chat-komercia> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByh33xchBmphNi10U-eB3oCX9sVVT4fiY"></script>
+  <script>
+    const conf = {
+      "id": "229",
+      "tema": 0,
+      "user": {
+        "id": "79",
+        "foto": "user.jpeg",
+        "nombre": "Diego Aguilar",
+      }
+    }
+    localStorage.setItem("conf", JSON.stringify(conf));
+
+  </script>
+</body>
+
 </html>

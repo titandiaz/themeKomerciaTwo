@@ -7,7 +7,7 @@
         <i id="closeOrder" class="material-icons">close</i>
       </header>
       <div class="products">
-        <div v-for="(product, index) in productsCart" class="product">
+        <div v-for="(product, index) in productsCart" :key="index" class="product">
           <figure class="photo">
             <img :src="setFoto(product.foto)" alt="">
           </figure>
@@ -33,38 +33,38 @@
 <script>
 export default {
   computed: {
-    totalCart(){
+    totalCart() {
       return this.$store.state.totalCart;
     },
-    orderComponent(){
+    orderComponent() {
       return this.$store.state.orderComponent;
     },
-    productsCart(){
+    productsCart() {
       return this.$store.state.productsCart;
     },
-    styles(){
+    styles() {
       return {
-        colorPrincipal:{backgroundColor: this.$store.state.colorPrincipal},
-        colorSecundario: {backgroundColor: this.$store.state.colorSecundario},
-        colorSecundarioTotal: {color: this.$store.state.colorSecundario}
-      }
+        colorPrincipal: { backgroundColor: this.$store.state.colorPrincipal },
+        colorSecundario: { backgroundColor: this.$store.state.colorSecundario },
+        colorSecundarioTotal: { color: this.$store.state.colorSecundario }
+      };
     }
   },
   methods: {
     setFoto(f) {
       return `${this.$urlHttp}/mini/${f}`;
     },
-    deleteItemCart(i, id){
+    deleteItemCart(i, id) {
       this.$store.state.productsCart.splice(i, 1);
-      this.$store.commit('updateContentCart');
-      this.$store.commit('removeProductsPurchased', id);
+      this.$store.commit("updateContentCart");
+      this.$store.commit("removeProductsPurchased", id);
     },
     backPage(e) {
-      if(e.target.id == 'order' || e.target.id == 'closeOrder'){
+      if (e.target.id == "order" || e.target.id == "closeOrder") {
         this.$store.state.orderComponent = false;
       }
     },
-    next(){
+    next() {
       let json = {
         products: this.$store.state.productsCart,
         tienda: this.$store.state.id,
@@ -72,130 +72,132 @@ export default {
         total: this.$store.state.totalCart,
         estado: 0,
         direccion_entrega: 1
-      }
-      json = JSON.stringify(json)
-      if(this.$store.state.productsCart.length != 0){
+      };
+      json = JSON.stringify(json);
+      if (this.$store.state.productsCart.length != 0) {
         location.href = `${this.$urlHttp}/before/checkout/${json}`;
       }
     }
   },
   filters: {
     currency(value) {
-      if(value){
+      if (value) {
         return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
     },
-    capitalize(value){
-      if(value){
+    capitalize(value) {
+      if (value) {
         value = value.toLowerCase();
-        return value.replace(/^\w|\s\w/g, l => l.toUpperCase())
+        return value.replace(/^\w|\s\w/g, l => l.toUpperCase());
       }
-    },
+    }
   }
-}
+};
 </script>
 
 <style scoped>
-  #order{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 10;
-    opacity: 0;
-    visibility: hidden;
-    transition: .2s;
+#order {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  right: 0;
+  transition: 0.2s;
+}
+#closeOrder {
+  cursor: pointer;
+}
+.order {
+  position: absolute;
+  top: calc(50% - 300px);
+  right: -430px;
+  max-width: 400px;
+  width: 100%;
+  max-height: 100vh;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.6);
+  /* border-radius: 10px 0 0 10px; */
+  overflow: hidden;
+  transition: all 0.3s;
+}
+#order.activeOrder {
+  opacity: 1;
+  visibility: visible;
+}
+.order.active {
+  right: 0;
+}
+.order header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.products {
+  height: calc(600px - 160px);
+  overflow-y: auto;
+}
+.product {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 10px 20px;
+  /* border-radius: 4px; */
+  border: solid 1px #e5e5e5;
+}
+.product .photo img {
+  max-width: 50px;
+  max-height: 50px;
+}
+.product .nombre {
+  max-width: 160px;
+  font-size: 13px;
+}
+.order .total {
+  display: flex;
+  justify-content: space-around;
+}
+.order .total h3 {
+  font-size: 1.2em;
+  color: var(--color_secundario);
+}
+.order .actionOfCheckout {
+  width: 100%;
+  padding: 5px 0;
+  display: flex;
+  justify-content: center;
+  background-color: var(--color_secundario);
+}
+.actionOrder {
+  border-style: none;
+  color: #fff;
+  border: 2px solid #fff;
+  background-color: transparent;
+  /* border-radius: 15px; */
+  padding: 10px 50px;
+  cursor: pointer;
+  transition: 0.3s;
+  outline: none;
+}
+.actionOrder:hover {
+  color: var(--color_secundario);
+  /* transform: scale(0.9); */
+  background-color: #fff;
+}
+@media (max-height: 600px) {
+  .order {
+    top: initial;
   }
-  #closeOrder{
-    cursor: pointer;
-  }
-  .order{
-    position: absolute;
-    top: calc(50% - 300px);
-    right: -430px;
-    max-width: 400px;
-    width: 100%;
-    max-height: 100vh;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #FFF;
-    color: rgba(0,0,0,0.6);
-    border-radius: 10px 0 0 10px;
-    overflow: hidden;
-    transition: all .3s;
-  }
-  #order.activeOrder{
-    opacity: 1;
-    visibility: visible;
-  }
-  .order.active{
-    right: 0;
-  }
-  .order header{
-    width: 100%;
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
-  .products{
-    height: calc(600px - 160px);
-    overflow-y: auto;
-  }
-  .product{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    margin: 10px 20px;
-    border-radius: 4px;
-    border: solid 1px #e5e5e5;
-  }
-  .product .photo img{
-    max-width: 50px;
-    max-height: 50px;
-  }
-  .product .nombre{
-    max-width: 160px;
-    font-size: 13px;
-  }
-  .order .total{
-    display: flex;
-    justify-content: space-around;
-  }
-  .order .total h3{
-    font-size: 1.2em;
-    color: var(--color_secundario);
-  }
-  .order .actionOfCheckout{
-    width: 100%;
-    padding: 5px 0;
-    display: flex;
-    justify-content: center;
-    background-color: var(--color_secundario);
-  }
-  .actionOrder{
-    border-style: none;
-    color: #FFF;
-    border: 2px solid #FFF;
-    background-color: transparent;
-    border-radius: 15px;
-    padding: 10px 50px;
-    cursor: pointer;
-    transition: .3s;
-    outline: none;
-  }
-  .actionOrder:hover{
-    transform: scale(0.9);
-    background-color: rgba(0,0,0,0.1);
-  }
-  @media(max-height: 600px){
-    .order{
-      top: initial;
-    }
-  }
+}
 </style>

@@ -18,34 +18,34 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 export default {
   components: { swiper, swiperSlide },
-    name: 'carrousel',
-    data() {
-          return {
-            swiperOption: {
-              loop: true,
-              direction: 'horizontal',
-              pagination: '.swiper-pagination',
-              setWrapperSize: true,
-              paginationClickable: true,
-              grabCursor : true,
-              autoplay: 3500,
-            }
-          }
-        },
-        computed: {
-          banners(){
-            return this.$store.state.banners;
-          }
-        },
-        methods: {
-          setBanner(banner){
-            return `${this.$urlHttp}/banners/${banner}`;
-          }
-        }
+  name: "carrousel",
+  data() {
+    return {
+      swiperOption: {
+        loop: true,
+        direction: "horizontal",
+        pagination: ".swiper-pagination",
+        setWrapperSize: true,
+        paginationClickable: true,
+        grabCursor: true,
+        autoplay: 3500
       }
+    };
+  },
+  computed: {
+    banners() {
+      return this.$store.state.banners;
+    }
+  },
+  methods: {
+    setBanner(banner) {
+      return `${this.$urlHttp}/banners/${banner}`;
+    }
+  }
+};
 </script>
 
 <style>
@@ -61,7 +61,7 @@ export default {
   border-left: 10px solid transparent;
   border-bottom: 10px solid transparent;
 } */
-  .transition-banner {
+.transition-banner {
   height: 4px;
   width: 100%;
   background: var(--color_secundario);
@@ -78,7 +78,7 @@ export default {
   }
 } */
 .btn-banner:hover {
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
   color: var(--color_secundario);
   /* box-shadow: inset 0 0 0 3px red; */
 }
@@ -95,10 +95,10 @@ export default {
 .paragraph-banner {
   max-width: 300px;
   text-align: left;
-  font-family: 'helvetica', sans-serif;
+  font-family: "helvetica", sans-serif;
   font-weight: 300;
   margin-top: 15px;
-  font-size: 16px;;
+  font-size: 16px;
 }
 .title-banner {
   font-size: 40px;
@@ -107,43 +107,47 @@ export default {
   text-transform: uppercase;
   font-weight: 700;
 }
+.banner-container {
+  position: absolute;
+  color: #fff;
+  left: 60px;
+}
+header .swiper-container {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+header .swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+header .swiper-slide .banner {
+  width: 100%;
+  margin: 0 auto;
+}
+header .swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+header .swiper-pagination-bullet-active {
+  background-color: #fff;
+}
+@media screen and (max-width: 700px) {
   .banner-container {
-    position: absolute;
-    color:#fff;
-    left: 60px;;
-
+    display: none;
   }
-  header .swiper-container {
-    width: 100%;
-    height: 100%;
-    background-color: #FFF;
-  }
-  header .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-  }
-  header .swiper-slide .banner{
-    width: 100%;
-    margin: 0 auto;
-  }
-  header .swiper-pagination-bullet{
-    background-color: rgba(255,255,255,0.5);
-  }
-  header .swiper-pagination-bullet-active{
-    background-color: #FFF;
-  }
+}
 </style>
