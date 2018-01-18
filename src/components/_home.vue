@@ -70,21 +70,21 @@
 </template>
 
 <script>
-import banners from "./banners.vue";
-import promo from "./promo.vue";
-import product from "./product.vue";
-import axios from "axios";
+import banners from './banners.vue';
+import promo from './promo.vue';
+import product from './product.vue';
+import axios from 'axios';
 
 export default {
   components: { product, banners, promo },
-  name: "home",
+  name: 'home',
   mounted() {
-    this.$store.commit("productsPurchased");
+    this.$store.commit('productsPurchased');
   },
   watch: {
     products: function(value) {
-      this.$store.commit("productsPurchased");
-    }
+      this.$store.commit('productsPurchased');
+    },
   },
   data() {
     return {};
@@ -99,14 +99,14 @@ export default {
     styles() {
       return {
         colorPrincipal: { backgroundColor: this.$store.state.colorPrincipal },
-        colorSecundario: { color: this.$store.state.colorSecundario }
+        colorSecundario: { color: this.$store.state.colorSecundario },
       };
     },
     banners() {
       return this.$store.state.banners;
-    }
+    },
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
@@ -279,7 +279,7 @@ header {
   display: flex;
   align-items: center;
   background-color: #f1f1f1;
-  border-radius: 10.8px;
+  /* border-radius: 10.8px; */
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   margin: 10px;
   padding: 0 25px;
