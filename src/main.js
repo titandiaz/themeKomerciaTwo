@@ -45,7 +45,7 @@ Vue.use(VueAnalytics, {
   }
 })
 
-Vue.prototype.$urlHttp = 'https://komercia.co';
+Vue.prototype.$urlHttp = 'https://brainmakers.net';
 store.state.urlHttp = Vue.prototype.$urlHttp;
 store.commit('getData');
 

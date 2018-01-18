@@ -4,7 +4,13 @@
       <banners></banners>
       <!-- <label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto"></label> -->
     </header>
-      <section class="items">
+    <div class="container-title-special">
+      <i class="fa fa-star icon-title" aria-hidden="true"></i>
+      <h1 class="main-title-promo">productos especiales</h1>
+      <i class="fa fa-star icon-title" aria-hidden="true"></i>
+    </div>
+    <promo/>
+      <!-- <section class="items">
         <div class="wrapper">
           <div class="items_item offers">
             <div class="items_item_info">
@@ -31,7 +37,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       <section class="products maxcontainer">
           <product v-for="product in products" :data="product" :key="product.id"></product>
           <product v-if="products.length == 0" v-for="product in productsPlaceholder" :data="product" :key="product.id"></product>
@@ -64,11 +70,12 @@
 
 <script>
   import banners from './banners.vue';
+  import promo from './promo.vue';
   import product from './product.vue';
   import axios from 'axios';
 
   export default {
-    components: { product, banners },
+    components: { product, banners, promo },
     name: 'home',
     mounted(){
       this.$store.commit('productsPurchased');
@@ -109,6 +116,19 @@
   *{
     box-sizing: border-box;
     color: #4a4a4a;
+  }
+  .icon-title {
+    color: var(--color_secundario);
+  }
+  .main-title-promo {
+    text-transform: uppercase;
+    font-weight: 700px;
+    padding: 0 20px;
+  }
+  .container-title-special {
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
   }
   .home{
     display: flex;

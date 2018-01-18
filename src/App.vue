@@ -35,6 +35,7 @@ export default {
 </script>
 
 <style>
+@import url('../node_modules/font-awesome/css/font-awesome.min.css');
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -48,7 +49,7 @@ export default {
 .ko_header{
   position: relative;
   width: 100%;
-  height: 90px;
+  height: 70px;
   background-color: var(--color_principal);
   padding: 0 20px;
 }
