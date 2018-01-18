@@ -4,7 +4,7 @@
     <div class="transition-banner"></div>
     <swiper-slide v-for="banner in banners" :key="banner.id">
       <img class="banner" :src="setBanner(banner.ruta_banner)">
-      <div class="banner-container">
+      <div v-show="false" class="banner-container">
         <p class="title-banner">make style cool</p>
         <p class="paragraph-banner">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, placeat. Similique ea inventore natus nihil.</p>
         <button class="btn-banner">Saber mas</button>
@@ -18,33 +18,33 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
 export default {
   components: { swiper, swiperSlide },
-  name: "carrousel",
+  name: 'carrousel',
   data() {
     return {
       swiperOption: {
         loop: true,
-        direction: "horizontal",
-        pagination: ".swiper-pagination",
+        direction: 'horizontal',
+        pagination: '.swiper-pagination',
         setWrapperSize: true,
         paginationClickable: true,
         grabCursor: true,
-        autoplay: 3500
-      }
+        autoplay: 3500,
+      },
     };
   },
   computed: {
     banners() {
       return this.$store.state.banners;
-    }
+    },
   },
   methods: {
     setBanner(banner) {
       return `${this.$urlHttp}/banners/${banner}`;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -95,7 +95,7 @@ export default {
 .paragraph-banner {
   max-width: 300px;
   text-align: left;
-  font-family: "helvetica", sans-serif;
+  font-family: 'helvetica', sans-serif;
   font-weight: 300;
   margin-top: 15px;
   font-size: 16px;

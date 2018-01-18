@@ -35,20 +35,20 @@
 </template>
 
 <script>
-import menuLateral from "./menu_lateral.vue";
+import menuLateral from './menu_lateral.vue';
 
 export default {
   components: { menuLateral },
   data() {
     return {
-      search: ""
+      search: '',
     };
   },
   computed: {
     styles() {
       return {
         colorPrincipal: { backgroundColor: this.$store.state.colorPrincipal },
-        colorSecundario: { backgroundColor: this.$store.state.colorSecundario }
+        colorSecundario: { backgroundColor: this.$store.state.colorSecundario },
       };
     },
     info() {
@@ -64,7 +64,7 @@ export default {
         return product;
       });
       return quantityCart;
-    }
+    },
   },
   methods: {
     openMenuComponent() {
@@ -81,26 +81,26 @@ export default {
         distance: 100,
         maxPatternLength: 32,
         minMatchCharLength: 1,
-        keys: ["nombre"]
+        keys: ['nombre'],
       };
       this.$search(this.search, this.productsData, options).then(results => {
         this.$store.state.searchProducts = results;
         console.log(results);
       });
       // this.paginationActions = false;
-    }
+    },
   },
   watch: {
     search: function() {
       this.searchProduct();
-      if (this.$route.path != "/catalogo") {
-        this.$router.push("/catalogo");
+      if (this.$route.path != '/catalogo') {
+        this.$router.push('/catalogo');
       }
       // if(this.search == ''){
       // 	this.paginationActions = true;
       // }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -204,8 +204,8 @@ a:visited {
 }
 .header__logo {
   max-width: 150px;
-  width: 100%;
-  height: auto;
+  /* width: 100%; */
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -216,8 +216,8 @@ a:visited {
   /* box-shadow: 0px 0px 0px 4px rgba(255,255,255, 0.5); */
 }
 .header__logo img {
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  max-height: 90%;
 }
 /* .header__title{
     font-size: 1.25em;
