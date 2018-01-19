@@ -2,42 +2,13 @@
   <div class="home">
     <header>
       <banners></banners>
-      <!-- <label for="searchProduct" class="header__search"><i class="material-icons">search</i><input type="text" id="searchProduct" placeholder="Buscar producto"></label> -->
     </header>
-    <div class="container-title-special">
+    <!-- <div class="container-title-special">
       <i class="fa fa-star icon-title" aria-hidden="true"></i>
       <h1 class="main-title-promo">productos especiales</h1>
       <i class="fa fa-star icon-title" aria-hidden="true"></i>
     </div>
-    <promo/>
-      <!-- <section class="items">
-        <div class="wrapper">
-          <div class="items_item offers">
-            <div class="items_item_info">
-              <h3>Nuestras Ofertas</h3>
-              <p class="detail">Encuentra lo que</br> siempre has querido</p>
-              <router-link to="/catalogo" class="detail block" :style="styles.colorSecundario">Ver Catalogo</router-link>
-            </div>
-            <img src="../assets/offers.png">
-          </div>
-          <div class="items_item login">
-            <div class="items_item_info">
-              <h3>Contáctanos</h3>
-              <p class="detail">Estaremos pendientes de responderte</p>
-              <br>
-              <router-link to="/contacto" class="detail">CONTACTANOS</router-link>
-            </div>
-          </div>
-          <div class="items_item shopping_cart">
-            <img src="../assets/shopping.png">
-            <div class="items_item_info">
-              <h3>Carrito de compras</h3>
-              <p class="detail">Añade tus productos</br> favoritos al carrito</p>
-              <router-link to="/pedido" class="detail block">Ir al carrito</router-link>
-            </div>
-          </div>
-        </div>
-      </section> -->
+    <promo/> -->
       <h1 class="title-news-products">Nuevos Productos</h1>
       <section class="products maxcontainer">
           <product v-for="product in products" :data="product" :key="product.id"></product>
