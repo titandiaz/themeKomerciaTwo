@@ -47,7 +47,7 @@ Vue.use(VueAnalytics, {
   }
 });
 
-Vue.prototype.$urlHttp = "http://api.komercia.co";
+Vue.prototype.$urlHttp = "http://templates.komercia.co";
 store.state.urlHttp = Vue.prototype.$urlHttp;
 store.commit("getData");
 
