@@ -70,7 +70,6 @@ export const store = new Vuex.Store({
   mutations: {
     getData(state) {
       axios
-        // .get(`${state.urlHttp}/api/front/tienda/${conf.id}`)
         .get(`${state.urlHttp}/api/front/tienda/${conf.id}`)
         .then(response => {
           store.state.banners = response.data.data.banners;
