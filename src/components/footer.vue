@@ -35,7 +35,7 @@
             </a>
           </div>
         <div class="footer_actions">
-          <input type="text" class="footer_actions_email" placeholder="Correo electrónico" v-model="email">
+          <input type="text" class="footer_actions_email" placeholder="Correo electrónico" required v-model="email">
           <button class="footer_actions_subscribe" v-on:click="submitNewsletter">Suscríbete</button>
         </div>
         <div class="footer_about_legal">
@@ -48,7 +48,7 @@
         <div class="footer_last">
           <span class="effects"></span>
           <p class="text">Desarrollado por komercia.co</p>
-          <img src="/template3/komercia.png">
+          <img src="/template2/komercia.png">
         </div>
   </footer>
 </template>
